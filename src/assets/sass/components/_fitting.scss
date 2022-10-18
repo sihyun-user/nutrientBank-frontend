@@ -1,0 +1,10 @@
+.baseMask {
+  width: 100%;
+  min-height: 100vh;
+  background-color: $color-black;
+  opacity: 0.5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
