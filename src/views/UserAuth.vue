@@ -8,8 +8,8 @@
         </div>
         <div class="user__form">
           <div class="user__form-title">會員登入</div>
+          <!-- 登入 -->
           <div class="user__form-login">
-            <!-- 登入 -->
             <div class="user__form-entered">
               <label for="login-email">信箱</label>
               <input id="login-email" class="inputMode" type="email">

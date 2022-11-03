@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import UserAuth from '../views/UserAuth.vue'
+import UserDiary from '../views/UserDiary.vue'
 
 const routes = [
   { path: '/', redirect: '/auth' },
   { path: '/auth', component: UserAuth },
+  { path: '/diary', component: UserDiary },
   { path: '/:notFound(.*)', redirect: '/auth' }
 ]
 
