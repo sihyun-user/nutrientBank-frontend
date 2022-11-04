@@ -4,14 +4,17 @@
 
 <script>
 import { watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useStore } from './store'
 export default {
   setup() {
     const store = useStore()
-    const router = useRouter()
+    const route = useRoute()
 
-    watch(() => router.path, () => store.$patch({ errorMsg: '' }))
+    watch(() => route.path, () => {
+      store.$patch({ errorMsg: '' })
+      store.$patch({ isLoading: false })
+    })
   }
 }
 </script>

@@ -11,10 +11,9 @@
 
 .inputMode {
   font-size: 16px;
-  color: #9B9893;
+  color: $color-primary;
   width: 100%;
-  // height: 25px;
-  border-bottom: 1px solid $color-gray-1;
+  border-bottom: 1px solid $color-primary;
   padding: 22px 10px 2px;
 }
 
@@ -44,4 +43,8 @@
     transition: .8s linear;
     transition-property: width, background-color;
   }
+}
+
+.errorMsg {
+  color: $color-error;
 }
