@@ -1,24 +1,25 @@
 <template>
   <section class="diary">
     <div v-for="diary in diarys" :key="diary.diaryId" :food="diary.food">
-      <Skillbar></Skillbar>
+      <Skill-bar></Skill-bar>
     </div>
   </section>
 </template>
 
 <script>
 import { ref } from 'vue'
-import { apiUserLogin } from '../service/api'
-import Skillbar from '../components/layout/Skillbar.vue'
+import { apiGetDiarys } from '../service/api'
+import SkillBar from '../components/layout/SkillBar.vue'
 export default {
   components: {
-    Skillbar
+    SkillBar
   },
   setup() {
     const diarys = ref(null)
+
     const getMonthDiary = async() => {
       try {
-        const res = await apiUserLogin()
+        const res = await apiGetDiarys()
   
         diarys.value = res.data.data
       } catch (error) {

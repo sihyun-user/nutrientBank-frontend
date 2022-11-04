@@ -5,7 +5,6 @@ import * as appApi from '../service/api'
 
 export const useStore = defineStore('main', {
   state: () => ({
-    token: '',
     userId: '',
     errorMsg: '',
     isLogin: false,
@@ -24,7 +23,7 @@ export const useStore = defineStore('main', {
       }
 
       if (token && userId) {
-        this.$patch({ isLogin: true, token, userId })
+        this.$patch({ isLogin: true, userId })
       }
     },
     tryAuth(payload) {
@@ -37,7 +36,7 @@ export const useStore = defineStore('main', {
       localStorage.setItem('userId', userId)
       localStorage.setItem('tokenExpiration', expirationDate)
 
-      this.$patch({ token, userId })
+      this.$patch({ userId })
     },
     async login(payload) {
       try {
