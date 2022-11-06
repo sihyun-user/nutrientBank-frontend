@@ -1,0 +1,30 @@
+.userWall {
+  &__wrap {
+    &:first-child {
+      margin-bottom: 24px;
+    }
+
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.amount {
+  width: 525px;
+  height: 400px;
+  
+  &__title {
+    @include baseTitle;
+    margin-bottom: 30px;
+  }
+}
+
+.nutrition {
+  width: 745px;
+  height: 400px;
+
+  &__title {
+    @include baseTitle;
+    margin-bottom: 40px;
+  }
+}

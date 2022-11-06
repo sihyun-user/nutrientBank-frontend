@@ -2,13 +2,21 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useStore } from '../store'
 
 import UserAuth from '../views/UserAuth.vue'
-import UserDiary from '../views/UserDiary.vue'
+import UserCenter from '../views/UserCenter.vue'
+import UserWall from '../views/UserWall.vue'
 
 const routes = [
-  { path: '/', redirect: '/auth' },
-  { path: '/auth', component: UserAuth, meta: { requiresUnauth: true } },
-  { path: '/diary', component: UserDiary, meta: { requiresAuth: true } },
-  { path: '/:notFound(.*)', redirect: '/auth' }
+  { path: '/', redirect: '/userAuth' },
+  { path: '/userAuth', component: UserAuth, meta: { requiresUnauth: true } },
+  {
+    path: '/userWall',
+    redirect: '/userWall',
+    component: UserCenter,
+    children: [
+      { path: '/userWall', component: UserWall, meta: { requiresAuth: true } },
+    ]
+  },
+  { path: '/:notFound(.*)', redirect: '/userAuth' }
 ]
 
 const router = createRouter({
@@ -29,9 +37,9 @@ router.beforeEach(function(to, _, next){
   const isLiginCall = store.isLogin
   if (to.meta.requiresAuth && !isLiginCall) {
     alert('尚未登入')
-    next('/auth')
+    next('/userAuth')
   } else if (to.meta.requiresUnauth && isLiginCall) {
-    next('/diary')
+    next('/userWall')
   } else {
     next()
   }

@@ -1,12 +1,12 @@
 <template>
   <section class="auth">
-    <div class="container">
+    <div class="auth__container">
       <div class="user">
         <div class="user__logo">
-          <img src="../assets/img/logo-bg.svg">
+          <img src="src/assets/img/logo-bg.svg">
         </div>
         <div class="user__form">
-          <div class="user__form-title">{{ switchModeCaption }}</div>
+          <div class="user__form-title">{{switchModeCaption}}</div>
           <!-- 登入 -->
           <div v-if="mode=='login'" class="user__form-login">
             <div class="user__form-entered">
@@ -17,7 +17,7 @@
               <label for="login-password">密碼</label>
               <input id="login-password" class="inputMode" type="password" v-model="auth.password">
             </div>
-            <p v-if="errorMsg" class="user__form-errorMsg errorMsg">{{ errorMsg }}</p>
+            <p v-if="errorMsg" class="user__form-errorMsg errorMsg">{{errorMsg}}</p>
             <button class="user__form-btn baseBtn" @click="login">登入</button>
             <div class="user__form-direct">還不是會員，<span @click="switchAuthMode">加入會員</span></div>
           </div>
@@ -40,7 +40,7 @@
               <label for="register-confirmPassword">密碼確認</label>
               <input id="register-confirmPassword" class="inputMode" type="password" v-model="auth.confirmPassword">
             </div>
-            <p v-if="errorMsg" class="user__form-errorMsg errorMsg">{{ errorMsg }}</p>
+            <p v-if="errorMsg" class="user__form-errorMsg errorMsg">{{errorMsg}}</p>
             <button class="user__form-btn baseBtn" @click="signup">註冊</button>
             <div class="user__form-direct">已經是會員，<span @click="switchAuthMode">直接登入</span></div>
           </div>
@@ -73,12 +73,12 @@ export default {
     const switchModeCaption = computed(() => mode.value === 'login' ? '會員登入' : '會員註冊')
     const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/
 
-    const switchAuthMode = (() => {
+    const switchAuthMode = () => {
       clearForm()
       mode.value === 'login' ? mode.value = 'signup' : mode.value = 'login'
-    })
+    }
     
-    const login = (() => {
+    const login = () => {
       store.$patch({ errorMsg: '' })
 
       if (!auth.email || !emailRule.test(auth.email)) {
@@ -92,9 +92,9 @@ export default {
         password: auth.password
       }
       store.login(payload)
-    })
+    }
 
-    const signup = (async () => {
+    const signup = async() => {
       store.$patch({ errorMsg: '' })
 
       if (auth.name.length < 2) {
@@ -109,12 +109,12 @@ export default {
       
       const result = await store.signup(auth)
       if (result) switchAuthMode()
-    })
+    }
 
-    const clearForm = (() => {
+    const clearForm = () => {
       store.$patch({ errorMsg: '' })
       Object.assign(auth, authOriganil())
-    })
+    }
 
     return {
       mode,

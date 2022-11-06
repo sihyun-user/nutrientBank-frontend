@@ -4,12 +4,24 @@
 html {
   font-family: Noto Sans TC,黑體-繁,Apple LiGothic Medium,PingFang,微軟正黑體,Microsoft JhengHei,WenQuanYi Zen Hei,helvetica,Arial,sans-serif;
   font-size: 16px;
-  color: $color-primary;
   font-weight: $light;
+  color: $color-primary;
 }
 
 html,
 body {
   margin: 0;
   padding: 0;
+}
+
+.main {
+  background-color: #EAEAEA;
+  height: 100%;
+  padding: 40px 20px 0 20px;
+
+  &__container {
+    width: 1295px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
 }

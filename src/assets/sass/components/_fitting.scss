@@ -18,10 +18,19 @@
 }
 
 .skillbar {
-  width: 340px;
-  margin-left: 100px;
+  // display: flex;
 
-  &__wrapper {
+  &__leftSide {
+    width: 310px;
+    max-width: 100%;
+    margin-right: 60px;
+  }
+
+  &__row {
+    margin-bottom: 35px;
+  }
+
+  &__wrap {
     margin-bottom: 10px;
 
     display: flex;
@@ -38,11 +47,15 @@
   &__barControl {
     width: 0;
     height: 10px;
-    background-color: #25B79F;
+    background-color: $color-secondary;
     border-radius: 50px;
     transition: .8s linear;
     transition-property: width, background-color;
   }
+}
+
+.baseCard {
+  @include baseCard;
 }
 
 .errorMsg {
