@@ -24,6 +24,7 @@ import { apiGetDiarys } from '@/service/api'
 import BaseCard from '@/components/ui/BaseCard.vue'
 import DayAmount from '@/components/layout/DayAmount.vue'
 import SkillBar from '@/components/layout/Skillbar.vue'
+import moment from 'moment'
 export default {
   components: {
     BaseCard,
@@ -38,6 +39,8 @@ export default {
     const getDiarys = async() => {
       try {
         const res = await apiGetDiarys()
+
+        console.log(moment().format('YYYY-MM-DD'))
   
         diarys.value = res.data.data
       } catch (error) {
