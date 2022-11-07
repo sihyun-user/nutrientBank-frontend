@@ -6,12 +6,24 @@
 
     display: flex;
     justify-content: space-between;
+
+    @include pad {
+      flex-direction: column;
+    }
   }
 }
 
 .amount {
   width: 525px;
   height: 400px;
+  margin-right: 24px;
+
+  @include pad {
+    width: 100%;
+    height: 378px;
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
   
   &__title {
     @include baseTitle;
@@ -23,8 +35,19 @@
   width: 745px;
   height: 400px;
 
+  @include pad {
+    width: 100%;
+    height: 742px;
+  }
+
+  &__wrap {
+    margin-bottom: 31px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+  }
+
   &__title {
     @include baseTitle;
-    margin-bottom: 40px;
   }
 }

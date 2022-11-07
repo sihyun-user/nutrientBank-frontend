@@ -1,64 +1,144 @@
 <template>
-  <div class="skillbar">
-    <div class="skillbar__leftSide">
-      <div class="skillbar__row">
-        <div class="skillbar__wrap">
-          <div class="skillbar__title">熱量</div>
-          <div class="skillbar__value" v-if="nutrition">
-            <span class="skillbar__value--total">0</span> /
-            <span class="skillbar__value--target">0</span> (g)
-          </div>
-          <div class="skillbar__value" v-else>
-            <span class="skillbar__value--total">{{nutrition['fat'].id}}</span> /
-            <span class="skillbar__value--target">0</span> (g)
+  <div class="skillBar skillBar__web">
+    <div class="skillBar__wrapper">
+      <div class="skillBar__row">
+        <div class="skillBar__title">蛋白質 <span>(g)</span></div>
+        <div class="skillBar__bar">
+          <div class="skillBar__barControl skillBar__barControl-orange" :style="{'width':`${protein.percent}%`}">
+            <span class="skillBar__value skillBar__value-orange">{{protein.content}}</span>
           </div>
         </div>
-        <div class="skillbar__bar">
-          <div class="skillbar__barControl" :style="{'width':`80%`}"></div>
-        </div>
+        <div class="skillBar__target">{{protein.intake}}</div>
       </div>
-      <div class="skillbar__row">
-        <div class="skillbar__wrap">
-          <div class="skillbar__title">碳水化合物</div>
-          <div class="skillbar__value">
-            <span class="skillbar__value--total">699</span> /
-            <span class="skillbar__value--target">1360</span> (g)
+      <div class="skillBar__row">
+        <div class="skillBar__title">碳水化合物 <span>(g)</span></div>
+        <div class="skillBar__bar">
+          <div class="skillBar__barControl skillBar__barControl-orange" :style="{'width':`${carbohydrates.percent}%`}">
+            <span class="skillBar__value skillBar__value-orange">{{carbohydrates.content}}</span>
           </div>
         </div>
-        <div class="skillbar__bar">
-          <div class="skillbar__barControl" :style="{'width':`80%`}"></div>
-        </div>
+        <div class="skillBar__target">{{carbohydrates.intake}}</div>
       </div>
-      <div class="skillbar__row">
-        <div class="skillbar__wrap">
-          <div class="skillbar__title">蛋白質</div>
-          <div class="skillbar__value">
-            <span class="skillbar__value--total">699</span> /
-            <span class="skillbar__value--target">1360</span> (g)
+      <div class="skillBar__row">
+        <div class="skillBar__title">納 <span>(mg)</span></div>
+        <div class="skillBar__bar">
+          <div class="skillBar__barControl skillBar__barControl-gray" :style="{'width':`${sodium.percent}%`}">
+            <span class="skillBar__value skillBar__value-gray">{{sodium.content}}</span>
           </div>
         </div>
-        <div class="skillbar__bar">
-          <div class="skillbar__barControl" :style="{'width':`80%`}"></div>
-        </div>
+        <div class="skillBar__target">{{sodium.intake}}</div>
       </div>
     </div>
+    <div class="skillBar__wrapper">
+      <div class="skillBar__row">
+        <div class="skillBar__title">脂肪 <span>(g)</span></div>
+        <div class="skillBar__bar">
+          <div class="skillBar__barControl skillBar__barControl-orange" :style="{'width':`${fat.percent}%`}">
+            <span class="skillBar__value skillBar__value-orange">{{fat.content}}</span>
+          </div>
+        </div>
+        <div class="skillBar__target">{{fat.intake}}</div>
+      </div>
+      <div class="skillBar__row skillBar__row--short">
+        <div class="skillBar__title">飽和脂肪 <span>(g)</span></div>
+        <div class="skillBar__bar">
+          <div class="skillBar__barControl skillBar__barControl-yellow" :style="{'width':`${saturated_fat.percent}%`}">
+            <span class="skillBar__value skillBar__value-yellow">{{saturated_fat.content}}</span>
+          </div>
+        </div>
+        <div class="skillBar__target">{{saturated_fat.intake}}</div>
+      </div>
+      <div class="skillBar__row skillBar__row--short">
+        <div class="skillBar__title">反式脂肪 <span>(g)</span></div>
+        <div class="skillBar__bar">
+          <div class="skillBar__barControl skillBar__barControl-yellow" :style="{'width':`${trans_fat.percent}%`}">
+            <span class="skillBar__value skillBar__value-yellow">{{trans_fat.content}}</span>
+          </div>
+        </div>
+        <div class="skillBar__target">{{trans_fat.intake}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="skillBar skillBar__pad">
+    <base-card class="skillCard">
+      <div class="skillBar__title">蛋白質 <span>(g)</span></div>
+        <div class="skillBar__bar">
+          <div class="skillBar__barControl skillBar__barControl-orange" :style="{'width':`${protein.percent}%`}">
+            <span class="skillBar__value skillBar__value-orange">{{protein.content}}</span>
+          </div>
+      </div>
+      <div class="skillBar__target">{{protein.intake}}</div>
+    </base-card>
+    <base-card class="skillCard">
+      <div class="skillBar__title">碳水化合物 <span>(g)</span></div>
+      <div class="skillBar__bar">
+        <div class="skillBar__barControl skillBar__barControl-orange" :style="{'width':`${carbohydrates.percent}%`}">
+          <span class="skillBar__value skillBar__value-orange">{{carbohydrates.content}}</span>
+        </div>
+      </div>
+      <div class="skillBar__target">{{carbohydrates.intake}}</div>
+    </base-card>
+    <base-card class="skillCard">
+      <div class="skillBar__row">
+        <div class="skillBar__title">脂肪 <span>(g)</span></div>
+        <div class="skillBar__bar">
+          <div class="skillBar__barControl skillBar__barControl-orange" :style="{'width':`${fat.percent}%`}">
+            <span class="skillBar__value skillBar__value-orange">{{fat.content}}</span>
+          </div>
+        </div>
+        <div class="skillBar__target">{{fat.intake}}</div>
+      </div>
+      <div class="skillBar__row skillBar__row--short">
+        <div class="skillBar__title">飽和脂肪 <span>(g)</span></div>
+        <div class="skillBar__bar">
+          <div class="skillBar__barControl skillBar__barControl-yellow" :style="{'width':`${saturated_fat.percent}%`}">
+            <span class="skillBar__value skillBar__value-yellow">{{saturated_fat.content}}</span>
+          </div>
+        </div>
+        <div class="skillBar__target">{{saturated_fat.intake}}</div>
+      </div>
+      <div class="skillBar__row skillBar__row--short">
+        <div class="skillBar__title">反式脂肪 <span>(g)</span></div>
+        <div class="skillBar__bar">
+          <div class="skillBar__barControl skillBar__barControl-yellow" :style="{'width':`${trans_fat.percent}%`}">
+            <span class="skillBar__value skillBar__value-yellow">{{trans_fat.content}}</span>
+          </div>
+        </div>
+        <div class="skillBar__target">{{trans_fat.intake}}</div>
+      </div>
+    </base-card>
+    <base-card class="skillCard">
+      <div class="skillBar__title">納 <span>(mg)</span></div>
+      <div class="skillBar__bar">
+        <div class="skillBar__barControl skillBar__barControl-gray" :style="{'width':`${sodium.percent}%`}">
+          <span class="skillBar__value skillBar__value-gray">{{sodium.content}}</span>
+        </div>
+      </div>
+      <div class="skillBar__target">{{sodium.intake}}</div>
+    </base-card>
   </div>
 </template>
 
 <script>
-import { reactive, ref, toRef, toRefs, computed, watch} from 'vue'
+import { reactive, toRefs, watch } from 'vue'
+import NUTRITION_DATA from '@/service/nutrition.json'
+import BaseCard from '@/components/ui/BaseCard.vue'
 export default {
   props: {
     diarys: {
-      type: Object,
-      dafault: {}
+      type: Object
     }
+  },
+  components: {
+    BaseCard
   },
   setup(props) {
     const { diarys } = toRefs(props)
     let nutrition  = reactive({})
 
-    watch(diarys, (nv) => updateNutrition())
+    Object.assign(nutrition, NUTRITION_DATA)
+    watch(diarys, () => updateNutrition())
 
     // 計算每日營養攝取量
     const clacTodayIntakes = (data) => {
@@ -143,22 +223,12 @@ export default {
     const updateNutrition = () => {
       const total = calcNutrition()
       const newTotal = {}
-      const info = {
-        calories: { id: 'calories', name: '熱量', unit: 'kcal' },
-        carbohydrates: { id: 'carbohydrates', name: '碳水化合物', unit: 'g' },
-        protein: { id: 'protein', name: '蛋白質', unit: 'g' },
-        fat: { id: 'fat', name: '脂肪', unit: 'g' },
-        saturated_fat: { id: 'saturated_fat', name: '飽和脂肪', unit: 'g' },
-        trans_fat: { id: 'trans_fat', name: '反式脂肪', unit: 'g' },
-        sugar: { id: 'sugar', name: '糖', unit: 'g' },
-        sodium: { id: 'sodium', name: '納', unit: 'mg' }
-      }
+      const info = NUTRITION_DATA
+
       for (let key in total) {
         info[key].content = total[key]
-        // newTotal.push(info[key])
         newTotal[key] = info[key]
       }
-
       Object.assign(nutrition, newTotal)
 
       clacTodayIntakes({
@@ -175,7 +245,7 @@ export default {
     }
     
     return {
-      nutrition
+      ...toRefs(nutrition)
     }
   }
 }

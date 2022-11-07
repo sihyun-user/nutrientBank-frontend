@@ -53,3 +53,27 @@
   font-weight: $bold;
   color: $color
 }
+
+@mixin baseBtn($width:142px, $height:36px, $color: 'orange') {
+  font-size: 16px;
+  font-weight: $medium;
+  width: $width;
+  height: $height;
+  color: $color-white;
+  border-radius: 8px;
+  cursor: pointer;
+
+  @if $color == 'orange' {
+    background-color: $color-secondary;
+
+    &:hover {
+      background-color: $color-orange;
+    }
+  } @else if ($color == 'green') {
+    background-color: $color-green-light;
+
+    &:hover {
+      background-color: $color-green-dark;
+    }
+  }
+}

@@ -18,7 +18,7 @@
               <input id="login-password" class="inputMode" type="password" v-model="auth.password">
             </div>
             <p v-if="errorMsg" class="user__form-errorMsg errorMsg">{{errorMsg}}</p>
-            <button class="user__form-btn baseBtn" @click="login">登入</button>
+            <button class="user__form-btn" @click="login">登入</button>
             <div class="user__form-direct">還不是會員，<span @click="switchAuthMode">加入會員</span></div>
           </div>
 
@@ -41,7 +41,7 @@
               <input id="register-confirmPassword" class="inputMode" type="password" v-model="auth.confirmPassword">
             </div>
             <p v-if="errorMsg" class="user__form-errorMsg errorMsg">{{errorMsg}}</p>
-            <button class="user__form-btn baseBtn" @click="signup">註冊</button>
+            <button class="user__form-btn" @click="signup">註冊</button>
             <div class="user__form-direct">已經是會員，<span @click="switchAuthMode">直接登入</span></div>
           </div>
         </div>

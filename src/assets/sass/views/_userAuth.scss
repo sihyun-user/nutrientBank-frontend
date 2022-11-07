@@ -64,6 +64,7 @@
     }
 
     &-btn {
+      @include baseBtn ($height: 44px);
       width: 100%;
       margin-top: 20px;
     }
