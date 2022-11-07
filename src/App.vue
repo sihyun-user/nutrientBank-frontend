@@ -5,7 +5,7 @@
 <script>
 import { watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from './store'
+import { useStore } from '@/store'
 export default {
   setup() {
     const store = useStore()

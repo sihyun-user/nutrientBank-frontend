@@ -16,9 +16,9 @@
 
 <script>
 import { computed, reactive, ref, toRefs } from 'vue'
-import { apiGetDiarys } from '../service/api'
-import BaseCard from '../components/ui/BaseCard.vue'
-import SkillBar from '../components/layout/SkillBar.vue'
+import { apiGetDiarys } from '@/service/api'
+import BaseCard from '@/components/ui/BaseCard.vue'
+import SkillBar from '@/components/layout/SkillBar.vue'
 export default {
   components: {
     BaseCard,

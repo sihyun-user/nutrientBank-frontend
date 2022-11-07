@@ -53,7 +53,7 @@
 
 <script>
 import { ref, computed, reactive } from 'vue'
-import { useStore } from '../store'
+import { useStore } from '@/store'
 export default {
   setup() {
     const store = useStore()
