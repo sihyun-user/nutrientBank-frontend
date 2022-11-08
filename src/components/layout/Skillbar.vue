@@ -127,7 +127,7 @@ import BaseCard from '@/components/ui/BaseCard.vue'
 export default {
   props: {
     diarys: {
-      type: Object
+      type: Array
     }
   },
   components: {
@@ -136,6 +136,11 @@ export default {
   setup(props) {
     const { diarys } = toRefs(props)
     let nutrition  = reactive({})
+    ///!!!!!!!!!!!
+    const renderData = () => {
+      return NUTRITION_DATA
+    }
+    
 
     Object.assign(nutrition, NUTRITION_DATA)
     watch(diarys, () => updateNutrition())
@@ -200,7 +205,8 @@ export default {
     const clacIntakePercent = () => {
       for (let key in nutrition) {
         const {content, intake } = nutrition[key]
-        nutrition[key].percent = Math.round(content / intake * 10000 / 100)
+        const percent = Math.round(content / intake * 10000 / 100)
+        nutrition[key].percent = percent >= 100 ? 100 : percent
       }
     }
 
@@ -219,7 +225,7 @@ export default {
       return total
     }
 
-    // 更新營養物件內容
+    // 更新營養物件內容 (無法更新)
     const updateNutrition = () => {
       const total = calcNutrition()
       const newTotal = {}
@@ -241,7 +247,7 @@ export default {
       })
       clacIntakePercent()
 
-      console.log(nutrition)
+      console.log('當日紀錄:',nutrition)
     }
     
     return {
