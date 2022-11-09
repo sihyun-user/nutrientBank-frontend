@@ -126,24 +126,21 @@ import NUTRITION_DATA from '@/service/nutrition.json'
 import BaseCard from '@/components/ui/BaseCard.vue'
 export default {
   props: {
-    diarys: {
+    dayDiarys: {
       type: Array
+    },
+    selectedDate: {
+      type: String
     }
   },
   components: {
     BaseCard
   },
   setup(props) {
-    const { diarys } = toRefs(props)
-    let nutrition  = reactive({})
-    ///!!!!!!!!!!!
-    const renderData = () => {
-      return NUTRITION_DATA
-    }
-    
+    const { dayDiarys, selectedDate } = toRefs(props)
+    const nutrition = reactive(NUTRITION_DATA)
 
-    Object.assign(nutrition, NUTRITION_DATA)
-    watch(diarys, () => updateNutrition())
+    watch([dayDiarys, selectedDate], () =>  updateNutrition())
 
     // 計算每日營養攝取量
     const clacTodayIntakes = (data) => {
@@ -212,7 +209,15 @@ export default {
 
     // 計算每筆食品營養累加值
     const calcNutrition = () => {
-      let total = diarys.value.reduce((acc, curr) => {
+      if (dayDiarys.value == 0) {
+        const type = ['calories','carbohydrates', 'fat', 'protein', 'saturated_fat', 'trans_fat', 'sodium', 'sugar']
+  
+        const toal = {}
+        type.forEach(key => toal[key] = 0)
+        return toal
+      }
+
+      let total = dayDiarys.value.reduce((acc, curr) => {
       Object.keys(curr.food.nutrition).forEach((key, index) => {
         if (!acc[key]) {
           acc[key] = 0
@@ -225,17 +230,15 @@ export default {
       return total
     }
 
-    // 更新營養物件內容 (無法更新)
+    // 更新營養物件內容
     const updateNutrition = () => {
       const total = calcNutrition()
-      const newTotal = {}
       const info = NUTRITION_DATA
 
       for (let key in total) {
         info[key].content = total[key]
-        newTotal[key] = info[key]
       }
-      Object.assign(nutrition, newTotal)
+      Object.assign(nutrition, info)
 
       clacTodayIntakes({
         height: 154, 
@@ -243,7 +246,7 @@ export default {
         age: 25, 
         sex: 0, 
         sportType: 'underSport',
-        fitness_goal: 'loseFat'
+        fitness_goal: 'gentleLoseFat'
       })
       clacIntakePercent()
 

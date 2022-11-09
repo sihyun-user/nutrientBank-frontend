@@ -1,7 +1,13 @@
 <template>
   <section class="userWall">
     <div class="userWall__calendar">
-      <weekly-calendar :selectedDate="selectedDate" @change-date="tryChaneDate"></weekly-calendar>
+      <weekly-calendar 
+      :selectedDate="selectedDate" 
+      :selectedWeekly="selectedWeekly" 
+      @change-weekly="tryChangeWeekly" 
+      @update-diarys="tryUpdateDiarys"
+      >
+      </weekly-calendar>
     </div>
     <div class="userWall__wrap">
       <base-card class="amount">
@@ -15,7 +21,7 @@
             <i class="fa-solid fa-plus"></i>新增營養紀錄
           </button>
         </div>
-        <skill-bar :diarys="diarys"></skill-bar>
+        <skill-bar :selectedDate="selectedDate" :dayDiarys="dayDiarys"></skill-bar>
       </base-card>
     </div>
     <div class="userWall__wrap">
@@ -39,44 +45,50 @@ export default {
     WeeklyCalendar
   },
   setup() {
-    const diarys = ref([])
+    const monthDiarys = ref([])
+    const dayDiarys = ref([])
     const selectedDate = ref('2000-1-1')
+    const selectedWeekly = ref('2000-1-1')
 
-    onMounted(() => {
-      selectedDate.value = moment().format('YYYY-MM-DD')
-    })
-
-    // 取得選擇日期的日記 (無法更新)
+    // 取得選擇日期的日記
     const selectDateDiary = () => {
-      const data = diarys.value
+      const data = monthDiarys.value
       const newData = data.filter((item) => item.date == selectedDate.value)
-
-      diarys.value = newData
+      dayDiarys.value = newData
     }
+
     // 取得今月日記 API 
     const getDiarys = async() => {
       try {
-        const res = await apiGetDiarys()
-        diarys.value = res.data.data
+        selectedDate.value = moment().format('YYYY-MM-DD')
 
-        // console.log('今月日記:', diarys)
+        const res = await apiGetDiarys(selectedDate.value)
+        monthDiarys.value = res.data.data
+  
         selectDateDiary()
       } catch (error) {
         console.log(error)
       }
     }
-  
-    getDiarys()
 
-    const tryChaneDate = (payload) => {
+    const tryChangeWeekly = (payload) => {
+      console.log(payload)
+      selectedWeekly.value = payload
+    }
+
+    const tryUpdateDiarys = (payload) => {
       selectedDate.value = payload
       selectDateDiary()
     }
 
+    getDiarys()
+
     return {
-      diarys,
+      dayDiarys,
       selectedDate,
-      tryChaneDate
+      selectedWeekly,
+      tryChangeWeekly,
+      tryUpdateDiarys
     }
   }
 }

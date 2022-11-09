@@ -13,4 +13,4 @@ const userRequest = axios.create({
 export const apiUserLogin = data => baseRequest.post('/user/login', data)
 export const apiUserSignup = data => baseRequest.post('/user/signup', data)
 
-export const apiGetDiarys = () => userRequest.get('/diarys')
+export const apiGetDiarys = data => userRequest.get(`/diarys?entry_date=${data}`)

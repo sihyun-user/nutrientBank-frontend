@@ -47,7 +47,7 @@
 
       &--date {
         font-size: 24px;
-        color: $color-gray-3;
+        color: $color-primary;
       }
 
       &:not(:last-of-type) {
@@ -55,14 +55,14 @@
       }
 
       &:hover {
-        background-color: #FFD9C3;
+        background-color: $color-gray-1;
 
         .calendar__weekly-item--week {
-          color: $color-brown-light-1;
+          color: $color-gray-2;
         }
 
         .calendar__weekly-item--date {
-          color: $color-brown-light-2;
+          color: $color-white;
         }
       }
     }
@@ -81,15 +81,27 @@
 
   }
 
-  .selectedDate {
-    background-color: #FFD9C3;
+  .selectedDat {
+    background-color: $color-gray-1;
 
     .calendar__weekly-item--week {
-      color: $color-brown-light-1;
+      color: $color-gray-2;
     }
 
     .calendar__weekly-item--date {
-      color: $color-brown-light-2;
+      color: $color-white;
+    }
+  }
+
+  .todayDate {
+    background-color: #FFD9C3 !important; 
+
+    .calendar__weekly-item--week {
+      color: $color-brown-light-1 !important;
+    }
+
+    .calendar__weekly-item--date {
+      color: $color-brown-light-2 !important;
     }
   }
 }

@@ -5,8 +5,10 @@
       <span class="calendar__weekly-arrow calendar__weekly-arrow--left" @click="chanegeWeekly('prev')">
         <i class="fa-solid fa-chevron-left"></i>
       </span>
-      <div v-for="wd in weeklyDays" :key="wd.date" 
-      class="calendar__weekly-item" :class="{'selectedDate': selectedDate == wd.mothDate}">
+      <div v-for="wd in weeklyDays" :key="wd.mothDate"  @click="updateDiarys(wd.mothDate)"
+      class="calendar__weekly-item" 
+      :class="{'todayDate': today == wd.mothDate, 'selectedDat': selectedDate == wd.mothDate}"
+      >
         <span class="calendar__weekly-item--week">{{wd.day}}</span>
         <span class="calendar__weekly-item--date">{{wd.date}}</span>
       </div>
@@ -21,31 +23,37 @@
 import { computed, toRefs, watch, reactive, ref, onUpdated, onMounted } from 'vue'
 import moment from 'moment'
 export default {
-  emits: ['change-date'],
+  emits: ['change-weekly', 'update-diarys'],
   props: {
     selectedDate: {
       type: String
-    }
+    },
+    selectedWeekly: {
+      type: String
+    },
   },
   setup(props, context) {
-    const { selectedDate } = toRefs(props)
+    const { selectedWeekly, selectedDate } = toRefs(props)
     const weeklyDays = reactive({})
     const year = ref(2022)
     const month = ref('January')
+    const today = moment().format('YYYY-MM-DD')
 
-    watch(selectedDate, () => {
+    onMounted(() =>  getWeekly(selectedDate.value))
+
+    watch(selectedWeekly, () => {
       getYearMonth()
-      getWeekly(selectedDate.value)
+      getWeekly(selectedWeekly.value)
     })
 
     const getYearMonth = () => {
-      year.value = moment(selectedDate.value).format('YYYY')
-      month.value = moment(selectedDate.value).format('MMMM')
+      year.value = moment(selectedWeekly.value).format('YYYY')
+      month.value = moment(selectedWeekly.value).format('MMMM')
     }
 
     const getWeekly = (curDate) => {
-      const today = moment(curDate).add(4, 'days')
-      const daysArray = Array(7).fill().map(() => today.subtract(1, 'd').format('YYYY-MM-DD'))
+      const weekDay = moment(curDate).add(4, 'days')
+      const daysArray = Array(7).fill().map(() => weekDay.subtract(1, 'd').format('YYYY-MM-DD'))
 
       const weekly = []
       daysArray.reverse().forEach(item => {
@@ -55,27 +63,33 @@ export default {
   
         weekly.push({mothDate, day, date})
       })
-
       Object.assign(weeklyDays, weekly)
     }
 
     const chanegeWeekly = (type) => {
       let date
       if (type == 'prev') {
-        date = moment(selectedDate.value).subtract(1, 'days').format('YYYY-MM-DD')
+        date = moment('2022/11/9').subtract(7, 'days').format('YYYY-MM-DD')
       } else {
-        date = moment(selectedDate.value).add(1, 'days').format('YYYY-MM-DD')
+        date = moment('2022/11/9').add(7, 'days').format('YYYY-MM-DD')
       }
 
-      context.emit('change-date', date)
+      context.emit('change-weekly', date)
       getYearMonth()
+    }
+
+    const updateDiarys = (date) => {
+      context.emit('update-diarys', date)
     }
 
     return {
       year,
       month,
+      today,
       selectedDate,
+      selectedWeekly,
       weeklyDays,
+      updateDiarys,
       chanegeWeekly
     }
   }
