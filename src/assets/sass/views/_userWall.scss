@@ -1,14 +1,20 @@
 .userWall {
-  &__wrap {
+  padding: 40px 0 66px;
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+
     &:first-child {
       margin-bottom: 24px;
     }
 
-    display: flex;
-    justify-content: space-between;
-
     @include pad {
       flex-direction: column;
+
+      &:first-child {
+        margin-bottom: 0;
+      }
     }
   }
 }
@@ -108,7 +114,7 @@
 
 .amount {
   width: 525px;
-  height: 400px;
+  height: 410px;
   margin-right: 24px;
 
   @include pad {
@@ -126,15 +132,16 @@
 
 .nutrition {
   width: 745px;
-  height: 400px;
+  height: 410px;
 
   @include pad {
     width: 100%;
     height: 742px;
+    margin-bottom: 16px;
   }
 
-  &__wrap {
-    margin-bottom: 31px;
+  &__header {
+    margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center
@@ -150,4 +157,124 @@
       margin-right: 6px;
     }
   } 
+}
+
+.sports {
+  width: 745px;
+  height: 268px;
+  margin-right: 24px;
+
+  @include pad {
+    width: 100%;
+    height: 560px;
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+
+  &__header {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+  }
+
+  &__wrap {
+    display: flex;
+  }
+
+  &__title {
+    @include baseTitle($color: $color-green-dark);
+  }
+
+  &__consume {
+    font-weight: $regular;
+    color: $color-green-dark;
+    margin-left: 8px;
+  }
+
+  &__btn {
+    i {
+      font-size: 12px;
+      margin-right: 6px;
+    }
+  }
+
+  &__list {
+    @include mobile {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &-row {
+      &:first-child {
+        margin-bottom: 32px;
+
+        @include mobile {
+          margin-bottom: 0;
+        }
+      }
+
+      display: flex;
+      justify-content: space-between;
+
+      @include mobile {
+        flex-direction: column;
+      }
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+
+    @include mobile {
+      margin-bottom: 40px;
+    }
+
+    &-icon {
+      width: 50px;
+      height: 50px;
+      background-color: $color-green-light; // $color-gray-2
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        font-size: 20px;
+        color: $color-white;
+      }
+    }
+
+    &-type {
+      font-size: 14px;
+      font-weight: $bold;
+      color: $color-green-dark;
+      margin-left: 12px;
+
+      &--time {
+        font-size: 24px;
+
+        span {
+          font-size: 14px;
+          font-weight: $regular;
+          margin-left: 7px;
+        }
+      }
+    }
+  }
+}
+
+.week-record {
+  width: 526px;
+  height: 268px;
+  background-color: $color-orange-light;
+
+  @include pad {
+    width: 100%;
+  }
+
+  &__title {
+    @include baseTitle($color: $color-white);
+  }
 }

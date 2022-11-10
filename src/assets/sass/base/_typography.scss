@@ -18,8 +18,7 @@ body {
 
 .main {
   background-color: #EAEAEA;
-  height: calc(100vh - 88px);
-  padding: 40px 12px 0 12px;
+  padding: 0 12px;
 
   @include pad {
     height: 100%;

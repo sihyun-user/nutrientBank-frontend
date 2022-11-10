@@ -52,7 +52,8 @@ export default {
     }
 
     const getWeekly = (curDate) => {
-      const weekDay = moment(curDate).add(4, 'days')
+      const from_date = moment(curDate).startOf('week').format('YYYY-MM-DD')
+      const weekDay = moment(from_date).add(7, 'days')
       const daysArray = Array(7).fill().map(() => weekDay.subtract(1, 'd').format('YYYY-MM-DD'))
 
       const weekly = []
@@ -69,13 +70,14 @@ export default {
     const chanegeWeekly = (type) => {
       let date
       if (type == 'prev') {
-        date = moment('2022/11/9').subtract(7, 'days').format('YYYY-MM-DD')
+        date = moment(selectedWeekly.value).subtract(1, 'weeks').format('YYYY-MM-DD')
       } else {
-        date = moment('2022/11/9').add(7, 'days').format('YYYY-MM-DD')
+        date = moment(selectedWeekly.value).add(1, 'weeks').format('YYYY-MM-DD')
       }
 
+      console.log(date)
+
       context.emit('change-weekly', date)
-      getYearMonth()
     }
 
     const updateDiarys = (date) => {

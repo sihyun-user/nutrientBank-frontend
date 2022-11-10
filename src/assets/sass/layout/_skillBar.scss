@@ -26,7 +26,7 @@
   }
 
   &__row {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 
     &--short {
       margin-left: 38px;
@@ -35,20 +35,24 @@
 
   &__title {
     font-weight: $regular;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   &__bar {
     width: 100%;
-    height: 10px;
+    height: 12px;
     background: $color-gray-2;
     border-radius: 50px;
+
+    &--short {
+      height: 8px;
+    }
   }
 
   &__barControl {
     position: relative;
     width: 0;
-    height: 10px;
+    height: 12px;
     border-radius: 50px;
     transition: .6s linear;
     transition-property: width, background-color;
@@ -60,6 +64,7 @@
       background-color: $color-gray-1;
     }
     &-yellow {
+      height: 8px;
       background-color: $color-yellow;
     }
   }
