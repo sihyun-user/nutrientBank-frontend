@@ -53,6 +53,7 @@ export const useStore = defineStore('main', {
         alert('登入成功')
         router.push('userWall')
       } catch (error) {
+        console.log(error)
         const message = error.response.data.message
         this.$patch({ isLoading: false, errorMsg: `登入失敗，${message}` })
         checkConsole('登入失敗', error.response)

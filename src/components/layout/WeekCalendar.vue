@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { computed, toRefs, watch, reactive, ref, onUpdated, onMounted } from 'vue'
+import { ref, reactive, toRefs, watch, onMounted } from 'vue'
 import moment from 'moment'
 export default {
   emits: ['change-weekly', 'update-diarys'],

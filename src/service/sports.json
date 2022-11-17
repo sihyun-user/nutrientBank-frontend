@@ -1,0 +1,42 @@
+[
+  { 
+    "sportType": "walking",
+    "sportName": "健走",
+    "iconName": "fa-person-walking"
+  },
+  { 
+    "sportType": "running",
+    "sportName": "跑步",
+    "iconName": "fa-person-running"
+  },
+  { 
+    "sportType": "swimming",
+    "sportName": "游泳",
+    "iconName": "fa-person-swimming"
+  },
+  { 
+    "sportType": "basketball",
+    "sportName": "籃球",
+    "iconName": "fa-basketball"
+  },
+  { 
+    "sportType": "biking",
+    "sportName": "單車",
+    "iconName": "fa-person-biking"
+  },
+  { 
+    "sportType": "skiing",
+    "sportName": "滑雪",
+    "iconName": "fa-person-skiing"
+  },
+  { 
+    "sportType": "dumbbell",
+    "sportName": "重量訓練",
+    "iconName": "fa-dumbbell"
+  },
+  { 
+    "sportType": "volleyball",
+    "sportName": "排球",
+    "iconName": "fa-volleyball"
+  }
+]

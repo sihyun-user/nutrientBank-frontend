@@ -224,6 +224,7 @@
   }
 
   &__item {
+    width: 127px;
     display: flex;
     align-items: center;
 
@@ -234,7 +235,7 @@
     &-icon {
       width: 50px;
       height: 50px;
-      background-color: $color-green-light; // $color-gray-2
+      background-color: $color-gray-2;
       border-radius: 100%;
       display: flex;
       justify-content: center;
@@ -242,14 +243,14 @@
 
       i {
         font-size: 20px;
-        color: $color-white;
+        color: $color-gray-1;
       }
     }
 
     &-type {
       font-size: 14px;
-      font-weight: $bold;
-      color: $color-green-dark;
+      font-weight: $regular;
+      color: $color-gray-1;
       margin-left: 12px;
 
       &--time {
@@ -261,6 +262,21 @@
           margin-left: 7px;
         }
       }
+    }
+  }
+
+  &__active {
+    .sports__item-icon {
+      background-color: $color-green-light;
+
+      i {
+        color: $color-white;
+      }
+    }
+
+    .sports__item-type {
+      color: $color-green-dark;
+      font-weight: $bold;
     }
   }
 }
