@@ -1,6 +1,6 @@
 <template>
   <base-card class="week-record">
-    <div class="week-record__title baseTitle">建議運動量</div>
+    <div class="week-record__title baseTitle">本週成效</div>
   </base-card>
 </template>
 

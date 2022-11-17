@@ -113,14 +113,15 @@
 }
 
 .amount {
-  width: 525px;
+  max-width: 526px;
+  min-width: 450px;
   height: 410px;
   margin-right: 24px;
 
   @include pad {
-    width: 100%;
-    height: 378px;
-    margin-right: 0;
+    max-width: 100%;
+    min-width: 100%;
+    height: auto;
     margin-bottom: 16px;
   }
   
@@ -128,15 +129,158 @@
     @include baseTitle;
     margin-bottom: 30px;
   }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__circle {
+    margin-bottom: 30px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 195px;
+    height: 195px;
+
+    @include mobile {
+      width: 170px;
+      height: 170px;
+    }
+
+    &-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      &--word {
+        font-size: 14px;
+        font-weight: $regular;
+        color: $color-brown-light-2;
+      }
+
+      &--value {
+        font-size: 48px;
+        font-weight: $bold;
+        color: $color-secondary;
+        margin: 15px 0 12px;
+
+        @include mobile {
+          font-size: 40px;
+        }
+      }
+
+      &--kcal {
+        font-size: 14px;
+        font-weight: $regular;
+        color: $color-gray-1;
+      }
+    }
+  }
+
+  &__quota {
+    display: flex;
+    align-items: center;
+
+    &-item {
+      min-width: 180px;
+      display: flex;
+      align-items: center;
+
+      @include mobile {
+        min-width: 135px;
+      }
+    }
+
+    &-icon {
+      width: 50px;
+
+      @include mobile {
+        width: 32px;
+      }
+    }
+
+    &-wrap {
+      margin-left: 16px;
+      display: flex;
+      flex-direction: column;
+
+      @include mobile {
+        margin-left: 12px;
+      }
+    }
+
+    &-word {
+      font-size: 14px;
+      font-weight: $regular;
+      line-height: 1;
+
+      @include mobile {
+        font-size: 12px;
+      }
+    }
+
+    &-value {
+      font-size: 32px;
+      font-weight: $bold;
+      margin-top: 8px;
+
+      @include mobile {
+        font-size: 24px;
+      }
+
+      span {
+        font-size: 14px;
+        font-weight: $regular;
+        color: $color-gray-1;
+        margin-left: 9px;
+
+        @include mobile {
+          font-size: 12px;
+        }
+      }
+
+      &--yellow {
+        color: $color-yellow-dark;
+      }
+
+      &--blue {
+        color: $color-blue-dark;
+      }
+    }
+
+    &-block {
+      &:after {
+        content: '';
+        display: inline-block;
+        height: 40px;
+        border-right: 1px solid $color-gray-3;
+        margin: 0 30px;
+        
+
+        @include mobile {
+          margin: 0 17px;
+        }
+      }
+    }
+  }
 }
 
 .nutrition {
-  width: 745px;
+  max-width: 746px;
+  min-width: 53%;
   height: 410px;
 
   @include pad {
-    width: 100%;
-    height: 742px;
+    max-width: 100%;
+    min-width: 100%;
+    height: auto;
     margin-bottom: 16px;
   }
 
@@ -160,14 +304,15 @@
 }
 
 .sports {
-  width: 745px;
+  max-width: 745px;
+  min-width: 570px;
   height: 268px;
   margin-right: 24px;
 
   @include pad {
-    width: 100%;
-    height: 560px;
-    margin-right: 0;
+    max-width: 100%;
+    min-width: 100%;
+    height: auto;
     margin-bottom: 16px;
   }
 
@@ -229,7 +374,9 @@
     align-items: center;
 
     @include mobile {
-      margin-bottom: 40px;
+      &:not(:last-of-type) {
+        margin-bottom: 40px;
+      }
     }
 
     &-icon {
@@ -282,15 +429,19 @@
 }
 
 .week-record {
-  width: 526px;
+  max-width: 526px;
+  min-width: 35%;
   height: 268px;
   background-color: $color-orange-light;
 
   @include pad {
-    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
   }
 
   &__title {
     @include baseTitle($color: $color-white);
   }
 }
+
+//**
