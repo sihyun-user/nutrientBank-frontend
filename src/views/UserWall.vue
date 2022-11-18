@@ -51,8 +51,8 @@ export default {
     const monthDiarys = ref([])
     const dayDiarys = ref([])
     const nutrition = reactive(NUTRITION_DATA)
-    const selectedDate = ref('2022-12-12')
-    const selectedWeekly = ref('2022-12-12')
+    const selectedDate = ref(null)
+    const selectedWeekly = ref(null)
     const userHealthInfo = reactive({
       height: null, 
       weight: null, 
@@ -65,7 +65,6 @@ export default {
     const setToday = () => {
       const today = moment()
       selectedDate.value = today.format('YYYY-MM-DD')
-      selectedWeekly.value = today.startOf('week').format('YYYY-MM-DD')
     }
 
     // 取得使用者體態資訊
