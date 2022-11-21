@@ -23,14 +23,14 @@
       </div>
       <div class="userWall__row">
         <sport-record></sport-record>
-        <week-record></week-record>
+        <week-record :monthDiarys="monthDiarys"></week-record>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { apiGetDiarys } from '@/service/api'
 import NUTRITION_DATA from '@/service/nutrition.json'
 import WeekCalendar from '@/components/layout/WeekCalendar.vue'
@@ -61,6 +61,8 @@ export default {
       sportType: null,
       fitness_goal: null
     })
+
+    watch(monthDiarys, () => calcNutrition())
 
     const setToday = () => {
       const today = moment()
@@ -203,7 +205,6 @@ export default {
 
         const res = await apiGetDiarys(selectedDate.value)
         monthDiarys.value = res.data.data
-  
         selectDateDiary()
       } catch (error) {
         console.log(error)
@@ -222,9 +223,9 @@ export default {
 
     getDiarys()
     getUserHealth()
-    calcNutrition()
 
     return {
+      monthDiarys,
       dayDiarys,
       nutrition,
       userHealthInfo,

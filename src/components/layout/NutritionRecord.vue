@@ -154,9 +154,6 @@ export default {
   props: {
     nutrition: {
       type: Object
-    },
-    selectedDate: {
-      type: String
     }
   },
   components: {

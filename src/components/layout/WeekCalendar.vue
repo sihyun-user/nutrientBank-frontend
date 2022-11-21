@@ -52,8 +52,8 @@ export default {
     }
 
     const getWeekly = (curDate) => {
-      const from_date = moment(curDate).startOf('week').format('YYYY-MM-DD')
-      const weekDay = moment(from_date).add(7, 'days')
+      const start_date = moment(curDate).startOf('week').format('YYYY-MM-DD')
+      const weekDay = moment(start_date).add(7, 'days')
       const daysArray = Array(7).fill().map(() => weekDay.subtract(1, 'd').format('YYYY-MM-DD'))
 
       const weekly = []
