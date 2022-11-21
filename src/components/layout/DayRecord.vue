@@ -5,7 +5,7 @@
       <div class="amount__circle">
         <div class="amount__circle-text">
           <span class="amount__circle-text--word">尚可攝取</span>
-          <span class="amount__circle-text--value">{{overCalorie || intake}}</span>
+          <span class="amount__circle-text--value">{{intake - content}}</span>
           <span class="amount__circle-text--kcal">kcal</span>
 
         </div>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { computed, ref, toRefs, onMounted } from 'vue'
+import { computed, toRefs } from 'vue'
 import BaseCard from '@/components/ui/BaseCard.vue'
 import moment from 'moment'
 import CircleProgress from 'vue3-circle-progress'
@@ -68,9 +68,6 @@ export default {
   setup(props) {
     const { selectedDate } = toRefs(props)
     const { content , intake, percent } = toRefs(props.caloriesRecord)
-    const overCalorie = ref(null)
-
-    onMounted(() => overCalorie.value =  intake.value - content.value)
 
     const date = computed(() => {
       return dateFormat() == dateFormat(selectedDate.value) 
@@ -83,7 +80,6 @@ export default {
       content,
       intake,
       percent,
-      overCalorie,
       date
     }
   }
