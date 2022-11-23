@@ -2,17 +2,18 @@
   <div class="calendar">
     <div class="calendar__date">{{month}} {{year}}</div>
     <div class="calendar__weekly">
-      <span class="calendar__weekly-arrow calendar__weekly-arrow--left" @click="chanegeWeekly('prev')">
+      <span class="calendar__weekly-arrow calendar__weekly-arrow--left" @click="updateWeekly('prev')">
         <i class="fa-solid fa-chevron-left"></i>
       </span>
-      <div v-for="wd in weeklyDays" :key="wd.mothDate"  @click="updateDiarys(wd.mothDate)"
+      <div v-for="item in weeklyDays" :key="item.date"  @click="updateDate(item.date)"
       class="calendar__weekly-item" 
-      :class="{'todayDate': today == wd.mothDate, 'selectedDat': selectedDate == wd.mothDate}"
+      :class="{'todayDate': todayDate == item.date, 'selectedDat': selectedDate == item.date}"
       >
-        <span class="calendar__weekly-item--week">{{wd.day}}</span>
-        <span class="calendar__weekly-item--date">{{wd.date}}</span>
+        <span class="calendar__weekly-item--week">{{item.week}}</span>
+        <span class="calendar__weekly-item--date">{{item.day}}</span>
+        <span class="calendar__weekly-item--record" v-if="weekRecord && weekRecord[item.date]"></span>
       </div>
-      <span class="calendar__weekly-arrow calendar__weekly-arrow--right" @click="chanegeWeekly('next')">
+      <span class="calendar__weekly-arrow calendar__weekly-arrow--right" @click="updateWeekly('next')">
         <i class="fa-solid fa-chevron-right"></i>
       </span>
     </div>
@@ -20,11 +21,14 @@
 </template>
 
 <script>
-import { ref, reactive, toRefs, watch, onMounted } from 'vue'
+import { ref, toRefs, watch, onMounted } from 'vue'
 import moment from 'moment'
 export default {
-  emits: ['change-weekly', 'update-diarys'],
+  emits: ['update-weekly', 'update-date'],
   props: {
+    weekNutrition: {
+      type: Object
+    },
     selectedDate: {
       type: String
     },
@@ -33,41 +37,65 @@ export default {
     },
   },
   setup(props, context) {
-    const { selectedWeekly, selectedDate } = toRefs(props)
-    const weeklyDays = reactive({})
+    const { weekNutrition, selectedWeekly, selectedDate } = toRefs(props)
+    const weeklyDays = ref(null)
     const year = ref(2022)
     const month = ref('January')
-    const today = moment().format('YYYY-MM-DD')
+    const todayDate = moment().format('YYYY-MM-DD')
+    const weekRecord = ref(null)
 
-    onMounted(() =>  getWeekly(selectedDate.value))
+    onMounted(() => setWeekly(selectedDate.value))
+
+    watch(weekNutrition, () => setWeekRecord())
 
     watch(selectedWeekly, () => {
-      getYearMonth()
-      getWeekly(selectedWeekly.value)
+      setYearMonth()
+      setWeekly(selectedWeekly.value)
     })
 
-    const getYearMonth = () => {
+    // 設置年月
+    const setYearMonth = () => {
       year.value = moment(selectedWeekly.value).format('YYYY')
       month.value = moment(selectedWeekly.value).format('MMMM')
     }
 
-    const getWeekly = (curDate) => {
+    // 設置週日期
+    const setWeekly = (curDate) => {
       const start_date = moment(curDate).startOf('week').format('YYYY-MM-DD')
       const weekDay = moment(start_date).add(7, 'days')
       const daysArray = Array(7).fill().map(() => weekDay.subtract(1, 'd').format('YYYY-MM-DD'))
 
       const weekly = []
       daysArray.reverse().forEach(item => {
-        const mothDate = item
-        const day = moment(item).format('ddd')
-        const date = moment(item).format('DD')
-  
-        weekly.push({mothDate, day, date})
+        const date = item
+        const week = moment(item).format('ddd')
+        const day = moment(item).format('DD')
+        
+        weekly.push({date, week, day})
       })
-      Object.assign(weeklyDays, weekly)
+      weeklyDays.value = weekly
     }
 
-    const chanegeWeekly = (type) => {
+    // 設置週日期是否有紀錄
+    const setWeekRecord = () => {
+      const week_data = weekNutrition.value
+      let record = {}
+      for(let date in week_data) {
+        const item  = week_data[date]
+        for(let key in item) {
+          if (item[key].content !== 0) {
+            record[date] = 1
+            break
+          }
+          record[date] = 0
+        }
+      }
+
+      weekRecord.value = record
+    }
+
+    // 更新選擇上/下星期
+    const updateWeekly = (type) => {
       let date
       if (type == 'prev') {
         date = moment(selectedWeekly.value).subtract(1, 'weeks').format('YYYY-MM-DD')
@@ -75,24 +103,24 @@ export default {
         date = moment(selectedWeekly.value).add(1, 'weeks').format('YYYY-MM-DD')
       }
 
-      console.log(date)
-
-      context.emit('change-weekly', date)
+      context.emit('update-weekly', date)
     }
 
-    const updateDiarys = (date) => {
-      context.emit('update-diarys', date)
+    // 更新選擇日期
+    const updateDate = (date) => {
+      context.emit('update-date', date)
     }
 
     return {
       year,
       month,
-      today,
+      todayDate,
+      weekRecord,
+      weekNutrition,
       selectedDate,
-      selectedWeekly,
       weeklyDays,
-      updateDiarys,
-      chanegeWeekly
+      updateDate,
+      updateWeekly
     }
   }
 }

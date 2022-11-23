@@ -1,9 +1,9 @@
 <template>
   <base-card class="week-record">
     <div class="week-record__header">
-      <div class="week-record__title baseTitle">本週成效</div>
+      <div class="week-record__title baseTitle">當週成效</div>
       <div class="week-record__word">
-        攝取 10410 kcal<span></span>消耗 9430 kcal
+        攝取 {{contentValue}} kcal<span></span>消耗 {{sportValue}} kcal
       </div>
     </div>
     <div class="week-record__spline"></div>
@@ -12,25 +12,53 @@
 
 <script>
 import BaseCard from '@/components/ui/BaseCard.vue'
-import { onMounted } from 'vue'
+import { ref, onMounted, toRefs, watch } from 'vue'
 export default {
+  props: {
+    weekNutrition: {
+      type: Object
+    }
+  },
   components: {
     BaseCard
   },
-  setup() {
-    onMounted(() => {
+  setup(props) {
+    const { weekNutrition } = toRefs(props)
+    const contentRecord = ref(['消耗kcal量', 0, 0, 0, 0, 0, 0, 0])
+    const sportRecord = ref(['消耗kcal量', 0, 0, 0, 0, 0, 0, 0])
+    const contentValue = ref(0)
+    const sportValue = ref(0)
+
+    onMounted(() => renderSpline())
+
+    watch(weekNutrition,() =>  {
+      setWeekRcord()
       renderSpline()
     })
+
+    const setWeekRcord = () => {
+      const week_data = weekNutrition.value
+      let record = ['攝取kcal量']
+      let total = 0
+      for(let date in week_data) {
+        let { content } = week_data[date].calories
+        record.push(content)
+        total += content
+      }
+
+      contentRecord.value = record
+      contentValue.value = total
+    }
 
     const renderSpline = () => {
       let splineChart = c3.generate({
         bindto: '.week-record__spline',
+        size: {
+          width: 370
+        },
         data: {
           type: 'spline',
-          columns: [
-            ['攝取kcal量', 30, 200, 100, 400, 150, 250],
-            ['消耗kcal量', 50, 20, 10, 40, 15, 25]
-          ],
+          columns: [ contentRecord.value, sportRecord.value],
           colors: {
             '攝取kcal量': '#FFFFFF',
             '消耗kcal量': '#ABE7BC'
@@ -51,7 +79,7 @@ export default {
           }
         },
         point: {
-            show: false
+          show: false
         },
         grid: {
           y: {
@@ -59,7 +87,12 @@ export default {
             color: '#FFFFF'
           }
         }
-      });
+      })
+    }
+
+    return {
+      contentValue,
+      sportValue
     }
   }
 }

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { ref } from 'vue'
 import BaseCard from '@/components/ui/BaseCard.vue'
 import SPORTS_DATA from '@/service/sports.json'
 export default {
@@ -45,7 +45,7 @@ export default {
     BaseCard
   },
   setup() {
-    const sports = reactive(SPORTS_DATA)
+    const sports = ref(SPORTS_DATA)
 
     return {
       sports

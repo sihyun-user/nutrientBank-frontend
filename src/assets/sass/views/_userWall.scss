@@ -40,6 +40,7 @@
 
     &-item {
       @include baseCard(16px 15px);
+      position: relative;
       width: 68px;
       cursor: pointer;
 
@@ -54,6 +55,18 @@
       &--date {
         font-size: 24px;
         color: $color-primary;
+      }
+
+      &--record {
+        width: 7px;
+        height: 7px;
+        background-color: $color-secondary;
+        border-radius: 10px;
+
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -20px;
       }
 
       &:not(:last-of-type) {
@@ -474,7 +487,6 @@
   }
 
   &__spline {
-    color: $color-white;
     height: 180px;
 
     .c3-line {
@@ -492,6 +504,11 @@
       font-size: 12px;
       font-weight: $regular;
       fill: $color-white;
+    }
+
+    .c3-tooltip td {
+      font-size: 14px;
+      background-color: $color-gray-3;
     }
   }
 }

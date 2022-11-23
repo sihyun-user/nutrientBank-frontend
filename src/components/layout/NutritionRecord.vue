@@ -148,21 +148,34 @@
 </template>
 
 <script>
-import { toRefs } from 'vue'
+import { reactive, toRefs, watch } from 'vue'
 import BaseCard from '@/components/ui/BaseCard.vue'
+import NUTRITION_DATA from '@/service/nutrition.json'
 export default {
   props: {
-    nutrition: {
+    weekNutrition: {
       type: Object
+    },
+    selectedDate: {
+      type: String
     }
   },
   components: {
     BaseCard
   },
   setup(props) {
-    
+    const { weekNutrition, selectedDate } = toRefs(props)
+    const dayRecord = reactive(NUTRITION_DATA)
+
+    watch([weekNutrition, selectedDate], () => setDayRecord())
+
+    const setDayRecord = () => {
+      const record = weekNutrition.value[selectedDate.value]
+      Object.assign(dayRecord, record)
+    }
+
     return {
-      ...toRefs(props.nutrition)
+      ...toRefs(dayRecord)
     }
   }
 }
