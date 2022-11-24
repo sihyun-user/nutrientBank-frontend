@@ -63,6 +63,15 @@
   border-radius: 8px;
   cursor: pointer;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    font-size: 12px;
+    margin-right: 6px;
+  }
+
   @if $color == 'orange' {
     background-color: $color-secondary;
 
@@ -75,5 +84,9 @@
     &:hover {
       background-color: $color-green-dark;
     }
+  } @else if ($color == 'white') {
+    color: $color-secondary;
+    background-color: $color-white;
+    border: 1px solid $color-secondary;
   }
 }

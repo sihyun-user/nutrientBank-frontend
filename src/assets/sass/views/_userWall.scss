@@ -308,10 +308,11 @@
     @include baseTitle;
   }
 
-  &__btn {
-    i {
-      font-size: 12px;
-      margin-right: 6px;
+  &__btns {
+    display: flex;
+
+    .baseWhiteBtn {
+      margin-right: 16px;
     }
   } 
 }
@@ -348,13 +349,6 @@
     font-weight: $regular;
     color: $color-green-dark;
     margin-left: 8px;
-  }
-
-  &__btn {
-    i {
-      font-size: 12px;
-      margin-right: 6px;
-    }
   }
 
   &__list {

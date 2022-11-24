@@ -27,7 +27,7 @@
           <div class="amount__quota-wrap">
             <span class="amount__quota-word">目標</span>
             <p class="amount__quota-value amount__quota-value--yellow">
-              {{intake}}<span>kacl</span>
+              {{intake}}<span>kcal</span>
             </p>
           </div>
         </div>
@@ -37,7 +37,7 @@
           <div class="amount__quota-wrap">
             <span class="amount__quota-word">已攝取</span>
             <p class="amount__quota-value amount__quota-value--blue">
-              {{content}}<span>kacl</span>
+              {{content}}<span>kcal</span>
             </p>
           </div>
         </div>

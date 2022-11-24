@@ -2,9 +2,16 @@
   <base-card class="nutrition">
     <div class="nutrition__header">
       <div class="nutrition__title baseTitle">今日紀錄</div>
-      <button class="nutrition__btn baseBtn">
-        <i class="fa-solid fa-plus"></i>新增營養紀錄
-      </button>
+      <div class="nutrition__btns">
+        <div class="baseWhiteBtn">
+          <i class="fa-solid fa-plus"></i>
+          <span>新增自訂食品</span>
+        </div>
+        <div class="baseBtn">
+          <i class="fa-solid fa-plus"></i>
+          <span>新增營養紀錄</span>
+        </div>
+      </div>
     </div>
     <div class="skillBar skillBar__web">
       <div class="skillBar__wrapper">

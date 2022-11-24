@@ -1,0 +1,209 @@
+.lightBox {
+  font-weight: $regular;
+  max-width: 450px;
+  width: 100%;
+  background-color: $color-white;
+  border-radius: 8px;
+  padding: 24px 32px;
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 11;
+  overflow: hidden;
+
+  @include mobile {
+    width: calc(100% - 24px);
+  }
+
+  &__close {
+    cursor: pointer;
+    position: absolute;
+    right: 32px;
+    top: 22px;
+
+    i {
+      font-size: 18px;
+      color: $color-primary;
+    }
+  }
+}
+
+.add-food {
+  height: 585px;
+
+  &__header {
+    line-height: 1;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: flex-end;
+
+    h1 {
+      font-size: 20px;
+      font-weight: $bold;
+      color: $color-gray-4;
+    }
+
+    span {
+      font-size: 14px;
+      margin: 0 8px 0 5px;
+    }
+
+    i {
+      font-size: 12px;
+    }
+  }
+
+  &__details {
+    padding: 24px;
+    background-color: #FAFAFA;
+    border-radius: 8px;
+  }
+
+  &__detail-item {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &--name,
+    &--description {
+      font-size: 16px;
+    }
+
+    &--name {
+      color: $color-gray-4;
+    }
+
+    &--quantity {
+      input {
+        font-size: 16px;
+        color: $color-primary;
+        width: 62px;
+        height: 40px;
+        border-radius: 7px;
+        border: 1px solid $color-gray-2;
+        margin: 0 14px;
+        padding: 8px 4px;
+        text-align: center;
+      }
+
+      i {
+        font-size: 14px;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        border-radius: 100%;
+        background-color: $color-white;
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+
+    &--select {
+      position: relative;
+
+      &-text {
+        width: 180px;
+        height: 40px;
+        background-color: $color-white;
+        border: 1px solid $color-gray-2;
+        border-radius: 7px;
+        padding: 8px 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      &-icon {
+        font-size: 12px;
+      }
+
+      &-list {
+        width: 180px;
+        border-radius: 7px;
+        background-color: $color-white;
+        border: 1px solid $color-gray-2;
+
+        position: absolute;
+        top: 45px;
+        right: 0;
+        z-index: 12;
+
+        li {
+          padding: 8px 12px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $color-gray-2;
+          }
+
+          &:not(:last-child) {
+            border-bottom: 1px solid $color-gray-2;
+          }
+        }
+      }
+
+      &-selected {
+        background-color: $color-gray-2;
+      }
+    }
+
+    &--date {
+      position: relative;
+
+      &-select {
+        font-size: 16px;
+        font-weight: $regular;
+        color: $color-primary;
+        width: 180px;
+        height: 40px;
+        background-color: $color-white;
+        border: 1px solid $color-gray-2;
+        border-radius: 7px;
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+
+      &-icon {
+        font-size: 12px;
+        position: absolute;
+        z-index: 11;
+        top: 8px;
+        right: 12px;
+      }
+
+      // Datepicker
+      &-picker {
+        font-size: 16px;
+        color: $color-primary;
+        width: 180px;
+        height: 40px;
+        background-color: $color-white;
+        border: 1px solid $color-gray-2;
+        border-radius: 7px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-family: Noto Sans TC,黑體-繁,Apple LiGothic Medium,PingFang,微軟正黑體,Microsoft JhengHei,WenQuanYi Zen Hei,helvetica,Arial,sans-serif;
+      }
+      .v3dp__popout {
+        position: absolute;
+        left: -100px;
+        top: 45px;
+      }
+
+      --vdp-text-color: #828282;
+      --vdp-hover-color: #828282;
+      --vdp-hover-bg-color: #F2F2F2;
+      --vdp-selected-bg-color: #FBA06E;
+      --vdp-border-radius: 7px;
+    }
+  }
+
+  &__btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+}

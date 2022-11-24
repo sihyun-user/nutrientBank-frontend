@@ -5,9 +5,10 @@
         <div class="sports__title baseTitle">建議運動量</div>
         <div class="sports__consume">已消耗 200/1560 kcal</div>
       </div>
-      <button class="sports__btn baseGreenBtn">
-        <i class="fa-solid fa-plus"></i>新增運動紀錄
-      </button>
+      <div class="baseGreenBtn">
+        <i class="fa-solid fa-plus"></i>
+        <span>新增運動紀錄</span>
+      </div>
     </div>
     <div class="sports__list">
       <div class="sports__list-row">

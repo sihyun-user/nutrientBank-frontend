@@ -1,6 +1,7 @@
 .baseMask {
   width: 100%;
   min-height: 100vh;
+  height: 100%;
   background-color: $color-black;
   opacity: 0.5;
   position: fixed;
@@ -22,66 +23,6 @@
 
   @include pad {
     padding: 40px 12px;
-  }
-}
-
-.lightBox {
-  max-width: 480px;
-  width: 100%;
-  // max-height: calc(100vh - 120px);
-  background-color: $color-white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  position: fixed;
-  top: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 11;
-  overflow: hidden;
-
-  @include mobile {
-    width: calc(100% - 24px);
-  }
-
-  &__header {
-    border-bottom: 1px solid $color-gray-1;
-    padding: 15px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-    h1 {
-      font-size: 18px;
-      font-weight: $regular;
-    }
-
-    &--close {
-      cursor: pointer;
-      position: absolute;
-      right: 15px;
-      top: 15px;
-
-      i {
-        font-size: 18px;
-        color: $color-primary;
-      }
-    }
-
-  }
-
-  &__content {
-    padding: 30px 18px;
-    max-height: calc(100vh - 160px);
-    overflow: auto;
-
-    @include mobile {
-      max-height: calc(100vh - 125px);
-    }
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 }
 

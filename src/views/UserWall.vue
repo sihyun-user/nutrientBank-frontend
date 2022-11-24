@@ -1,6 +1,5 @@
 <template>
   <section class="userWall">
-    <light-box></light-box>
     <week-calendar
     :weekNutrition="weekNutrition"
     :selectedDate="selectedDate" 
@@ -28,8 +27,7 @@
         <week-record :weekNutrition="weekNutrition"></week-record>
       </div>
     </div>
-
-    <add-nutrition v-if="showBox"></add-nutrition>
+    <add-food></add-food>
   </section>
 </template>
 
@@ -42,8 +40,7 @@ import DayRecord from '@/components/layout/DayRecord.vue'
 import NutritionRecord from '@/components/layout/NutritionRecord.vue'
 import SportRecord from '@/components/layout/SportRecord.vue'
 import WeekRecord from '@/components/layout/WeekRecord.vue'
-import AddNutrition from '@/components/lightBoxs/AddNutrition.vue'
-import LightBox from '@/components/layout/LightBox.vue'
+import AddFood from '@/components/lightBoxs/AddFood.vue'
 import moment from 'moment'
 export default {
   components: {
@@ -52,11 +49,9 @@ export default {
     NutritionRecord,
     SportRecord,
     WeekRecord,
-    LightBox,
-    AddNutrition
+    AddFood
   },
   setup() {
-    const showBox = ref(true)
     const monthDiarys = ref([])
     const selectedDate = ref(null)
     const selectedWeekly = ref(null)
@@ -94,13 +89,12 @@ export default {
     getMonthDiarys()
 
     return {
-      showBox,
       monthDiarys,
       weekNutrition,
       selectedDate,
       selectedWeekly,
       tryChangeWeekly,
-      tryUpdateDate,
+      tryUpdateDate
     }
   }
 }
