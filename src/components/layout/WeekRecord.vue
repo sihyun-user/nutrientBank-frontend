@@ -53,9 +53,6 @@ export default {
     const renderSpline = () => {
       let splineChart = c3.generate({
         bindto: '.week-record__spline',
-        size: {
-          width: 370
-        },
         data: {
           type: 'spline',
           columns: [ contentRecord.value, sportRecord.value],

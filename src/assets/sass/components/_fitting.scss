@@ -29,3 +29,148 @@
 .errorMsg {
   color: $color-error;
 }
+
+.food-detail {
+  &__header {
+    line-height: 1;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: flex-end;
+
+    h1 {
+      font-size: 32px;
+      font-weight: $bold;
+      color: $color-gray-4;
+
+      @include mobile {
+        font-size: 20px;
+      }
+    }
+
+    span {
+      font-size: 20px;
+      margin: 0 10px 0 8px;
+
+      @include mobile {
+        font-size: 14px;
+        margin: 0 8px 0 5px;
+      }
+    }
+
+    i {
+      font-size: 12px;
+    }
+  }
+
+  &__form {
+    padding: 40px;
+    background-color: #FAFAFA;
+    border-radius: 8px;
+
+    @include mobile {
+      padding: 24px;
+    }
+
+    &-item {
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  
+      &--name,
+      &--description {
+        font-size: 16px;
+      }
+  
+      &--name {
+        color: $color-gray-4;
+      }
+  
+      &--quantity {
+        input {
+          font-size: 16px;
+          color: $color-primary;
+          width: 62px;
+          height: 42px;
+          border-radius: 7px;
+          border: 1px solid $color-gray-2;
+          margin: 0 14px;
+          padding: 8px 4px;
+          text-align: center;
+        }
+  
+        i {
+          font-size: 14px;
+          width: 24px;
+          height: 24px;
+          line-height: 24px;
+          border-radius: 100%;
+          background-color: $color-white;
+          text-align: center;
+          cursor: pointer;
+        }
+      }
+  
+      &--select {
+        @include baseSelect;
+      }
+  
+      &--date {
+        position: relative;
+  
+        &-icon {
+          font-size: 12px;
+          position: absolute;
+          z-index: 11;
+          top: 8px;
+          right: 12px;
+        }
+  
+        // Datepicker
+        &-picker {
+          font-size: 16px;
+          color: $color-primary;
+          width: 180px;
+          height: 42px;
+          background-color: $color-white;
+          border: 1px solid $color-gray-2;
+          border-radius: 7px;
+          padding: 8px 12px;
+          cursor: pointer;
+          font-family: Noto Sans TC,黑體-繁,Apple LiGothic Medium,PingFang,微軟正黑體,Microsoft JhengHei,WenQuanYi Zen Hei,helvetica,Arial,sans-serif;
+        }
+  
+        .v3dp__popout {
+          position: absolute;
+          left: -100px;
+          top: 48px;
+        }
+  
+        --vdp-text-color: #828282;
+        --vdp-hover-color: #828282;
+        --vdp-hover-bg-color: #F2F2F2;
+        --vdp-selected-bg-color: #FBA06E;
+        --vdp-border-radius: 7px;
+      }
+    }
+
+    &-btn {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  &__nutrition {
+    margin-top: 40px;
+
+    @include mobile {
+      margin-top: 24px;
+    }
+
+    &--content {
+      font-size: 16px;
+      font-weight: $bold;
+      color: $color-gray-4;
+    }
+  }
+}

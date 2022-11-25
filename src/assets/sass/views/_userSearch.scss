@@ -1,0 +1,244 @@
+.userSearch {
+  padding: 40px 0 50px;
+
+  .search-food {
+    width: 636px;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+
+    @include mobile {
+      flex-direction: column;
+    }
+
+    &--select {
+      @include baseSelect($width:196px, $height:44px, $iconSize:16px, $boderColor:$color-gray-3);
+
+      @include mobile {
+        @include baseSelect($width:100%, $height:44px, $iconSize:16px, $boderColor:$color-gray-3);
+        margin-bottom: 17px;
+      }
+    }
+
+    &--search {
+      @include baseSearch($width:416px, $height:44px, $iconSize:16px, $boderColor:$color-gray-3);
+
+      @include mobile {
+        @include baseSearch($width:100%, $height:44px, $iconSize:16px, $boderColor:$color-gray-3);
+      }
+    }
+  }
+
+  .search-reault {
+    width: 1076px;
+    max-width: 100%;
+    margin: 0 auto;
+
+    &__header {
+      margin: 40px 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      @include mobile {
+        margin: 24px 0 16px;
+      }
+
+      &--text {
+        font-weight: $regular;
+        color: $color-gray-4;
+      }
+
+      &--btn {
+        @include mobile {
+          display: none;
+        }
+      }
+    }
+
+    &__content {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__list {
+      width: 416px;
+      max-width: 100%;
+      margin-right: 24px;
+
+      @include pad {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+    
+    &__item {
+      background-color: $color-white;
+      border-radius: 8px;
+      border: 1px solid $color-gray-3;
+      padding: 24px;
+
+      &:not(:last-of-type) {
+        margin-bottom: 8px;
+      }
+
+      &--header {
+        margin-bottom: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &-name {
+          font-size: 20px;
+          font-weight: $bold;
+          color: $color-gray-4;
+        }
+
+        &-marks {
+          display: flex;
+
+        }
+
+        &-customMark {
+          font-size: 12px;
+          font-weight: $bold;
+          width: 40px;
+          height: 22px;
+          line-height: 22px;
+          color: $color-white;
+          background-color: $color-secondary;
+          border-radius: 2px;
+          text-align: center;
+          margin-right: 14px;
+        }
+  
+        &-bookmark {
+          cursor: pointer;
+
+          img {
+            width: 16.5px;
+            display: block;
+          }
+        }
+      }
+
+      &--kcal {
+        margin-bottom: 8px;
+        font-weight: $regular;
+        display: flex;
+        align-items: flex-end;
+  
+        &-main {
+          font-size: 14px;
+          color: $color-brown-light-1;
+
+          span {
+            font-size: 20px;
+            font-weight: $bold;
+          } 
+        }
+
+        &-sub {
+          font-size: 12px;
+
+          span {
+            margin: 0 4px;
+          }
+        }
+      }
+
+      &--intakes {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 400px;
+
+        @include mobile {
+          justify-content: space-between;
+        }
+      }
+
+      &--intakeItem {
+        font-size: 12px;
+        font-weight: $regular;
+        white-space: nowrap;
+
+        &:not(:last-child) {
+          margin-right: 24px;
+
+          @include pad {
+            margin-right: 15px;
+          }
+
+          @include mobile {
+            margin-right: 0;
+          }
+        }
+
+        span {
+          margin-left: 4px;
+        }
+      }
+    }
+
+    &__food {
+      width: 636px;
+      max-width: 100%;
+      background-color: $color-white;
+      border-radius: 8px;
+      border: 1px solid $color-gray-3;
+      padding: 56px 20px;
+
+      @include pad {
+        display: none;
+      }
+
+      &--content {
+        max-width: 548px;
+        margin: 0 auto;
+      }
+    }
+
+    &__pages {
+      margin-top: 30px;
+      width: 416px;
+      min-width: 250px;
+      max-width: 100%;
+      display: flex;
+      justify-content: center;
+
+      @include pad {
+        width: 100%;
+      }
+
+      &--arrow {
+        cursor: pointer;
+
+        &-left {
+          margin-right: 25px;
+        }
+
+        &-right {
+          margin-left: 25px;
+        }
+
+        i {
+          font-size: 12px;
+        }
+      }
+  
+      &--list {
+        display: flex;
+  
+        li {
+          font-weight: $regular;
+          cursor: pointer;
+
+          &:nth-child(n+1):not(:last-child) {
+            padding-right: 16px;
+          }
+        }
+      }
+    }
+  }
+}

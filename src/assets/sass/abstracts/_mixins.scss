@@ -88,5 +88,98 @@
     color: $color-secondary;
     background-color: $color-white;
     border: 1px solid $color-secondary;
+
+    &:hover {
+      color: $color-white;
+      background-color: $color-secondary
+    }
+  }
+}
+
+@mixin baseSelect($width:180px, $height:42px, $iconSize:12px, $boderColor:$color-gray-2) {
+  position: relative;
+  width: $width;
+  
+  &-text {
+    width: 100%;
+    height: $height;
+    background-color: $color-white;
+    border: 1px solid $boderColor;
+    border-radius: 7px;
+    padding: 4px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-icon {
+    font-size: $iconSize;
+  }
+
+  &-list {
+    width: $width;
+    border-radius: 7px;
+    background-color: $color-white;
+    border: 1px solid $boderColor;
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+
+    position: absolute;
+    top: 48px;
+    right: 0;
+    z-index: 12;
+
+    li {
+      padding: 8px 12px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-gray-2;
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid $color-gray-2;
+      }
+    }
+  }
+
+  &-selected {
+    background-color: $color-gray-2;
+  }
+}
+
+@mixin baseSearch($width:180px, $height:42px, $iconSize:12px, $boderColor:$color-gray-2) {
+  position: relative;
+  width: $width;
+  
+  &-text {
+    width: 100%;
+    height: $height;
+    background-color: $color-white;
+    border: 1px solid $boderColor;
+    border-radius: 7px;
+    padding: 4px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-icon {
+    font-size: $iconSize;
+  }
+
+  input {
+    font-size: 16px;
+    font-weight: $regular;
+    color: $color-primary;
+    vertical-align: middle;
+
+    &::placeholder {
+      font-size: 16px;
+      font-weight: $regular;
+      color: $color-primary;
+      transform: translateY(3px);
+    }
   }
 }

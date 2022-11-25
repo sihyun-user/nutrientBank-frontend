@@ -4,6 +4,7 @@ import { useStore } from '../store'
 import UserAuth from '../views/UserAuth.vue'
 import UserCenter from '../views/UserCenter.vue'
 import UserWall from '../views/UserWall.vue'
+import UserSearch from '../views/UserSearch.vue'
 
 const routes = [
   { path: '/', redirect: '/userAuth' },
@@ -14,6 +15,7 @@ const routes = [
     component: UserCenter,
     children: [
       { path: '/userWall', component: UserWall, meta: { requiresAuth: true } },
+      { path: '/userSearch', component: UserSearch, meta: { requiresAuth: true } }
     ]
   },
   { path: '/:notFound(.*)', redirect: '/userAuth' }
