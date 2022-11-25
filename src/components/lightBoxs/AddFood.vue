@@ -47,7 +47,12 @@
               <div class="add-food__detail-item--date-icon">
                 <i  class="fa-regular fa-calendar"></i>
               </div>
-              <Datepicker class="add-food__detail-item--date-picker" v-model="meatlDate"></Datepicker>
+              <datepicker 
+              v-model="meatlDate" 
+              inputFormat="yyyy/MM/dd"
+              class="add-food__detail-item--date-picker"
+              >
+              </datepicker>
             </div>
           </div>
         </div>
@@ -57,12 +62,15 @@
           </button>
         </div>
       </form>
+      <div class="add-food__nutrition">
+        <div class="add-food__nutrition--content">每 195.0g 含</div>
+      </div>
     </div>
   </base-light-box>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 import Datepicker from 'vue3-datepicker'
 export default {
@@ -101,6 +109,16 @@ export default {
     const tryClose = () => {
       showBox.value = false
     }
+
+    onMounted(() => {
+
+      document.addEventListener('click',(e) => {
+        const $select = e.target.closest('.add-food__detail-item--select')
+        if($select) return
+        isSelecte.value = false
+      })
+    })
+
     
     return {
       showBox,

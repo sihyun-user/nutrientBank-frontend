@@ -153,19 +153,6 @@
     &--date {
       position: relative;
 
-      &-select {
-        font-size: 16px;
-        font-weight: $regular;
-        color: $color-primary;
-        width: 180px;
-        height: 40px;
-        background-color: $color-white;
-        border: 1px solid $color-gray-2;
-        border-radius: 7px;
-        padding: 8px 12px;
-        cursor: pointer;
-      }
-
       &-icon {
         font-size: 12px;
         position: absolute;
@@ -187,6 +174,7 @@
         cursor: pointer;
         font-family: Noto Sans TC,黑體-繁,Apple LiGothic Medium,PingFang,微軟正黑體,Microsoft JhengHei,WenQuanYi Zen Hei,helvetica,Arial,sans-serif;
       }
+
       .v3dp__popout {
         position: absolute;
         left: -100px;
@@ -205,5 +193,15 @@
     display: flex;
     justify-content: center;
     margin-top: 16px;
+  }
+
+  &__nutrition {
+    margin-top: 24px;
+
+    &--content {
+      font-size: 16px;
+      font-weight: $bold;
+      color: $color-gray-4;
+    }
   }
 }
