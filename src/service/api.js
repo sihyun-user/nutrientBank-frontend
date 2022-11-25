@@ -10,7 +10,12 @@ const userRequest = axios.create({
   }
 })
 
+// 登入
 export const apiUserLogin = data => baseRequest.post('/user/login', data)
+// 註冊
 export const apiUserSignup = data => baseRequest.post('/user/signup', data)
 
-export const apiGetDiarys = data => userRequest.get(`/diarys?entry_date=${data}`)
+// 取得今月營養日記
+export const apiGetDiarys = query => userRequest.get(`/diarys?entry_date=${query}`)
+// 取得食品列表
+export const apiGetAllfFood = query => userRequest.get(`/foods?search=${query}`)

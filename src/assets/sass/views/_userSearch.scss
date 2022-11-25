@@ -63,7 +63,7 @@
     }
 
     &__list {
-      width: 416px;
+      width: 460px;
       max-width: 100%;
       margin-right: 24px;
 
@@ -164,11 +164,7 @@
         white-space: nowrap;
 
         &:not(:last-child) {
-          margin-right: 24px;
-
-          @include pad {
-            margin-right: 15px;
-          }
+          margin-right: 15px;
 
           @include mobile {
             margin-right: 0;
@@ -179,10 +175,14 @@
           margin-left: 4px;
         }
       }
+
+      &--select {
+        border: 2px solid $color-brown-light-1;
+      }
     }
 
     &__food {
-      width: 636px;
+      width: 592px;
       max-width: 100%;
       background-color: $color-white;
       border-radius: 8px;
@@ -201,7 +201,7 @@
 
     &__pages {
       margin-top: 30px;
-      width: 416px;
+      width: 460px;
       min-width: 250px;
       max-width: 100%;
       display: flex;

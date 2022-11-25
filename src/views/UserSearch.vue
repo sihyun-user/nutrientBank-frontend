@@ -28,9 +28,9 @@
         </div>
       </div>
     </div>
-    <div class="search-reault">
+    <div class="search-reault" v-if="!isLoading">
       <div class="search-reault__header">
-        <span class="search-reault__header--text">「燕麥」共有 15 筆搜尋結果</span>
+        <span class="search-reault__header--text"><span v-if="search!==''">「燕麥」</span>共有 {{foods.length}} 筆搜尋結果</span>
         <div class="search-reault__header--btn baseWhiteBtn">
           <i class="fa-solid fa-plus"></i>
           <span>新增自訂食品</span>
@@ -38,9 +38,13 @@
       </div>
       <div class="search-reault__content">
         <div class="search-reault__list">
-          <div v-for="(item, index) in 6" :key="index" class="search-reault__item">
+          <div v-for="food in foods" :key="food._id" 
+          class="search-reault__item"
+          :class="{'search-reault__item--select': selectFood&&selectFood._id==food._id}"
+          @click="switchSelectFood(food)"
+          >
             <div class="search-reault__item--header">
-              <div class="search-reault__item--header-name">燕麥片</div>
+              <div class="search-reault__item--header-name">{{food.name}}</div>
               <div class="search-reault__item--header-marks">
                 <div class="search-reault__item--header-customMark">自訂</div>
                 <div class="search-reault__item--header-bookmark">
@@ -50,22 +54,22 @@
             </div>
             <div class="search-reault__item--kcal">
               <div class="search-reault__item--kcal-main">
-                <span>195</span> kcal
+                <span>{{food.nutrition.calories}}</span> kcal
               </div>
-              <div class="search-reault__item--kcal-sub"><span>/</span>195.0g</div>
+              <div class="search-reault__item--kcal-sub"><span>/</span>{{food.perUnitWeight}}g</div>
             </div>
             <div class="search-reault__item--intakes">
-              <div class="search-reault__item--intakeItem">碳水化合物<span>28g</span></div>
-              <div class="search-reault__item--intakeItem">澱粉<span>10g</span></div>
-              <div class="search-reault__item--intakeItem">蛋白質<span>6g</span></div>
-              <div class="search-reault__item--intakeItem">脂肪<span>3g</span></div>
-              <div class="search-reault__item--intakeItem">納<span>1mg</span></div>
+              <div class="search-reault__item--intakeItem">碳水化合物<span>{{food.nutrition.carbohydrates}}g</span></div>
+              <div class="search-reault__item--intakeItem">蛋白質<span>{{food.nutrition.protein}}g</span></div>
+              <div class="search-reault__item--intakeItem">脂肪<span>{{food.nutrition.fat}}g</span></div>
+              <div class="search-reault__item--intakeItem">糖<span>{{food.nutrition.sugar}}g</span></div>
+              <div class="search-reault__item--intakeItem">納<span>{{food.nutrition.sodium}}mg</span></div>
             </div>
           </div>
         </div>
         <div class="search-reault__food">
           <div class="search-reault__food--content">
-            <food-detail></food-detail>
+            <food-detail :selectFood="selectFood"></food-detail>
           </div>
         </div>
       </div>
@@ -85,18 +89,27 @@
       </div>
     </div>
   </section>
+  <base-spinner v-if="isLoading"></base-spinner>
 </template>
 
 <script>
-import { ref } from '@vue/reactivity'
+import { ref, computed, reactive } from '@vue/reactivity'
+import { useStore } from '@/store'
+import { apiGetAllfFood } from '@/service/api'
 import FoodDetail from '@/components/layout/FoodDetail.vue'
 export default {
   components: {
     FoodDetail
   },
   setup() {
+    const store = useStore()
+    const search = ref('')
+    const foods = ref([])
     const foodType = ref('全部食品')
     const isSelecte = ref(false)
+    const selectFood = reactive({})
+
+    const isLoading = computed(() => store.isLoading)
 
     const switchFoodMemu = () => {
       isSelecte.value = !isSelecte.value
@@ -107,17 +120,42 @@ export default {
       foodType.value = type
     }
 
+    const switchSelectFood = (food) => {
+      Object.assign(selectFood, food)
+      console.log(selectFood)
+    }
+
+    // 取得食品列表 API 
+    const getAllFood = async() => {
+      try {
+        store.$patch({ isLoading: true })
+
+        const res = await apiGetAllfFood(`${search.value}`)
+        foods.value = res.data.data
+        store.$patch({ isLoading: false })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     document.addEventListener('click',(e) => {
       const $select = e.target.closest('.search-food--select')
       if($select) return
       isSelecte.value = false
     })
 
+    getAllFood()
+
     return {
+      search,
+      foods,
       foodType,
       isSelecte,
+      selectFood,
+      isLoading,
       switchFoodMemu,
-      switchfoodType
+      switchfoodType,
+      switchSelectFood
     }
   }
 }

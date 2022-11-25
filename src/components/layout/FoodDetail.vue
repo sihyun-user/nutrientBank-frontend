@@ -1,14 +1,14 @@
 <template>
   <div class="food-detail">
     <header class="food-detail__header">
-      <h1>燕麥</h1>
-      <span>桂格</span>
+      <h1>{{selectFood.name}}</h1>
+      <span>{{selectFood.brand}}</span>
       <i class="fa-solid fa-pen"></i>
     </header>
     <form class="food-detail__form">
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">熱量</div>
-        <div class="food-detail__form-item--description">689 kcal / 1份</div>
+        <div class="food-detail__form-item--description" v-if="selectFood!=={}">{{selectFood.nutrition.calories}} kcal / 1份</div>
       </div>
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">攝取份數</div>
@@ -60,19 +60,24 @@
     </div>
     </form>
     <div class="food-detail__nutrition">
-      <div class="food-detail__nutrition--content">每 195.0g 含</div>
+      <div class="food-detail__nutrition--content">每 {{selectFood.perUnitWeight}}g 含</div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, toRefs } from 'vue'
 import Datepicker from 'vue3-datepicker'
 export default {
+  props: {
+    selectFood: {
+      type: Object
+    }
+  },
   components: {
     Datepicker
   },
-  setup() {
+  setup(props) {
     const quantity = ref(1)
     const mealType = ref('早餐')
     const isSelecte = ref(false)
@@ -112,7 +117,8 @@ export default {
       isSelecte,
       switchQuantity,
       switchMealMemu,
-      switchMealType
+      switchMealType,
+      ...toRefs(props.selectFood)
     }
   }
 }
