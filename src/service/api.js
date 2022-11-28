@@ -18,4 +18,4 @@ export const apiUserSignup = data => baseRequest.post('/user/signup', data)
 // 取得今月營養日記
 export const apiGetDiarys = query => userRequest.get(`/diarys?entry_date=${query}`)
 // 取得食品列表
-export const apiGetAllfFood = query => userRequest.get(`/foods?search=${query}`)
+export const apiGetAllfFood = query => userRequest.get(`/foods?search=${query.search}&page=${query.page}`)

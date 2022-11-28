@@ -46,7 +46,7 @@ export const useStore = defineStore('main', {
         const res = await appApi.apiUserLogin({ email, password })
         const data = res.data.data
 
-        this.tryAuth({ token: data.token, userId: data.user._id })
+        this.tryAuth({ token: data.token, userId: data.user.id })
 
         this.$patch({ isLoading: false, isLogin: true })
         checkConsole('登入成功', res.data)

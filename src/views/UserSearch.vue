@@ -1,17 +1,17 @@
 <template>
-  <section class="userSearch">
-    <div class="search-food">
-      <div class="search-food--select">
-        <div class="search-food--select-text" @click="switchFoodMemu">
+  <section class="search-results">
+    <form class="search" @submit.prevent="startSerach">
+      <div class="search--select">
+        <div class="search--select-text" @click="switchFoodMemu">
           <span>{{foodType}}</span>
-          <div class="search-food--select-icon">
+          <div class="search--select-icon">
             <i v-if="isSelecte" class="fa-solid fa-angle-up"></i>
             <i v-else class="fa-solid fa-angle-down"></i>
           </div>
         </div>
-        <ul v-if="isSelecte" class="search-food--select-list">
+        <ul v-if="isSelecte" class="search--select-list">
           <li v-for="(type, index) in ['全部食品', '自訂食品', '我的書籤']" :key="index"
-          :class="{ 'search-food--select-selected': foodType==type }"
+          :class="{ 'search--select-selected': foodType==type }"
           @click="switchfoodType(type)"
           >
             <input v-model="foodType" id="type" type="radio">
@@ -19,73 +19,96 @@
           </li>
         </ul>
       </div>
-      <div class="search-food--search">
-        <div class="search-food--search-text" @click="switchMealMemu">
-          <input type="text" placeholder="食品搜尋...">
-          <div class="search-food--search-icon">
+      <div class="search--search">
+        <div class="search--search-text" @click="switchMealMemu">
+          <input type="text" placeholder="食品搜尋..." v-model="enteredKeyword">
+          <button type="submit" class="search--search-icon">
             <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+    <div class="not-results " v-if="!isSearchFood">
+      <p>想找什麼內容，首先搜索一下食品吧！</p>
+    </div>
+    <div class="results" v-else>
+      <div class="results__header">
+        <div class="results__header--text">
+          <span v-if="curKeyword!==''">「{{curKeyword}}」</span>共有 {{count}} 筆搜尋結果
+        </div>
+        <div class="results__header--btn">
+          <div class="baseWhiteBtn">
+            <i class="fa-solid fa-plus"></i>
+            <span>新增自訂食品</span>
           </div>
         </div>
       </div>
-    </div>
-    <div class="search-reault" v-if="!isLoading">
-      <div class="search-reault__header">
-        <span class="search-reault__header--text"><span v-if="search!==''">「燕麥」</span>共有 {{foods.length}} 筆搜尋結果</span>
-        <div class="search-reault__header--btn baseWhiteBtn">
-          <i class="fa-solid fa-plus"></i>
-          <span>新增自訂食品</span>
-        </div>
-      </div>
-      <div class="search-reault__content">
-        <div class="search-reault__list">
-          <div v-for="food in foods" :key="food._id" 
-          class="search-reault__item"
-          :class="{'search-reault__item--select': selectFood&&selectFood._id==food._id}"
-          @click="switchSelectFood(food)"
-          >
-            <div class="search-reault__item--header">
-              <div class="search-reault__item--header-name">{{food.name}}</div>
-              <div class="search-reault__item--header-marks">
-                <div class="search-reault__item--header-customMark">自訂</div>
-                <div class="search-reault__item--header-bookmark">
-                  <img src="/img/book-mark.svg">
+      <div class="results__content">
+        <div class="results__list">
+          <div class="results__list-error" v-if="foods.length==0">
+            <p>找不到結果，請重新輸入不同關鍵字再試一次!</p>
+          </div>
+          <div class="results__list-items" v-else>
+            <div v-for="food in foods" :key="food.id" 
+            class="results__item"
+            :class="{'results__item--select': selectFood&&selectFood.id==food.id}"
+            @click="switchSelectFood(food)"
+            >
+              <div class="results__item--header">
+                <div class="results__item--header-name">{{food.name}}</div>
+                <div class="results__item--header-marks">
+                  <div class="results__item--header-customMark">自訂</div>
+                  <div class="results__item--header-bookmark">
+                    <img src="/img/book-mark.svg">
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="search-reault__item--kcal">
-              <div class="search-reault__item--kcal-main">
-                <span>{{food.nutrition.calories}}</span> kcal
+              <div class="results__item--kcal">
+                <div class="results__item--kcal-main">
+                  <span>{{food.nutrition.calories}}</span> kcal
+                </div>
+                <div class="results__item--kcal-sub"><span>/</span>{{food.perUnitWeight}}g</div>
               </div>
-              <div class="search-reault__item--kcal-sub"><span>/</span>{{food.perUnitWeight}}g</div>
-            </div>
-            <div class="search-reault__item--intakes">
-              <div class="search-reault__item--intakeItem">碳水化合物<span>{{food.nutrition.carbohydrates}}g</span></div>
-              <div class="search-reault__item--intakeItem">蛋白質<span>{{food.nutrition.protein}}g</span></div>
-              <div class="search-reault__item--intakeItem">脂肪<span>{{food.nutrition.fat}}g</span></div>
-              <div class="search-reault__item--intakeItem">糖<span>{{food.nutrition.sugar}}g</span></div>
-              <div class="search-reault__item--intakeItem">納<span>{{food.nutrition.sodium}}mg</span></div>
+              <div class="results__item--intakes">
+                <div class="results__item--intakeItem">碳水化合物<span>{{food.nutrition.carbohydrates}}g</span></div>
+                <div class="results__item--intakeItem">蛋白質<span>{{food.nutrition.protein}}g</span></div>
+                <div class="results__item--intakeItem">脂肪<span>{{food.nutrition.fat}}g</span></div>
+                <div class="results__item--intakeItem">糖<span>{{food.nutrition.sugar}}g</span></div>
+                <div class="results__item--intakeItem">納<span>{{food.nutrition.sodium}}mg</span></div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="search-reault__food">
-          <div class="search-reault__food--content">
+        <div class="results__food" v-if="selectFood">
+          <div class="results__food--content">
             <food-detail :selectFood="selectFood"></food-detail>
           </div>
         </div>
       </div>
-      <div class="search-reault__pages">
-        <span class="search-reault__pages--arrow search-reault__pages--arrow-left">
-          <i class="fa-solid fa-chevron-left"></i>
-        </span>
-        <ul class="search-reault__pages--list">
-          <li class="search-reault__pages--item">1</li>
-          <li class="search-reault__pages--item">2</li>
-          <li class="search-reault__pages--item">3</li>
-          <li class="search-reault__pages--item">4</li>
-        </ul>
-        <span class="search-reault__pages--arrow search-reault__pages--arrow-right">
-          <i class="fa-solid fa-chevron-right"></i>
-        </span>
+      <div class="results__pagination" v-if="foods.length!==0">
+        <div class="results__pagination--container">
+          <span
+          @click="switchPagination(curPage-1)"
+          class="results__pagination--arrow results__pagination--arrow-left"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+          </span>
+          <ul class="results__pagination--list">
+            <li v-for="page in paginationNum" :key="page" 
+            class="results__pagination--item"
+            :class="{'results__pagination--selectItem': curPage==page}"
+            @click="switchPagination(page)"
+            >
+              {{page}}
+            </li>
+          </ul>
+          <span
+          @click="switchPagination(curPage+1)"
+          class="results__pagination--arrow results__pagination--arrow-right"
+          >
+            <i class="fa-solid fa-chevron-right"></i>
+          </span>
+        </div>
       </div>
     </div>
   </section>
@@ -93,7 +116,7 @@
 </template>
 
 <script>
-import { ref, computed, reactive } from '@vue/reactivity'
+import { ref, computed } from '@vue/reactivity'
 import { useStore } from '@/store'
 import { apiGetAllfFood } from '@/service/api'
 import FoodDetail from '@/components/layout/FoodDetail.vue'
@@ -103,13 +126,31 @@ export default {
   },
   setup() {
     const store = useStore()
-    const search = ref('')
+    const enteredKeyword = ref('')
+    const curKeyword = ref('')
     const foods = ref([])
+    const count = ref(0)
     const foodType = ref('全部食品')
     const isSelecte = ref(false)
-    const selectFood = reactive({})
+    const selectFood = ref(null)
+    const curPage = ref(1)
+    const isSearchFood = ref(false)
 
     const isLoading = computed(() => store.isLoading)
+    //! TODO:首尾頁箭頭、page樣式長度跑掉
+    const paginationNum = computed(() => {
+      let min = 1
+      let length = 4
+      let total = Math.ceil(count.value/4)
+      let current = curPage.value
+      if (length > total) length = total
+
+      let start = current - Math.floor(length / 2)
+      start = Math.max(start, min);
+      start = Math.min(start, min + total - length)
+      return Array.from({length: length}, (el, i) => start + i)
+    }
+)
 
     const switchFoodMemu = () => {
       isSelecte.value = !isSelecte.value
@@ -121,41 +162,69 @@ export default {
     }
 
     const switchSelectFood = (food) => {
-      Object.assign(selectFood, food)
-      console.log(selectFood)
+      selectFood.value = food
+    }
+
+    const switchPagination = (page) => {
+      curPage.value = page
+      enteredKeyword.value = curKeyword.value
+      getAllFood()
+    }
+
+    const startSerach = () => {
+      isSearchFood.value = true
+      curKeyword.value = enteredKeyword.value
+      curPage.value = 1
+      getAllFood()
+    }
+
+    const resetSearch = () => {
+      enteredKeyword.value = ''
+      selectFood.value = null
     }
 
     // 取得食品列表 API 
     const getAllFood = async() => {
       try {
         store.$patch({ isLoading: true })
+        const res = await apiGetAllfFood({search: enteredKeyword.value, page: curPage.value})
+        const data = res.data.data
+        foods.value = data.list
+        count.value = data.count
 
-        const res = await apiGetAllfFood(`${search.value}`)
-        foods.value = res.data.data
         store.$patch({ isLoading: false })
+        resetSearch()
+
+        if (foods.value.length==0) return
+        switchSelectFood(foods.value[0])
       } catch (error) {
         console.log(error)
       }
     }
 
     document.addEventListener('click',(e) => {
-      const $select = e.target.closest('.search-food--select')
+      const $select = e.target.closest('.search--select')
       if($select) return
       isSelecte.value = false
     })
 
-    getAllFood()
-
     return {
-      search,
+      enteredKeyword,
+      curKeyword,
       foods,
+      count,
       foodType,
       isSelecte,
       selectFood,
+      isSearchFood,
+      curPage,
       isLoading,
+      paginationNum,
       switchFoodMemu,
       switchfoodType,
-      switchSelectFood
+      switchSelectFood,
+      switchPagination,
+      startSerach
     }
   }
 }

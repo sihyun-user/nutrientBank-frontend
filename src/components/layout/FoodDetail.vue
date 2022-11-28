@@ -1,5 +1,5 @@
 <template>
-  <div class="food-detail">
+  <div class="food-detail" v-if="selectFood">
     <header class="food-detail__header">
       <h1>{{selectFood.name}}</h1>
       <span>{{selectFood.brand}}</span>
@@ -8,7 +8,7 @@
     <form class="food-detail__form">
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">熱量</div>
-        <div class="food-detail__form-item--description" v-if="selectFood!=={}">{{selectFood.nutrition.calories}} kcal / 1份</div>
+        <div class="food-detail__form-item--description" v-if="selectFood.nutrition">{{selectFood.nutrition.calories}} kcal / 1份</div>
       </div>
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">攝取份數</div>
