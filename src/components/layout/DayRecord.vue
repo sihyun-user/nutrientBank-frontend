@@ -23,7 +23,7 @@
       </div>
       <div class="amount__quota">
         <div class="amount__quota-item">
-          <img class="amount__quota-icon" src="img/icon-goal-bg.svg">
+          <img class="amount__quota-icon" src="@/assets/img/icon-goal-bg.svg">
           <div class="amount__quota-wrap">
             <span class="amount__quota-word">目標</span>
             <p class="amount__quota-value amount__quota-value--yellow">
@@ -33,7 +33,7 @@
         </div>
         <div class="amount__quota-block"></div>
         <div class="amount__quota-item">
-          <img class="amount__quota-icon" src="img/icon-eat-bg.svg">
+          <img class="amount__quota-icon" src="@/assets/img/icon-eat-bg.svg">
           <div class="amount__quota-wrap">
             <span class="amount__quota-word">已攝取</span>
             <p class="amount__quota-value amount__quota-value--blue">

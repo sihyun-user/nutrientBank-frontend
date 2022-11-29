@@ -59,7 +59,7 @@
                 <div class="results__item--header-marks">
                   <div class="results__item--header-customMark">自訂</div>
                   <div class="results__item--header-bookmark">
-                    <img src="/img/book-mark.svg">
+                    <img src="@/assets/img/book-mark.svg">
                   </div>
                 </div>
               </div>

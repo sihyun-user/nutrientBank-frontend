@@ -3,7 +3,7 @@
     <div class="auth__container">
       <div class="user">
         <div class="user__logo">
-          <img src="/img/logo-bg.svg">
+          <img src="@/assets/img/logo-bg.svg">
         </div>
         <div class="user__form">
           <div class="user__form-title">{{switchModeCaption}}</div>
