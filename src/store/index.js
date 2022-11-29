@@ -1,14 +1,15 @@
+import router from '@/router'
 import { defineStore } from 'pinia'
-import router from '../router'
-import { checkConsole } from '../service/helper'
-import * as appApi from '../service/api'
+import { checkConsole, appError } from '@/service/helper'
+import * as appApi from '@/service/api'
 
 export const useStore = defineStore('main', {
   state: () => ({
     userId: '',
     errorMsg: '',
     isLogin: false,
-    isLoading: false
+    isLoading: false,
+    userInfo: {}
   }),
   actions: {
     tryLogin() {
@@ -38,6 +39,14 @@ export const useStore = defineStore('main', {
 
       this.$patch({ userId })
     },
+    logout() {
+      localStorage.removeItem('token')
+      localStorage.removeItem('userId')
+      localStorage.removeItem('tokenExpiration')
+      this.$reset()
+      router.replace('/auth')
+    },
+    // 登入
     async login(payload) {
       try {
         this.$patch({ isLoading: true })
@@ -47,18 +56,17 @@ export const useStore = defineStore('main', {
         const data = res.data.data
 
         this.tryAuth({ token: data.token, userId: data.user.id })
-
+        this.getUserInfo()
+        
         this.$patch({ isLoading: false, isLogin: true })
         checkConsole('登入成功', res.data)
         alert('登入成功')
-        router.push('userWall')
+        router.push('user-wall')
       } catch (error) {
-        console.log(error)
-        const message = error.response.data.message
-        this.$patch({ isLoading: false, errorMsg: `登入失敗，${message}` })
-        checkConsole('登入失敗', error.response)
+        appError(error, '登入失敗')
       }
     },
+    // 註冊
     async signup(payload) {
       try {
         this.$patch({ isLoading: true })
@@ -71,10 +79,20 @@ export const useStore = defineStore('main', {
         alert('註冊成功，請重新登入')
         return true
       } catch (error) {
-        console.log(error)
-        const message = error.response.data.message
-        this.$patch({ isLoading: false, errorMsg: `註冊失敗，${message}` })
-        checkConsole('註冊失敗', error.response)
+        appError(error, '註冊失敗')
+      }
+    },
+    // 取得會員資料
+    async getUserInfo() {
+      try {
+        this.$patch({ isLoading: true })
+
+        const res = await appApi.apiGetUserInfo()
+
+        this.$patch({ isLoading: false, userInfo: res.data.data })
+        checkConsole('取得會員資成功', res.data)
+      } catch (error) {
+        appError(error, '取得會員資料失敗')
       }
     }
   },

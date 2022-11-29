@@ -14,6 +14,8 @@ const userRequest = axios.create({
 export const apiUserLogin = data => baseRequest.post('/user/login', data)
 // 註冊
 export const apiUserSignup = data => baseRequest.post('/user/signup', data)
+// 取得會員資料
+export const apiGetUserInfo = () => userRequest.get(`/user/profile`)
 
 // 取得今月營養日記
 export const apiGetDiarys = query => userRequest.get(`/diarys?entry_date=${query}`)

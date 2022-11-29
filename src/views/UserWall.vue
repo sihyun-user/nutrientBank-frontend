@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { apiGetDiarys } from '@/service/api'
 import useCalcNutrition from '@/hooks/calcNutrition'
 import WeekCalendar from '@/components/WeekCalendar.vue'
@@ -55,6 +55,8 @@ export default {
     const { updateNutrition, weekNutrition } = useCalcNutrition(monthDiarys, selectedWeekly)
 
     watch(monthDiarys, () => updateNutrition())
+
+    onMounted(() => getMonthDiarys())
 
     // 設置今日日期
     const setTodayDate = () => {
@@ -83,7 +85,6 @@ export default {
     }
 
     setTodayDate()
-    getMonthDiarys()
 
     return {
       monthDiarys,

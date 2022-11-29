@@ -2,16 +2,96 @@
   padding: 0 20px;
 
   &__container {
-    width: 1215px;
+    position: relative;
+    width: 1295px;
     max-width: 100%;
     margin: 0 auto;
     height: 88px;
-
     display: flex;
     align-items: center;
+    justify-content: space-between;
+
+    @include pad {
+      height: 64px;
+    }
   }
 
   &__logo {
     width: 125px;
+  }
+
+  &__nav {
+    font-weight: $regular;
+    display: flex;
+    align-items: center;
+
+    &--web {
+      @include pad {
+        display: none;
+      }
+    }
+
+    &--pad {
+      display: none;
+
+      @include pad {
+        display: block;
+      }
+    }
+
+    &--item {
+      cursor: pointer;
+
+      &:not(:last-of-type) {
+        margin-right: 35px;
+      }
+    }
+
+    &--hamburger {
+      cursor: pointer;
+
+      i {
+        font-size: 20px;
+        color: $color-secondary;
+      }
+    }
+
+    &--user {
+      display: flex;
+      align-items: center;
+
+      i {
+        font-size: 35px;
+        color: $color-gray-1;
+        margin-right: 10px;
+      }
+    }
+
+    &--user-list {
+      width: 180px;
+      background-color: $color-white;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      top: 88px;
+      z-index: 12;
+
+      @include pad {
+        top: 64px;
+      }
+
+      li {
+        text-align: end;
+        padding: 12px;
+
+        &:hover {
+          color: $color-white;
+          background-color: $color-gray-1;
+        }
+      }
+    }
   }
 }
