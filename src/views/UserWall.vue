@@ -27,7 +27,6 @@
         <week-record :weekNutrition="weekNutrition"></week-record>
       </div>
     </div>
-    <add-food></add-food>
   </section>
 </template>
 
@@ -40,7 +39,6 @@ import DayRecord from '@/components/layout/DayRecord.vue'
 import NutritionRecord from '@/components/layout/NutritionRecord.vue'
 import SportRecord from '@/components/layout/SportRecord.vue'
 import WeekRecord from '@/components/layout/WeekRecord.vue'
-import AddFood from '@/components/lightBoxs/AddFood.vue'
 import moment from 'moment'
 export default {
   components: {
@@ -48,8 +46,7 @@ export default {
     DayRecord,
     NutritionRecord,
     SportRecord,
-    WeekRecord,
-    AddFood
+    WeekRecord
   },
   setup() {
     const monthDiarys = ref([])

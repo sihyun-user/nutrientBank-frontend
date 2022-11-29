@@ -3,9 +3,8 @@
     <header class="food-detail__header">
       <h1>{{selectFood.name}}</h1>
       <span>{{selectFood.brand}}</span>
-      <i class="fa-solid fa-pen"></i>
     </header>
-    <form class="food-detail__form">
+    <form class="food-detail__form" @submit.prevent="addDiary">
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">熱量</div>
         <div class="food-detail__form-item--description" v-if="selectFood.nutrition">{{selectFood.nutrition.calories}} kcal / 1份</div>
@@ -54,9 +53,9 @@
         </div>
       </div>
       <div class="food-detail__form-btn">
-      <div type="submit" class="orangeBigBtn">
+      <button type="submit" class="orangeBigBtn">
         <i class="fa-solid fa-plus"></i><span>加入日記</span>
-      </div>
+      </button>
     </div>
     </form>
     <div class="food-detail__nutrition">

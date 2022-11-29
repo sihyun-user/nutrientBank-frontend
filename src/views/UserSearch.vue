@@ -88,13 +88,14 @@
       <div class="results__pagination" v-if="foods.length!==0">
         <div class="results__pagination--container">
           <span
+          v-if="curPage > 1"
           @click="switchPagination(curPage-1)"
           class="results__pagination--arrow results__pagination--arrow-left"
           >
             <i class="fa-solid fa-chevron-left"></i>
           </span>
           <ul class="results__pagination--list">
-            <li v-for="page in paginationNum" :key="page" 
+            <li v-for="page in pagingNumber" :key="page" 
             class="results__pagination--item"
             :class="{'results__pagination--selectItem': curPage==page}"
             @click="switchPagination(page)"
@@ -103,6 +104,7 @@
             </li>
           </ul>
           <span
+          v-if="curPage < Math.ceil(count/6)"
           @click="switchPagination(curPage+1)"
           class="results__pagination--arrow results__pagination--arrow-right"
           >
@@ -111,21 +113,23 @@
         </div>
       </div>
     </div>
+    <base-light-box v-if="padMode && showBox" @close="tryClose">
+      <food-detail :selectFood="selectFood"></food-detail>
+    </base-light-box>
   </section>
-  <base-spinner v-if="isLoading"></base-spinner>
 </template>
 
 <script>
-import { ref, computed } from '@vue/reactivity'
-import { useStore } from '@/store'
+import { ref, computed } from 'vue'
 import { apiGetAllfFood } from '@/service/api'
 import FoodDetail from '@/components/layout/FoodDetail.vue'
+import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 export default {
   components: {
-    FoodDetail
+    FoodDetail,
+    BaseLightBox
   },
   setup() {
-    const store = useStore()
     const enteredKeyword = ref('')
     const curKeyword = ref('')
     const foods = ref([])
@@ -135,20 +139,21 @@ export default {
     const selectFood = ref(null)
     const curPage = ref(1)
     const isSearchFood = ref(false)
+    const showBox = ref(false)
+    const padMode = ref(false)
 
-    const isLoading = computed(() => store.isLoading)
-    //! TODO:首尾頁箭頭、page樣式長度跑掉
-    const paginationNum = computed(() => {
-      let min = 1
-      let length = 4
-      let total = Math.ceil(count.value/4)
-      let current = curPage.value
-      if (length > total) length = total
+    const pagingNumber = computed(() => {
+      let min = 1, 
+          page_length = 4,
+          total_pages = Math.ceil(count.value/6),
+          current = curPage.value
 
-      let start = current - Math.floor(length / 2)
-      start = Math.max(start, min);
-      start = Math.min(start, min + total - length)
-      return Array.from({length: length}, (el, i) => start + i)
+      if (page_length > total_pages) page_length = total_pages
+  
+      let start = current - Math.floor(page_length / 2)
+      start = Math.max(start, min)
+      start = Math.min(start, min + total_pages - page_length)
+      return Array.from({length: page_length}, (el, i) => start + i)
     }
 )
 
@@ -163,6 +168,7 @@ export default {
 
     const switchSelectFood = (food) => {
       selectFood.value = food
+      showBox.value = true
     }
 
     const switchPagination = (page) => {
@@ -181,18 +187,17 @@ export default {
     const resetSearch = () => {
       enteredKeyword.value = ''
       selectFood.value = null
+      showBox.value = false
     }
 
     // 取得食品列表 API 
     const getAllFood = async() => {
       try {
-        store.$patch({ isLoading: true })
         const res = await apiGetAllfFood({search: enteredKeyword.value, page: curPage.value})
         const data = res.data.data
         foods.value = data.list
         count.value = data.count
 
-        store.$patch({ isLoading: false })
         resetSearch()
 
         if (foods.value.length==0) return
@@ -202,10 +207,19 @@ export default {
       }
     }
 
-    document.addEventListener('click',(e) => {
+    const tryClose = () => {
+      showBox.value = false
+    }
+
+    window.addEventListener('click',(e) => {
       const $select = e.target.closest('.search--select')
       if($select) return
       isSelecte.value = false
+    })
+
+    window.addEventListener('resize', () => {
+      const currentWidth = window.innerWidth
+      padMode.value = currentWidth >= 1023 ? false : true
     })
 
     return {
@@ -218,13 +232,15 @@ export default {
       selectFood,
       isSearchFood,
       curPage,
-      isLoading,
-      paginationNum,
+      showBox,
+      padMode,
+      pagingNumber,
       switchFoodMemu,
       switchfoodType,
       switchSelectFood,
       switchPagination,
-      startSerach
+      startSerach,
+      tryClose
     }
   }
 }

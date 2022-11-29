@@ -227,7 +227,8 @@
       }
 
       &--container {
-        width: 160px;
+        max-width: 160px;
+        padding: 0 20px;
         display: flex;
         justify-content: center;
         position: relative;
@@ -253,9 +254,9 @@
       }
   
       &--list {
+        max-width: 120px;
         display: flex;
         justify-content: space-between;
-        width: 120px;
   
         li {
           font-weight: $regular;
