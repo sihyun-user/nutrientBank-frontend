@@ -94,6 +94,19 @@ export const useStore = defineStore('main', {
       } catch (error) {
         appError(error, '取得會員資料失敗')
       }
+    },
+    // 新增一筆營養日記
+    async createOneDiary(payload) {
+      try {
+        const { foodId, paramData } = payload
+        this.$patch({ isLoading: true })
+        const res = await appApi.apiCreateOneDiary({ foodId, paramData })
+
+        this.$patch({ isLoading: false })
+        checkConsole('新增一筆營養日記成功', res.data)
+      } catch (error) {
+        appError(error, '新增一筆營養日記失敗')
+      }
     }
   },
   getters: {

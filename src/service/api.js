@@ -19,5 +19,8 @@ export const apiGetUserInfo = () => userRequest.get(`/user/profile`)
 
 // 取得今月營養日記
 export const apiGetDiarys = query => userRequest.get(`/diarys?entry_date=${query}`)
+// 新增一則營養日記
+export const apiCreateOneDiary = data => userRequest.post(`/diary/${data.oodId}`, data.paramData)
+
 // 取得食品列表
 export const apiGetAllfFood = query => userRequest.get(`/foods?search=${query.search}&page=${query.page}`)

@@ -4,7 +4,7 @@
       <h1>{{selectFood.name}}</h1>
       <span>{{selectFood.brand}}</span>
     </header>
-    <form class="food-detail__form" @submit.prevent="addDiary">
+    <form class="food-detail__form" @submit.prevent="createOneDiary">
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">熱量</div>
         <div class="food-detail__form-item--description" v-if="selectFood.nutrition">{{selectFood.nutrition.calories}} kcal / 1份</div>
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { storeToRefs } from 'pinia'
 import { ref, toRefs } from 'vue'
 import Datepicker from 'vue3-datepicker'
 export default {
@@ -103,6 +104,11 @@ export default {
       mealType.value = type
     }
 
+    // 新增一筆營養日記 API
+    const createOneDiary = async() => {
+      store.createOneDiary()
+    }
+
     document.addEventListener('click',(e) => {
       const $select = e.target.closest('.food-detail__form-item--select')
       if($select) return
@@ -117,6 +123,7 @@ export default {
       switchQuantity,
       switchMealMemu,
       switchMealType,
+      createOneDiary,
       ...toRefs(props.selectFood)
     }
   }
