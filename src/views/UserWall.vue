@@ -34,11 +34,11 @@
 import { ref, watch } from 'vue'
 import { apiGetDiarys } from '@/service/api'
 import useCalcNutrition from '@/hooks/calcNutrition'
-import WeekCalendar from '@/components/layout/WeekCalendar.vue'
-import DayRecord from '@/components/layout/DayRecord.vue'
-import NutritionRecord from '@/components/layout/NutritionRecord.vue'
-import SportRecord from '@/components/layout/SportRecord.vue'
-import WeekRecord from '@/components/layout/WeekRecord.vue'
+import WeekCalendar from '@/components/WeekCalendar.vue'
+import DayRecord from '@/components/DayRecord.vue'
+import NutritionRecord from '@/components/NutritionRecord.vue'
+import SportRecord from '@/components/SportRecord.vue'
+import WeekRecord from '@/components/WeekRecord.vue'
 import moment from 'moment'
 export default {
   components: {

@@ -122,8 +122,8 @@
 <script>
 import { ref, computed } from 'vue'
 import { apiGetAllfFood } from '@/service/api'
-import FoodDetail from '@/components/layout/FoodDetail.vue'
 import BaseLightBox from '@/components/ui/BaseLightBox.vue'
+import FoodDetail from '@/components/FoodDetail.vue'
 export default {
   components: {
     FoodDetail,
