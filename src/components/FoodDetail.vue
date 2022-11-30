@@ -7,7 +7,7 @@
     <form class="food-detail__form" @submit.prevent="createOneDiary">
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">熱量</div>
-        <div class="food-detail__form-item--description" v-if="selectFood.nutrition">{{selectFood.nutrition.calories}} kcal / 1份</div>
+        <div class="food-detail__form-item--description" v-if="itemNutrition">{{itemNutrition.calories.content}} kcal / 1份</div>
       </div>
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">攝取份數</div>
@@ -59,14 +59,38 @@
     </div>
     </form>
     <div class="food-detail__nutrition">
-      <div class="food-detail__nutrition--content">每 {{selectFood.perUnitWeight}}g 含</div>
+      <div class="food-detail__nutrition--content">
+        <span>營養素</span>{{selectFood.perUnitWeight}}g 含
+      </div>
+      <ul class="food-detail__nutrition--list" v-if="itemNutrition">
+        <li v-for="(type, index) in itemNutrition" :key="index" class="food-detail__nutrition--item">
+          <div class="food-detail__nutrition--item-wrap">
+            <div 
+            class="food-detail__nutrition--item-percent"
+            :class="'food-detail__nutrition--item-percent--' + index"
+            >
+              {{type.percent}}%
+            </div>
+            <div class="food-detail__nutrition--item-content"
+            :class="'food-detail__nutrition--item-content--' + index"
+            >
+              {{type.content}}<span>{{type.unit}}</span>
+            </div>
+          </div>
+          <div class="food-detail__nutrition--item-name"
+          :class="{'food-detail__nutrition--item-name--overly':type.name=='碳水化合物'||type.name=='飽和脂肪'||type.name=='反式脂肪'}"
+          >
+            {{type.name}}
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-import { storeToRefs } from 'pinia'
-import { ref, toRefs } from 'vue'
+import { ref, toRefs, computed, watch } from 'vue'
+import { clacIntakes, clacIntakePercent } from '@/hooks/calcNutrition'
 import Datepicker from 'vue3-datepicker'
 export default {
   props: {
@@ -83,6 +107,8 @@ export default {
     const isSelecte = ref(false)
     const meatlDate = ref(new Date())
 
+    const itemNutrition = computed(() => calcItemNutrition())
+      
     const switchQuantity = (type) => {
       let total = quantity.value
       if(type == 'add') {
@@ -104,6 +130,31 @@ export default {
       mealType.value = type
     }
 
+    // 計算食品營養成分
+    const calcItemNutrition = () => {
+      let data = props.selectFood.nutrition
+      let array = ['calories', 'carbohydrates', 'protein', 'fat', 'saturated_fat', 'trans_fat', 'sodium', 'sugar']
+
+      // 1) 每日營養攝取量
+      const calc_data = clacIntakes()
+
+      // 2) 計算當前攝取百分比
+      for(let key of array) {
+        calc_data[key].content = data[key]
+        calc_data[key].percent = clacIntakePercent(calc_data[key])
+      }
+
+      // 3) 計算份數含量
+      for(let key in calc_data) {
+          let value = calc_data[key].content * quantity.value
+          calc_data[key].content = Math.round(value).toFixed(1)
+        }
+
+      console.log(calc_data)
+
+      return calc_data
+    }
+
     // 新增一筆營養日記 API
     const createOneDiary = async() => {
       store.createOneDiary()
@@ -114,6 +165,8 @@ export default {
       if($select) return
       isSelecte.value = false
     })
+
+    calcItemNutrition()
     
     return {
       quantity,
@@ -124,7 +177,8 @@ export default {
       switchMealMemu,
       switchMealType,
       createOneDiary,
-      ...toRefs(props.selectFood)
+      ...toRefs(props.selectFood),
+      itemNutrition
     }
   }
 }

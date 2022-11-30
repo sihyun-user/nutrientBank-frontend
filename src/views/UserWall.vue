@@ -33,7 +33,7 @@
 <script>
 import { ref, watch, onMounted } from 'vue'
 import { apiGetDiarys } from '@/service/api'
-import useCalcNutrition from '@/hooks/calcNutrition'
+import { useCalcNutrition } from '@/hooks/calcNutrition'
 import WeekCalendar from '@/components/WeekCalendar.vue'
 import DayRecord from '@/components/DayRecord.vue'
 import NutritionRecord from '@/components/NutritionRecord.vue'

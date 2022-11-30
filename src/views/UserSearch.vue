@@ -200,7 +200,7 @@ export default {
 
         resetSearch()
 
-        if (foods.value.length==0) return
+        if (foods.value.length==0 || window.innerWidth < 1023) return
         switchSelectFood(foods.value[0])
       } catch (error) {
         console.log(error)
@@ -211,16 +211,20 @@ export default {
       showBox.value = false
     }
 
+    const switchPadMode = (() => {
+      const currentWidth = window.innerWidth
+      padMode.value = currentWidth >= 1023 ? false : true
+    })
+
     window.addEventListener('click',(e) => {
       const $select = e.target.closest('.search--select')
       if($select) return
       isSelecte.value = false
     })
 
-    window.addEventListener('resize', () => {
-      const currentWidth = window.innerWidth
-      padMode.value = currentWidth >= 1023 ? false : true
-    })
+    window.addEventListener('resize', () => switchPadMode())
+
+    switchPadMode()
 
     return {
       enteredKeyword,

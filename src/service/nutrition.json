@@ -15,17 +15,17 @@
     "percent": 0,
     "unit": "g"
   },
-  "fat": { 
-    "id":"fat",
-    "name":"脂肪",
+  "protein": {
+    "id":"protein",
+    "name":"蛋白質",
     "content":0,
     "intake":0,
     "percent": 0,
     "unit": "g"
   },
-  "protein": {
-    "id":"protein",
-    "name":"蛋白質",
+  "fat": { 
+    "id":"fat",
+    "name":"脂肪",
     "content":0,
     "intake":0,
     "percent": 0,

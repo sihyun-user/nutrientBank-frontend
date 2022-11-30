@@ -1,0 +1,283 @@
+.food-detail {
+  &__header {
+    margin-bottom: 25px;
+    display: flex;
+    align-items: flex-end;
+
+    h1 {
+      font-size: 32px;
+      font-weight: $bold;
+      color: $color-gray-4;
+
+      @include mobile {
+        font-size: 20px;
+      }
+    }
+
+    span {
+      font-size: 20px;
+      margin: 0 10px 0 8px;
+
+      @include mobile {
+        font-size: 14px;
+        margin: 0 8px 0 5px;
+      }
+    }
+  }
+
+  &__form {
+    padding: 40px;
+    background-color: #FAFAFA;
+    border-radius: 8px;
+
+    @include mobile {
+      padding: 24px;
+    }
+
+    &-item {
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  
+      &--name,
+      &--description {
+        font-size: 16px;
+      }
+  
+      &--name {
+        color: $color-gray-4;
+      }
+  
+      &--quantity {
+        input {
+          font-size: 16px;
+          color: $color-primary;
+          width: 62px;
+          height: 42px;
+          border-radius: 7px;
+          border: 1px solid $color-gray-2;
+          margin: 0 14px;
+          padding: 8px 4px;
+          text-align: center;
+        }
+  
+        i {
+          font-size: 14px;
+          width: 24px;
+          height: 24px;
+          line-height: 24px;
+          border-radius: 100%;
+          background-color: $color-white;
+          text-align: center;
+          cursor: pointer;
+        }
+      }
+  
+      &--select {
+        @include baseSelect;
+      }
+  
+      &--date {
+        position: relative;
+  
+        &-icon {
+          font-size: 12px;
+          position: absolute;
+          z-index: 11;
+          top: 8px;
+          right: 12px;
+        }
+  
+        // Datepicker
+        &-picker {
+          font-size: 16px;
+          color: $color-primary;
+          width: 180px;
+          height: 42px;
+          background-color: $color-white;
+          border: 1px solid $color-gray-2;
+          border-radius: 7px;
+          padding: 8px 12px;
+          cursor: pointer;
+          font-family: Noto Sans TC,黑體-繁,Apple LiGothic Medium,PingFang,微軟正黑體,Microsoft JhengHei,WenQuanYi Zen Hei,helvetica,Arial,sans-serif;
+        }
+  
+        .v3dp__popout {
+          position: absolute;
+          left: -100px;
+          top: 48px;
+          z-index: 12;
+        }
+  
+        --vdp-text-color: #828282;
+        --vdp-hover-color: #828282;
+        --vdp-hover-bg-color: #F2F2F2;
+        --vdp-selected-bg-color: #FBA06E;
+        --vdp-border-radius: 7px;
+      }
+    }
+
+    &-btn {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  &__nutrition {
+    margin-top: 40px;
+
+    @include mobile {
+      margin-top: 24px;
+    }
+
+    &--content {
+      font-size: 14px;
+      font-weight: $regular;
+      margin-bottom: 25px;
+
+      span {
+        font-size: 20px;
+        color: $color-gray-4;
+        margin-right: 10px;
+      }
+    }
+
+    &--list {
+      display: grid;
+      grid-template-columns:repeat(auto-fit, minmax(54px, 1fr));
+      gap: 24px 44px;
+
+      @include mobile {
+        grid-template-columns:repeat(auto-fit, minmax(44px, 1fr));
+        gap: 17px 20px;
+      }
+    }
+
+    &--item {
+      font-size: 14px;
+      font-weight: $regular;
+      color: $color-gray-4;
+      
+      &-wrap {
+        width: 58px;
+        max-width: 100%;
+        overflow: hidden;
+
+        @include mobile {
+          width: 46px;
+        }
+      }
+
+      &-percent {
+        height: 45px;
+        background-color: $color-white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px 8px 0 0;
+        border-width: 1px 1px 0 1px;
+        border-style: solid;
+
+        &--calories {
+          border-color: #FDD4BE;
+        }
+        &--carbohydrates {
+          border-color: #FDC6A8;
+        }
+        &--protein {
+          border-color: #FCB892;
+        }
+        &--fat {
+          border-color: #FCAE84;
+        }
+        &--saturated_fat {
+          border-color: #EE9868
+        }
+        &--trans_fat {
+          border-color: #DA8B60;
+        }
+        &--sodium {
+          border-color: #C98058;
+        }
+        &--sugar {
+          border-color: #B0704D;
+        }
+      }
+
+      &-content {
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-direction: column;
+        line-height: 1;
+        border-radius: 0 0 8px 8px;
+        border-width: 0 1px 1px 1px;
+        border-style: solid;
+
+        &--calories {
+          background-color: #FDD4BE;
+          border-color: #FDD4BE;
+        }
+        &--carbohydrates {
+          background-color: #FDC6A8;
+          border-color: #FDC6A8;
+        }
+        &--protein {
+          background-color: #FCB892;
+          border-color: #FCB892;
+        }
+        &--fat {
+          background-color: #FCAE84;
+          border-color: #FCAE84;
+        }
+        &--saturated_fat {
+          color: $color-white;
+          border-color: #EE9868;
+          background-color: #EE9868;
+        }
+        &--trans_fat {
+          color: $color-white;
+          border-color: #DA8B60;
+          background-color: #DA8B60;
+        }
+        &--sodium {
+          color: $color-white;
+          border-color: #C98058;
+          background-color: #C98058;
+        }
+        &--sugar {
+          color: $color-white;
+          border-color: #B0704D;
+          background-color: #B0704D;
+        }
+
+        span {
+          font-size: 10px;
+          margin: 5px 0;
+        }
+      }
+
+      &-name {
+        text-align: center;
+        width: 56px;
+        white-space: nowrap;
+        margin-top: 7px;
+
+        @include mobile {
+          width: 46px;
+        }
+
+        &--overly {
+          width: 73px;
+          transform: translateX(-7px);
+
+          @include mobile {
+            transform: translateX(-13px);
+          }
+        }
+      }
+    }
+  }
+}
