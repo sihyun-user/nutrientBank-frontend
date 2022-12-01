@@ -1,18 +1,18 @@
 <template>
   <section class="search-results">
-    <form class="search" @submit.prevent="starSearchFood">
+    <form class="search" @submit.prevent="startSerach">
       <div class="search--select">
         <div class="search--select-text" @click="switchFoodMemu">
           <span>{{foodType}}</span>
           <div class="search--select-icon">
-            <i v-if="isOpenMeun" class="fa-solid fa-angle-up"></i>
+            <i v-if="isSelecte" class="fa-solid fa-angle-up"></i>
             <i v-else class="fa-solid fa-angle-down"></i>
           </div>
         </div>
-        <ul v-if="isOpenMeun" class="search--select-list">
+        <ul v-if="isSelecte" class="search--select-list">
           <li v-for="(type, index) in ['食品', '自訂食品', '我的書籤']" :key="index"
           :class="{ 'search--select-selected': foodType==type }"
-          @click="switchFoodType(type)"
+          @click="switchfoodType(type)"
           >
             <input id="type" type="radio">
             <label for="type">{{type}}</label>
@@ -20,7 +20,7 @@
         </ul>
       </div>
       <div class="search--search">
-        <div class="search--search-text">
+        <div class="search--search-text" @click="switchMealMemu">
           <input type="text" placeholder="食品搜尋..." v-model="enteredKeyword">
           <button type="submit" class="search--search-icon">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -34,7 +34,7 @@
     <div class="results" v-else>
       <div class="results__header">
         <div class="results__header--text">
-          <span v-if="useKeyword!==''">「{{useKeyword}}」</span>共有 {{count}} 筆搜尋結果
+          <span v-if="curKeyword!==''">「{{curKeyword}}」</span>共有 {{count}} 筆搜尋結果
         </div>
         <div class="results__header--btn">
           <div class="baseWhiteBtn">
@@ -88,8 +88,8 @@
       <div class="results__pagination" v-if="foods.length!==0">
         <div class="results__pagination--container">
           <span
-          v-if="curentPage > 1"
-          @click="switchPagination(curentPage-1)"
+          v-if="curPage > 1"
+          @click="switchPagination(curPage-1)"
           class="results__pagination--arrow results__pagination--arrow-left"
           >
             <i class="fa-solid fa-chevron-left"></i>
@@ -97,15 +97,15 @@
           <ul class="results__pagination--list">
             <li v-for="page in pagingNumber" :key="page" 
             class="results__pagination--item"
-            :class="{'results__pagination--selectItem': curentPage==page}"
+            :class="{'results__pagination--selectItem': curPage==page}"
             @click="switchPagination(page)"
             >
               {{page}}
             </li>
           </ul>
           <span
-          v-if="curentPage < Math.ceil(count/6)"
-          @click="switchPagination(curentPage+1)"
+          v-if="curPage < Math.ceil(count/6)"
+          @click="switchPagination(curPage+1)"
           class="results__pagination--arrow results__pagination--arrow-right"
           >
             <i class="fa-solid fa-chevron-right"></i>
@@ -113,6 +113,9 @@
         </div>
       </div>
     </div>
+    <base-light-box v-if="padMode && showBox" @close="tryClose">
+      <food-detail :selectFood="selectFood"></food-detail>
+    </base-light-box>
   </section>
 </template>
 
@@ -128,23 +131,23 @@ export default {
   },
   setup() {
     const store = useStore()
-    const foodType = ref('食品')
     const enteredKeyword = ref('')
-    const useKeyword = ref('')
+    const curKeyword = ref('')
     const foods = ref([])
     const count = ref(0)
+    const foodType = ref('自訂食品')
+    const isSelecte = ref(false)
     const selectFood = ref(null)
-    const curentPage = ref(1)
-    const isOpenMeun = ref(false)
+    const curPage = ref(1)
     const isSearchFood = ref(false)
     const showBox = ref(false)
+    const padMode = ref(false)
 
-    // 設置分頁數
     const pagingNumber = computed(() => {
       let min = 1, 
           page_length = 4,
           total_pages = Math.ceil(count.value/6),
-          current = curentPage.value
+          current = curPage.value
 
       if (page_length > total_pages) page_length = total_pages
   
@@ -152,46 +155,48 @@ export default {
       start = Math.max(start, min)
       start = Math.min(start, min + total_pages - page_length)
       return Array.from({length: page_length}, (el, i) => start + i)
-    })
-
-    // 設置搜尋下拉選單
-    const switchFoodMemu = () => {
-      isOpenMeun.value = !isOpenMeun.value
     }
-    // 設置搜尋食品類別
-    const switchFoodType = (type) => {
-      isOpenMeun.value = false
+)
+
+    const switchFoodMemu = () => {
+      isSelecte.value = !isSelecte.value
+    }
+
+    const switchfoodType = (type) => {
+      isSelecte.value = false
       foodType.value = type
     }
-    // 設置選擇的食品
+
     const switchSelectFood = (food) => {
       selectFood.value = food
       showBox.value = true
     }
-    // 設置分頁
+
     const switchPagination = (page) => {
-      curentPage.value = page
+      curPage.value = page
+      enteredKeyword.value = curKeyword.value
       getTypeFoods()
     }
-    // 搜尋食品
-    const starSearchFood = () => {
-      curentPage.value = 1
+
+    const startSerach = () => {
       isSearchFood.value = true
-      useKeyword.value = enteredKeyword.value
+      curKeyword.value = enteredKeyword.value
+      curPage.value = 1
       getTypeFoods()
     }
-    // 重置搜尋食品設置
+
     const resetSearch = () => {
       enteredKeyword.value = ''
       selectFood.value = null
       showBox.value = false
     }
-    // 取得食品、自訂食品列表
+
+    // 取得食品、自訂食品列表 API 
     const getTypeFoods = async() => {
-      let data, paramData = { search: useKeyword.value, page: curentPage.value }
-      if (foodType.value=='食品') {
+      let data, paramData = { search: enteredKeyword.value, page: curPage.value }
+      if (foodType.value='食品') {
         data = await store.getAllFood(paramData)
-      }else if (foodType.value=='自訂食品') {
+      }else if (foodType.value='自訂食品') {
         data = await store.getAllCustomFood(paramData)
       }
       foods.value = data.list
@@ -207,28 +212,39 @@ export default {
       showBox.value = false
     }
 
+    const switchPadMode = (() => {
+      const currentWidth = window.innerWidth
+      padMode.value = currentWidth >= 1023 ? false : true
+    })
+
     window.addEventListener('click',(e) => {
       const $select = e.target.closest('.search--select')
       if($select) return
-      isOpenMeun.value = false
+      isSelecte.value = false
     })
 
+    window.addEventListener('resize', () => switchPadMode())
+
+    switchPadMode()
+
     return {
-      foodType,
       enteredKeyword,
-      useKeyword,
+      curKeyword,
       foods,
       count,
+      foodType,
+      isSelecte,
       selectFood,
-      curentPage,
-      isOpenMeun,
       isSearchFood,
+      curPage,
+      showBox,
+      padMode,
       pagingNumber,
       switchFoodMemu,
-      switchFoodType,
-      starSearchFood,
+      switchfoodType,
       switchSelectFood,
       switchPagination,
+      startSerach,
       tryClose
     }
   }

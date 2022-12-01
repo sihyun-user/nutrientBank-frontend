@@ -107,6 +107,32 @@ export const useStore = defineStore('main', {
       } catch (error) {
         appError(error, '新增一筆營養日記失敗')
       }
+    },
+    // 取得食品列表
+    async getAllFood(payload) {
+      try {
+        const { search, page } = payload
+        const res = await appApi.apiGetAllfFood({ search, page })
+
+        this.$patch({ isLoading: false })
+        checkConsole('取得食品列表成功', res.data)
+        return res.data.data
+      } catch (error) {
+        appError(error, '取得食品列表失敗')
+      }
+    },
+    // 取得自訂食品列表
+    async getAllCustomFood(payload) {
+      try {
+        const { search, page } = payload
+        const res = await appApi.apiGetAllCustomFood({ search, page })
+
+        this.$patch({ isLoading: false })
+        checkConsole('取得自訂食品列表成功', res.data)
+        return res.data.data
+      } catch (error) {
+        appError(error, '取得自訂食品列表失敗')
+      }
     }
   },
   getters: {

@@ -153,7 +153,7 @@ export const useCalcNutrition = (monthDiarys, selectedWeekly) => {
       const total_data = calcNutrition(data)
       const copy_data = JSON.parse(JSON.stringify(calc_data)) // 深拷貝
       for (let key in total_data) {
-        copy_data[key].content = total_data[key].content
+        copy_data[key].content = total_data[key]
         copy_data[key].percent = clacIntakePercent(copy_data[key])
       }
       weekNutrition.value[date] = copy_data

@@ -141,6 +141,10 @@
       &:not(:last-child) {
         border-bottom: 1px solid $color-gray-2;
       }
+
+      label {
+        cursor: pointer;
+      }
     }
   }
 

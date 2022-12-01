@@ -19,6 +19,12 @@ export default {
       context.emit('close')
     }
 
+    window.addEventListener('click',(e) => {
+      const $mask = e.target.closest('.baseMask')
+      if(!$mask) return
+      tryClose()
+    })
+
     return {
       tryClose
     }

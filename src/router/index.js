@@ -7,7 +7,7 @@ import UserWall from '@/views/userWall.vue'
 import UserSearch from '@/views/UserSearch.vue'
 
 const routes = [
-  { path: '/', redirect: '/auth' },
+  { path: '/', redirect: '/user-wall' },
   { path: '/auth', component: UserAuth, meta: { requiresUnauth: true } },
   {
     path: '/user-wall',
@@ -32,7 +32,7 @@ const router = createRouter({
   }
 })
 
-router.beforeEach(function(to, _, next){
+router.beforeEach((to, _, next) => {
   const store = useStore()
   store.tryLogin()
 

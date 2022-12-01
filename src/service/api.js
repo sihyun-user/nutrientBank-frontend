@@ -24,3 +24,6 @@ export const apiCreateOneDiary = data => userRequest.post(`/diary/${data.oodId}`
 
 // 取得食品列表
 export const apiGetAllfFood = query => userRequest.get(`/foods?search=${query.search}&page=${query.page}`)
+
+// 取得自訂食品列表
+export const apiGetAllCustomFood = query => userRequest.get(`/customFoods?search=${query.search}&page=${query.page}`)

@@ -7,7 +7,7 @@
     <form class="food-detail__form" @submit.prevent="createOneDiary">
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">熱量</div>
-        <div class="food-detail__form-item--description" v-if="itemNutrition">{{itemNutrition.calories.content}} kcal / 1份</div>
+        <div class="food-detail__form-item--description" v-if="totalNutrition">{{totalNutrition.calories.content}} kcal / 1份</div>
       </div>
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">攝取份數</div>
@@ -23,11 +23,11 @@
           <div class="food-detail__form-item--select-text" @click="switchMealMemu">
             <span>{{mealType}}</span>
             <div class="food-detail__form-item--select-icon">
-              <i v-if="isSelecte" class="fa-solid fa-angle-up"></i>
+              <i v-if="isOpenMeal" class="fa-solid fa-angle-up"></i>
               <i v-else class="fa-solid fa-angle-down"></i>
             </div>
           </div>
-          <ul v-if="isSelecte" class="food-detail__form-item--select-list">
+          <ul v-if="isOpenMeal" class="food-detail__form-item--select-list">
             <li v-for="(type, index) in ['早餐', '午餐', '晚餐', '點心']" :key="index"
             :class="{ 'food-detail__form-item--select-selected': mealType==type }"
             @click="switchMealType(type)"
@@ -60,10 +60,10 @@
     </form>
     <div class="food-detail__nutrition">
       <div class="food-detail__nutrition--content">
-        <span>營養素</span>{{selectFood.perUnitWeight}}g 含
+        <span>營養素</span>{{totalPerUnitWeight}} g 含
       </div>
-      <ul class="food-detail__nutrition--list" v-if="itemNutrition">
-        <li v-for="(type, index) in itemNutrition" :key="index" class="food-detail__nutrition--item">
+      <ul class="food-detail__nutrition--list" v-if="totalNutrition">
+        <li v-for="(type, index) in totalNutrition" :key="index" class="food-detail__nutrition--item">
           <div class="food-detail__nutrition--item-wrap">
             <div 
             class="food-detail__nutrition--item-percent"
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { ref, toRefs, computed, watch } from 'vue'
+import { ref, computed, toRefs, watch } from 'vue'
 import { clacIntakes, clacIntakePercent } from '@/hooks/calcNutrition'
 import Datepicker from 'vue3-datepicker'
 export default {
@@ -104,11 +104,16 @@ export default {
   setup(props) {
     const quantity = ref(1)
     const mealType = ref('早餐')
-    const isSelecte = ref(false)
+    const isOpenMeal = ref(false)
     const meatlDate = ref(new Date())
+    const { selectFood } = toRefs(props)
 
-    const itemNutrition = computed(() => calcItemNutrition())
-      
+    watch(selectFood, () => quantity.value=1)
+
+    const totalNutrition = computed(() => calcItemNutrition())
+    const totalPerUnitWeight = computed(() => +selectFood.perUnitWeight * quantity.value.toFixed(1))
+    
+    // 設置份數
     const switchQuantity = (type) => {
       let total = quantity.value
       if(type == 'add') {
@@ -120,19 +125,18 @@ export default {
       }
       quantity.value = total
     }
-
+    // 設置餐別下拉選單
     const switchMealMemu = () => {
-      isSelecte.value = !isSelecte.value
+      isOpenMeal.value = !isOpenMeal.value
     }
-
+    // 設置餐別
     const switchMealType = (type) => {
-      isSelecte.value = false
+      isOpenMeal.value = false
       mealType.value = type
     }
-
     // 計算食品營養成分
     const calcItemNutrition = () => {
-      let data = props.selectFood.nutrition
+      let data = selectFood.value.nutrition
       let array = ['calories', 'carbohydrates', 'protein', 'fat', 'saturated_fat', 'trans_fat', 'sodium', 'sugar']
 
       // 1) 每日營養攝取量
@@ -147,15 +151,12 @@ export default {
       // 3) 計算份數含量
       for(let key in calc_data) {
           let value = calc_data[key].content * quantity.value
-          calc_data[key].content = Math.round(value).toFixed(1)
+          calc_data[key].content = +value.toFixed(1)
         }
-
-      console.log(calc_data)
 
       return calc_data
     }
-
-    // 新增一筆營養日記 API
+    // 新增一筆營養日記
     const createOneDiary = async() => {
       store.createOneDiary()
     }
@@ -163,7 +164,7 @@ export default {
     document.addEventListener('click',(e) => {
       const $select = e.target.closest('.food-detail__form-item--select')
       if($select) return
-      isSelecte.value = false
+      isOpenMeal.value = false
     })
 
     calcItemNutrition()
@@ -172,13 +173,14 @@ export default {
       quantity,
       mealType,
       meatlDate,
-      isSelecte,
+      isOpenMeal,
+      totalNutrition,
+      totalPerUnitWeight,
       switchQuantity,
       switchMealMemu,
       switchMealType,
       createOneDiary,
       ...toRefs(props.selectFood),
-      itemNutrition
     }
   }
 }

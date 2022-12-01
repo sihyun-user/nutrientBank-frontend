@@ -13,6 +13,9 @@ export const checkConsole = (text, response) => {
 
 export const appError = (error, errorText) => {
   const store = useStore()
+  if (!error.response) {
+    return checkConsole(`${errorText}`, error)
+  }
   const message = error.response.data.message
   store.$patch({ isLoading: false, errorMsg: `${errorText}，${message}` })
   checkConsole(`${errorText}`, error.response)
