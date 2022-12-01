@@ -32,7 +32,7 @@
 
 <script>
 import { ref, watch, onMounted } from 'vue'
-import { apiGetDiarys } from '@/service/api'
+import { useStore } from '@/store'
 import { useCalcNutrition } from '@/hooks/calcNutrition'
 import WeekCalendar from '@/components/WeekCalendar.vue'
 import DayRecord from '@/components/DayRecord.vue'
@@ -49,6 +49,7 @@ export default {
     WeekRecord
   },
   setup() {
+    const store = useStore()
     const monthDiarys = ref([])
     const selectedDate = ref(null)
     const selectedWeekly = ref(null)
@@ -64,22 +65,15 @@ export default {
       selectedDate.value = today
       selectedWeekly.value = today
     }
-
-    // 取得今月日記 API 
+    // 取得今月日記 
     const getMonthDiarys = async() => {
-      try {
-        const res = await apiGetDiarys(selectedDate.value)
-        monthDiarys.value = res.data.data
-      } catch (error) {
-        console.log(error)
-      }
+      const data = await store.getDiarys(selectedDate.value)
+      monthDiarys.value = data
     }
-
     const tryChangeWeekly = (payload) => {
       selectedWeekly.value = payload
       updateNutrition()
     }
-
     const tryUpdateDate = (payload) => {
       selectedDate.value = payload
     }

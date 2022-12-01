@@ -1,21 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useStore } from '@/store'
 
-import UserAuth from '@/views/UserAuth.vue'
-import UserCenter from '@/views/UserCenter.vue'
-import UserWall from '@/views/userWall.vue'
-import UserSearch from '@/views/UserSearch.vue'
-
 const routes = [
   { path: '/', redirect: '/user-wall' },
-  { path: '/auth', component: UserAuth, meta: { requiresUnauth: true } },
+  { path: '/auth', meta: { requiresUnauth: true }, component: () => import('@/views/UserAuth.vue') },
   {
     path: '/user-wall',
     redirect: '/user-wall',
-    component: UserCenter,
+    component: () => import('@/views/UserCenter.vue'),
     children: [
-      { path: '/user-wall', component: UserWall, meta: { requiresAuth: true } },
-      { path: '/user-search', component: UserSearch, meta: { requiresAuth: true } }
+      { path: '/user-wall', meta: { requiresAuth: true }, component: () => import('@/views/userWall.vue') },
+      { path: '/user-search', meta: { requiresAuth: true }, component: () => import('@/views/UserSearch.vue') }
     ]
   },
   { path: '/:notFound(.*)', redirect: '/auth' }

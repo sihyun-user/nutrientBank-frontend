@@ -1,5 +1,5 @@
-import router from '@/router'
 import { defineStore } from 'pinia'
+import router from '@/router'
 import { checkConsole, appError } from '@/service/helper'
 import * as appApi from '@/service/api'
 
@@ -60,8 +60,8 @@ export const useStore = defineStore('main', {
         
         this.$patch({ isLoading: false, isLogin: true })
         checkConsole('登入成功', res.data)
-        alert('登入成功')
         router.push('user-wall')
+        alert('登入成功')
       } catch (error) {
         appError(error, '登入失敗')
       }
@@ -86,13 +86,26 @@ export const useStore = defineStore('main', {
     async getUserInfo() {
       try {
         this.$patch({ isLoading: true })
-
         const res = await appApi.apiGetUserInfo()
 
         this.$patch({ isLoading: false, userInfo: res.data.data })
         checkConsole('取得會員資成功', res.data)
       } catch (error) {
         appError(error, '取得會員資料失敗')
+      }
+    },
+    // 取得營養日記列表
+    async getDiarys(payload) {
+      try {
+        this.$patch({ isLoading: true })
+
+        const res = await appApi.apiGetDiarys(payload)
+
+        this.$patch({ isLoading: false })
+        checkConsole('取得營養日記列表成功', res.data)
+        return res.data.data
+      } catch (error) {
+        appError(error, '取得營養日記列表失敗')
       }
     },
     // 新增一筆營養日記

@@ -113,6 +113,9 @@
         </div>
       </div>
     </div>
+    <base-light-box v-if="padMode && showBox" @close="tryClose">
+      <food-detail :selectFood="selectFood"></food-detail>
+    </base-light-box>
   </section>
 </template>
 
@@ -138,6 +141,7 @@ export default {
     const isOpenMeun = ref(false)
     const isSearchFood = ref(false)
     const showBox = ref(false)
+    const padMode = ref(false)
 
     // 設置分頁數
     const pagingNumber = computed(() => {
@@ -202,16 +206,25 @@ export default {
       if (foods.value.length==0 || window.innerWidth < 1023) return
       switchSelectFood(foods.value[0])
     }
+  
 
     const tryClose = () => {
       showBox.value = false
     }
+    const switchPadMode = (() => {
+      const currentWidth = window.innerWidth
+      padMode.value = currentWidth >= 1023 ? false : true
+    })
 
     window.addEventListener('click',(e) => {
       const $select = e.target.closest('.search--select')
       if($select) return
       isOpenMeun.value = false
     })
+
+    window.addEventListener('resize', () => switchPadMode())
+
+    switchPadMode()
 
     return {
       foodType,
@@ -223,6 +236,8 @@ export default {
       curentPage,
       isOpenMeun,
       isSearchFood,
+      showBox,
+      padMode,
       pagingNumber,
       switchFoodMemu,
       switchFoodType,
