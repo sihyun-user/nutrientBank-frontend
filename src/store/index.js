@@ -98,7 +98,6 @@ export const useStore = defineStore('main', {
     async getDiarys(payload) {
       try {
         this.$patch({ isLoading: true })
-
         const res = await appApi.apiGetDiarys(payload)
 
         this.$patch({ isLoading: false })
@@ -111,8 +110,9 @@ export const useStore = defineStore('main', {
     // 新增一筆營養日記
     async createOneDiary(payload) {
       try {
-        const { foodId, paramData } = payload
         this.$patch({ isLoading: true })
+        const { foodId, paramData } = payload
+
         const res = await appApi.apiCreateOneDiary({ foodId, paramData })
 
         this.$patch({ isLoading: false })
@@ -124,7 +124,9 @@ export const useStore = defineStore('main', {
     // 取得食品列表
     async getAllFood(payload) {
       try {
+        this.$patch({ isLoading: ture })
         const { search, page } = payload
+
         const res = await appApi.apiGetAllfFood({ search, page })
 
         this.$patch({ isLoading: false })
@@ -137,7 +139,9 @@ export const useStore = defineStore('main', {
     // 取得自訂食品列表
     async getAllCustomFood(payload) {
       try {
+        this.$patch({ isLoading: true })
         const { search, page } = payload
+
         const res = await appApi.apiGetAllCustomFood({ search, page })
 
         this.$patch({ isLoading: false })
@@ -146,6 +150,38 @@ export const useStore = defineStore('main', {
       } catch (error) {
         appError(error, '取得自訂食品列表失敗')
       }
+    },
+    // 取得食品書籤列表
+    async getAllLikes() {
+      try {
+        this.$patch({ isLoading: true })
+
+        const res = await appApi.apiGetAllLikes()
+
+        this.$patch({ isLoading: false })
+        checkConsole('取得食品書籤列表成功', res.data)
+        return res.data.data
+      } catch (error) {
+        appError(error, '取得食品書籤列表失敗')
+      }
+    },
+    // 新增一筆食品書籤
+    async addFoodLike(payload) {
+      try {
+        this.$patch({ isLoading: true })
+        const { foodType } = payload
+
+        const res = await appApi.apiAddFoodLike(foodType)
+
+        this.$patch({ isLoading: false })
+        checkConsole('取得食品書籤列表成功', res.data)
+      } catch (error) {
+        appError(error, '新增一筆食品書籤失敗')
+      }
+    },
+    // 刪除一筆食品書籤
+    async cancelFoodLike() {
+
     }
   },
   getters: {

@@ -24,19 +24,26 @@ userRequest.interceptors.request.use(
 );
 
 // 登入
-export const apiUserLogin = data => baseRequest.post('/user/login', data)
+export const apiUserLogin = payload => baseRequest.post('/user/login', payload)
 // 註冊
-export const apiUserSignup = data => baseRequest.post('/user/signup', data)
+export const apiUserSignup = payload => baseRequest.post('/user/signup', payload)
 // 取得會員資料
 export const apiGetUserInfo = () => userRequest.get(`/user/profile`)
 
 // 取得今月營養日記
-export const apiGetDiarys = query => userRequest.get(`/diarys?entry_date=${query}`)
+export const apiGetDiarys = payload => userRequest.get(`/diarys?entry_date=${payload}`)
 // 新增一則營養日記
-export const apiCreateOneDiary = data => userRequest.post(`/diary/${data.oodId}`, data.paramData)
+export const apiCreateOneDiary = payload => userRequest.post(`/diary/${payload.oodId}`, payload.paramData)
 
 // 取得食品列表
-export const apiGetAllfFood = query => userRequest.get(`/foods?search=${query.search}&page=${query.page}`)
+export const apiGetAllfFood = payload => userRequest.get(`/foods?search=${payload.search}&page=${payload.page}`)
 
 // 取得自訂食品列表
-export const apiGetAllCustomFood = query => userRequest.get(`/customFoods?search=${query.search}&page=${query.page}`)
+export const apiGetAllCustomFood = payload => userRequest.get(`/customFoods?search=${payload.search}&page=${payload.page}`)
+
+// 取得食品書籤列表
+export const apiGetAllLikes = () => userRequest.get(`/likes`)
+// 新增一筆食品書籤
+export const apiAddFoodLike = payload => userRequest.get(`/like/${payload.foodId}?type=${payload.foodType}`)
+// 取消一筆食品書籤
+export const apiCancelFoodLike = payload => userRequest.get(`/unlike/${payload.foodId}?type=${payload.foodType}`)
