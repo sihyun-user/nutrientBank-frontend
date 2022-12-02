@@ -97,13 +97,13 @@ export const useCalcNutrition = (monthDiarys, selectedWeekly) => {
     week_array.forEach(date => {
       const diarys_data = monthDiarys.value
       
-      for(let key in diarys_data) {
-        if (diarys_data[key].date == date) {
-          week_data.push(diarys_data[key])
+      diarys_data.forEach(item => {
+        if(item.date==date) {
+          week_data.push(item)
         }
-      }
+      })
     })
-    
+
     weekDiarys.value = week_data
     weekly.value = week_array
   }
@@ -118,13 +118,13 @@ export const useCalcNutrition = (monthDiarys, selectedWeekly) => {
       return toal
     }
 
-    let total = data.reduce((acc, curr) => {
-    Object.keys(curr.food.nutrition).forEach((key, index) => {
-      if (!acc[key]) {
-        acc[key] = 0
+    const total = data.reduce((acc, curr) => {
+      for(let key in curr.food.nutrition) {
+        if (!acc[key]) {
+          acc[key] = 0
+        }
+        acc[key] += Math.round(curr.food.nutrition[key])
       }
-      acc[key] += Math.round(curr.food.nutrition[key])
-    })
       return acc
     }, {})
 
@@ -148,6 +148,7 @@ export const useCalcNutrition = (monthDiarys, selectedWeekly) => {
           data.push(item)
         }
       })
+      
       
       // 整合攝取量、累加值、攝取百分比
       const total_data = calcNutrition(data)

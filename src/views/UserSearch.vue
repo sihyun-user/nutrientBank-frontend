@@ -2,7 +2,7 @@
   <section class="search-results">
     <form class="search" @submit.prevent="starSearchFood">
       <div class="search--select">
-        <div class="search--select-text" @click="switchFoodMemu">
+        <div class="search--select-text" @click="setFoodMemu">
           <span>{{foodType}}</span>
           <div class="search--select-icon">
             <i v-if="isOpenMeun" class="fa-solid fa-angle-up"></i>
@@ -12,7 +12,7 @@
         <ul v-if="isOpenMeun" class="search--select-list">
           <li v-for="(type, index) in ['食品', '自訂食品', '我的書籤']" :key="index"
           :class="{ 'search--select-selected': foodType==type }"
-          @click="switchFoodType(type)"
+          @click="setFoodType(type)"
           >
             <input id="type" type="radio">
             <label for="type">{{type}}</label>
@@ -49,34 +49,14 @@
             <p>找不到結果，請重新輸入不同關鍵字再試一次!</p>
           </div>
           <div class="results__list-items" v-else>
-            <div v-for="food in foods" :key="food.id" 
-            class="results__item"
-            :class="{'results__item--select': selectFood&&selectFood.id==food.id}"
-            @click="switchSelectFood(food)"
+            <results-item v-for="food in pagingFoods" :key="food.id"
+            :food="food"
+            :selectFood="selectFood"
+            @select-food="trySelectFood"
+            @update-likes="tryUpdateLikes"
             >
-              <div class="results__item--header">
-                <div class="results__item--header-name">{{food.name}}</div>
-                <div class="results__item--header-marks">
-                  <div class="results__item--header-customMark">自訂</div>
-                  <div class="results__item--header-bookmark">
-                    <img src="@/assets/img/book-mark.svg">
-                  </div>
-                </div>
-              </div>
-              <div class="results__item--kcal">
-                <div class="results__item--kcal-main">
-                  <span>{{food.nutrition.calories}}</span> kcal
-                </div>
-                <div class="results__item--kcal-sub"><span>/</span>{{food.perUnitWeight}}g</div>
-              </div>
-              <div class="results__item--intakes">
-                <div class="results__item--intakeItem">碳水化合物<span>{{food.nutrition.carbohydrates}}g</span></div>
-                <div class="results__item--intakeItem">蛋白質<span>{{food.nutrition.protein}}g</span></div>
-                <div class="results__item--intakeItem">脂肪<span>{{food.nutrition.fat}}g</span></div>
-                <div class="results__item--intakeItem">糖<span>{{food.nutrition.sugar}}g</span></div>
-                <div class="results__item--intakeItem">納<span>{{food.nutrition.sodium}}mg</span></div>
-              </div>
-            </div>
+
+            </results-item>
           </div>
         </div>
         <div class="results__food" v-if="selectFood">
@@ -89,7 +69,7 @@
         <div class="results__pagination--container">
           <span
           v-if="curentPage > 1"
-          @click="switchPagination(curentPage-1)"
+          @click="setPagination(curentPage-1)"
           class="results__pagination--arrow results__pagination--arrow-left"
           >
             <i class="fa-solid fa-chevron-left"></i>
@@ -98,14 +78,14 @@
             <li v-for="page in pagingNumber" :key="page" 
             class="results__pagination--item"
             :class="{'results__pagination--selectItem': curentPage==page}"
-            @click="switchPagination(page)"
+            @click="setPagination(page)"
             >
               {{page}}
             </li>
           </ul>
           <span
           v-if="curentPage < Math.ceil(count/6)"
-          @click="switchPagination(curentPage+1)"
+          @click="setPagination(curentPage+1)"
           class="results__pagination--arrow results__pagination--arrow-right"
           >
             <i class="fa-solid fa-chevron-right"></i>
@@ -117,6 +97,7 @@
       <food-detail :selectFood="selectFood"></food-detail>
     </base-light-box>
   </section>
+  <base-spinner v-if="isLoading"></base-spinner>
 </template>
 
 <script>
@@ -124,10 +105,12 @@ import { ref, computed } from 'vue'
 import { useStore } from '@/store'
 import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 import FoodDetail from '@/components/FoodDetail.vue'
+import ResultsItem from '@/components/ResultsItem.vue'
 export default {
   components: {
+    BaseLightBox,
     FoodDetail,
-    BaseLightBox
+    ResultsItem
   },
   setup() {
     const store = useStore()
@@ -143,7 +126,17 @@ export default {
     const showBox = ref(false)
     const padMode = ref(false)
 
-    // 設置分頁數
+    const isLoading = computed(() => store.isLoading)
+
+    // 各分頁食品結果
+    const pagingFoods = computed(() => {
+      const page = curentPage.value
+      const results_per_foods = 6
+      const start = (page - 1) * results_per_foods //0
+      const end = page * results_per_foods //5
+      return foods.value.slice(start, end)
+    })
+    // 分頁數
     const pagingNumber = computed(() => {
       let min = 1, 
           page_length = 4,
@@ -157,25 +150,18 @@ export default {
       start = Math.min(start, min + total_pages - page_length)
       return Array.from({length: page_length}, (el, i) => start + i)
     })
-
     // 設置搜尋下拉選單
-    const switchFoodMemu = () => {
+    const setFoodMemu = () => {
       isOpenMeun.value = !isOpenMeun.value
     }
     // 設置搜尋食品類別
-    const switchFoodType = (type) => {
+    const setFoodType = (type) => {
       isOpenMeun.value = false
       foodType.value = type
     }
-    // 設置選擇的食品
-    const switchSelectFood = (food) => {
-      selectFood.value = food
-      showBox.value = true
-    }
     // 設置分頁
-    const switchPagination = (page) => {
+    const setPagination = (page=1) => {
       curentPage.value = page
-      getTypeFoods()
     }
     // 搜尋食品
     const starSearchFood = () => {
@@ -190,13 +176,16 @@ export default {
       selectFood.value = null
       showBox.value = false
     }
-    // 取得食品、自訂食品列表
+    // 取得食品、自訂食品、書籤列表
+    //!TODO:書籤列表暫時無法撈取頁數
     const getTypeFoods = async() => {
-      let data, paramData = { search: useKeyword.value, page: curentPage.value }
+      let data, paramData = { search: useKeyword.value }
       if (foodType.value=='食品') {
         data = await store.getAllFood(paramData)
       }else if (foodType.value=='自訂食品') {
         data = await store.getAllCustomFood(paramData)
+      }else {
+        data = await store.getAllLikes(paramData)
       }
       foods.value = data.list
       count.value = data.count
@@ -204,10 +193,19 @@ export default {
       resetSearch()
 
       if (foods.value.length==0 || window.innerWidth < 1023) return
-      switchSelectFood(foods.value[0])
+      trySelectFood(foods.value[0])
     }
-  
-
+    // 更新食品書籤(同步更新DOM)
+    const tryUpdateLikes = (newFood) => {
+      foods.value.find(food => {
+        if (food.id == newFood.id) food.likes = newFood.likes
+      })
+    }
+    // 設置選擇的食品
+    const trySelectFood = (food) => {
+      selectFood.value = food
+      showBox.value = true
+    }
     const tryClose = () => {
       showBox.value = false
     }
@@ -238,12 +236,15 @@ export default {
       isSearchFood,
       showBox,
       padMode,
+      isLoading,
+      pagingFoods,
       pagingNumber,
-      switchFoodMemu,
-      switchFoodType,
+      setFoodMemu,
+      setFoodType,
       starSearchFood,
-      switchSelectFood,
-      switchPagination,
+      setPagination,
+      trySelectFood,
+      tryUpdateLikes,
       tryClose
     }
   }

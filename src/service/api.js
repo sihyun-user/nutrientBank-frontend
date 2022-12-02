@@ -33,17 +33,19 @@ export const apiGetUserInfo = () => userRequest.get(`/user/profile`)
 // 取得今月營養日記
 export const apiGetDiarys = payload => userRequest.get(`/diarys?entry_date=${payload}`)
 // 新增一則營養日記
-export const apiCreateOneDiary = payload => userRequest.post(`/diary/${payload.oodId}`, payload.paramData)
+export const apiCreateOneDiary = payload => userRequest.post(`/diary/${payload.foodId}`, payload.paramData)
 
 // 取得食品列表
-export const apiGetAllfFood = payload => userRequest.get(`/foods?search=${payload.search}&page=${payload.page}`)
+export const apiGetAllfFood = payload => userRequest.get(`/foods?search=${payload.search}`)
 
 // 取得自訂食品列表
-export const apiGetAllCustomFood = payload => userRequest.get(`/customFoods?search=${payload.search}&page=${payload.page}`)
+export const apiGetAllCustomFood = payload => userRequest.get(`/customFoods?search=${payload.search}`)
 
 // 取得食品書籤列表
-export const apiGetAllLikes = () => userRequest.get(`/likes`)
+export const apiGetAllLikes = payload => userRequest.get(`/likes?search=${payload.search}`)
+// 取得一筆食品書籤
+export const apiGetOneLike = payload => userRequest.get(`/like/${payload.foodId}?type=${payload.foodType}`)
 // 新增一筆食品書籤
-export const apiAddFoodLike = payload => userRequest.get(`/like/${payload.foodId}?type=${payload.foodType}`)
+export const apiAddFoodLike = payload => userRequest.post(`/like/${payload.foodId}?type=${payload.foodType}`)
 // 取消一筆食品書籤
-export const apiCancelFoodLike = payload => userRequest.get(`/unlike/${payload.foodId}?type=${payload.foodType}`)
+export const apiCancelFoodLike = payload => userRequest.post(`/unlike/${payload.foodId}?type=${payload.foodType}`)

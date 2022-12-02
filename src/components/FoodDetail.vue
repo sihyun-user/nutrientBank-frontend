@@ -12,15 +12,15 @@
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">攝取份數</div>
         <div class="food-detail__form-item--quantity">
-          <i class="fa-solid fa-minus" @click="switchQuantity('sub')"></i>
+          <i class="fa-solid fa-minus" @click="setQuantity('sub')"></i>
           <input type="number" v-model="quantity" oninput="if(value.length>2)value=value.slice(0,2)">
-          <i class="fa-solid fa-plus" @click="switchQuantity('add')"></i>
+          <i class="fa-solid fa-plus" @click="setQuantity('add')"></i>
         </div>
       </div>
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">分類</div>
         <div class="food-detail__form-item--select">
-          <div class="food-detail__form-item--select-text" @click="switchMealMemu">
+          <div class="food-detail__form-item--select-text" @click="setMealMemu">
             <span>{{mealType}}</span>
             <div class="food-detail__form-item--select-icon">
               <i v-if="isOpenMeal" class="fa-solid fa-angle-up"></i>
@@ -30,7 +30,7 @@
           <ul v-if="isOpenMeal" class="food-detail__form-item--select-list">
             <li v-for="(type, index) in ['早餐', '午餐', '晚餐', '點心']" :key="index"
             :class="{ 'food-detail__form-item--select-selected': mealType==type }"
-            @click="switchMealType(type)"
+            @click="setMealType(type)"
             >
               <input v-model="mealType" id="type" type="radio">
               <label for="type">{{type}}</label>
@@ -45,7 +45,7 @@
             <i  class="fa-regular fa-calendar"></i>
           </div>
           <datepicker 
-          v-model="meatlDate" 
+          v-model="mealDate" 
           inputFormat="yyyy/MM/dd"
           class="food-detail__form-item--date-picker"
           >
@@ -90,6 +90,7 @@
 
 <script>
 import { ref, computed, toRefs, watch } from 'vue'
+import { useStore } from '@/store'
 import { clacIntakes, clacIntakePercent } from '@/hooks/calcNutrition'
 import Datepicker from 'vue3-datepicker'
 export default {
@@ -102,10 +103,11 @@ export default {
     Datepicker
   },
   setup(props) {
+    const store = useStore()
     const quantity = ref(1)
     const mealType = ref('早餐')
     const isOpenMeal = ref(false)
-    const meatlDate = ref(new Date())
+    const mealDate = ref(new Date())
     const { selectFood } = toRefs(props)
 
     watch(selectFood, () => quantity.value=1)
@@ -114,7 +116,7 @@ export default {
     const totalPerUnitWeight = computed(() => +selectFood.perUnitWeight * quantity.value.toFixed(1))
     
     // 設置份數
-    const switchQuantity = (type) => {
+    const setQuantity = (type) => {
       let total = quantity.value
       if(type == 'add') {
         total +=1
@@ -126,11 +128,11 @@ export default {
       quantity.value = total
     }
     // 設置餐別下拉選單
-    const switchMealMemu = () => {
+    const setMealMemu = () => {
       isOpenMeal.value = !isOpenMeal.value
     }
     // 設置餐別
-    const switchMealType = (type) => {
+    const setMealType = (type) => {
       isOpenMeal.value = false
       mealType.value = type
     }
@@ -157,8 +159,25 @@ export default {
       return calc_data
     }
     // 新增一筆營養日記
-    const createOneDiary = async() => {
-      store.createOneDiary()
+    //TODO 暫不能選擇時間
+    const createOneDiary = () => {
+      let meal
+      if(mealType.value=='早餐') {
+        meal = 'breakfast'
+      }else if(mealType.value=='午餐') {
+        meal = 'lunch'
+      }else if(mealType.value=='晚餐') {
+        meal = 'dinner'
+      } else {
+        meal = 'dessert'
+      }
+      const foodId = selectFood.value.id
+      const paramData = { 
+        meal, 
+        type: selectFood.value.type, 
+        quantity: quantity.value 
+      }
+      store.createOneDiary({foodId, paramData})
     }
 
     document.addEventListener('click',(e) => {
@@ -172,13 +191,13 @@ export default {
     return {
       quantity,
       mealType,
-      meatlDate,
+      mealDate,
       isOpenMeal,
       totalNutrition,
       totalPerUnitWeight,
-      switchQuantity,
-      switchMealMemu,
-      switchMealType,
+      setQuantity,
+      setMealMemu,
+      setMealType,
       createOneDiary,
       ...toRefs(props.selectFood),
     }

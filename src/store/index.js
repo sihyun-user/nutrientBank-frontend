@@ -111,23 +111,24 @@ export const useStore = defineStore('main', {
     async createOneDiary(payload) {
       try {
         this.$patch({ isLoading: true })
-        const { foodId, paramData } = payload
+        const { foodId, entry_date, paramData } = payload
 
-        const res = await appApi.apiCreateOneDiary({ foodId, paramData })
+        const res = await appApi.apiCreateOneDiary({ foodId, entry_date, paramData })
 
         this.$patch({ isLoading: false })
         checkConsole('新增一筆營養日記成功', res.data)
+        alert('新增營養日記成功')
       } catch (error) {
         appError(error, '新增一筆營養日記失敗')
+        alert('新增營養日記失敗，請稍後再試')
       }
     },
     // 取得食品列表
     async getAllFood(payload) {
       try {
-        this.$patch({ isLoading: ture })
-        const { search, page } = payload
+        this.$patch({ isLoading: true })
 
-        const res = await appApi.apiGetAllfFood({ search, page })
+        const res = await appApi.apiGetAllfFood(payload)
 
         this.$patch({ isLoading: false })
         checkConsole('取得食品列表成功', res.data)
@@ -140,9 +141,8 @@ export const useStore = defineStore('main', {
     async getAllCustomFood(payload) {
       try {
         this.$patch({ isLoading: true })
-        const { search, page } = payload
 
-        const res = await appApi.apiGetAllCustomFood({ search, page })
+        const res = await appApi.apiGetAllCustomFood(payload)
 
         this.$patch({ isLoading: false })
         checkConsole('取得自訂食品列表成功', res.data)
@@ -152,11 +152,11 @@ export const useStore = defineStore('main', {
       }
     },
     // 取得食品書籤列表
-    async getAllLikes() {
+    async getAllLikes(payload) {
       try {
         this.$patch({ isLoading: true })
 
-        const res = await appApi.apiGetAllLikes()
+        const res = await appApi.apiGetAllLikes(payload)
 
         this.$patch({ isLoading: false })
         checkConsole('取得食品書籤列表成功', res.data)
@@ -165,23 +165,48 @@ export const useStore = defineStore('main', {
         appError(error, '取得食品書籤列表失敗')
       }
     },
+    // 取得一筆食品書籤
+    async getOneLike(payload) {
+      try {
+        this.$patch({ isLoading: true })
+        const { foodId, foodType } = payload
+
+        const res = await appApi.apiGetOneLike({foodId, foodType})
+
+        this.$patch({ isLoading: false })
+        checkConsole('取得一筆食品書籤成功', res.data)
+        return res.data.data
+      } catch (error) {
+        appError(error, '取得一筆食品書籤失敗')
+      }
+    },
     // 新增一筆食品書籤
     async addFoodLike(payload) {
       try {
         this.$patch({ isLoading: true })
-        const { foodType } = payload
+        const { foodId, foodType } = payload
 
-        const res = await appApi.apiAddFoodLike(foodType)
+        const res = await appApi.apiAddFoodLike({foodId, foodType})
 
         this.$patch({ isLoading: false })
-        checkConsole('取得食品書籤列表成功', res.data)
+        checkConsole('新增一筆食品書籤成功', res.data)
       } catch (error) {
         appError(error, '新增一筆食品書籤失敗')
       }
     },
     // 刪除一筆食品書籤
-    async cancelFoodLike() {
+    async cancelFoodLike(payload) {
+      try {
+        this.$patch({ isLoading: true })
+        const { foodId, foodType } = payload
 
+        const res = await appApi.apiCancelFoodLike({foodId, foodType})
+
+        this.$patch({ isLoading: false })
+        checkConsole('刪除一筆食品書籤成功', res.data)
+      } catch (error) {
+        appError(error, '新增一筆食品書籤失敗')
+      }
     }
   },
   getters: {
