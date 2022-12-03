@@ -96,17 +96,17 @@
   }
 }
 
-@mixin baseSelect($width:180px, $height:42px, $iconSize:12px, $boderColor:$color-gray-2) {
+@mixin baseSelect($width:180px, $boderColor:$color-gray-2) {
   position: relative;
   width: $width;
   
   &-text {
     width: 100%;
-    height: $height;
+    height: 44px;
     background-color: $color-white;
     border: 1px solid $boderColor;
     border-radius: 7px;
-    padding: 4px 12px;
+    padding:  8px 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -114,7 +114,7 @@
   }
 
   &-icon {
-    font-size: $iconSize;
+    font-size: 16px;
   }
 
   &-list {
@@ -153,24 +153,24 @@
   }
 }
 
-@mixin baseSearch($width:180px, $height:42px, $iconSize:12px, $boderColor:$color-gray-2) {
+@mixin baseSearch($width:180px, $boderColor:$color-gray-2) {
   position: relative;
   width: $width;
   
   &-text {
     width: 100%;
-    height: $height;
+    height: 44px;
     background-color: $color-white;
     border: 1px solid $boderColor;
     border-radius: 7px;
-    padding: 4px 12px;
+    padding:  8px 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
   &-icon {
-    font-size: $iconSize;
+    font-size: 16px;
     cursor: pointer;
   }
 
@@ -186,5 +186,76 @@
       color: $color-primary;
       transform: translateY(3px);
     }
+  }
+}
+
+@mixin baseText($width:180px, $boderColor:$color-gray-2) {
+  width: $width;
+  
+  &-text {
+    width: 100%;
+    height: 44px;
+    background-color: $color-white;
+    border: 1px solid $boderColor;
+    border-radius: 7px;
+    padding:  8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  input {
+    font-size: 16px;
+    font-weight: $regular;
+    color: $color-primary;
+    vertical-align: middle;
+
+    &::placeholder {
+      font-size: 16px;
+      font-weight: $regular;
+      color: $color-primary;
+      transform: translateY(3px);
+    }
+  }
+}
+
+@mixin baseDatePicker($width:180px, $borderColor: $color-gray-2) {
+  .date-picker {
+    position: relative;
+    width: 100%;
+  
+    &__icon {
+      font-size: 12px;
+      position: absolute;
+      z-index: 11;
+      top: 10px;
+      right: 12px;
+    }
+  
+    &__input {
+      font-size: 16px;
+      color: $color-primary;
+      width: $width;
+      height: 44px;
+      background-color: $color-white;
+      border: 1px solid $borderColor;
+      border-radius: 7px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-family: Noto Sans TC,黑體-繁,Apple LiGothic Medium,PingFang,微軟正黑體,Microsoft JhengHei,WenQuanYi Zen Hei,helvetica,Arial,sans-serif;
+    }
+  
+    .v3dp__popout {
+      position: absolute;
+      right: 0;
+      top: 48px;
+      z-index: 12;
+    }
+  
+    --vdp-text-color: #828282;
+    --vdp-hover-color: #828282;
+    --vdp-hover-bg-color: #F2F2F2;
+    --vdp-selected-bg-color: #FBA06E;
+    --vdp-border-radius: 7px;
   }
 }

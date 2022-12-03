@@ -41,15 +41,7 @@
       <div class="food-detail__form-item">
         <div class="food-detail__form-item--name">日期</div>
         <div class="food-detail__form-item--date">
-          <div class="food-detail__form-item--date-icon">
-            <i  class="fa-regular fa-calendar"></i>
-          </div>
-          <datepicker 
-          v-model="mealDate" 
-          inputFormat="yyyy/MM/dd"
-          class="food-detail__form-item--date-picker"
-          >
-          </datepicker>
+          <base-datePicker :date="mealDate" @pick-time="tryPickTime"></base-datePicker>
         </div>
       </div>
       <div class="food-detail__form-btn">
@@ -93,6 +85,7 @@ import { ref, computed, toRefs, watch } from 'vue'
 import { useStore } from '@/store'
 import { clacIntakes, clacIntakePercent } from '@/hooks/calcNutrition'
 import Datepicker from 'vue3-datepicker'
+import BaseDatePicker from '@/components/ui/BaseDatePicker.vue'
 export default {
   props: {
     selectFood: {
@@ -100,14 +93,15 @@ export default {
     }
   },
   components: {
-    Datepicker
+    Datepicker,
+    BaseDatePicker
   },
   setup(props) {
     const store = useStore()
     const quantity = ref(1)
     const mealType = ref('早餐')
     const isOpenMeal = ref(false)
-    const mealDate = ref(new Date())
+    const mealDate = ref(Date.now())
     const { selectFood } = toRefs(props)
 
     watch(selectFood, () => quantity.value=1)
@@ -180,6 +174,11 @@ export default {
       store.createOneDiary({foodId, paramData})
     }
 
+    const tryPickTime = (payload) => {
+      mealDate.value = payload
+      console.log('mealDate', payload)
+    }
+
     document.addEventListener('click',(e) => {
       const $select = e.target.closest('.food-detail__form-item--select')
       if($select) return
@@ -199,6 +198,7 @@ export default {
       setMealMemu,
       setMealType,
       createOneDiary,
+      tryPickTime,
       ...toRefs(props.selectFood),
     }
   }

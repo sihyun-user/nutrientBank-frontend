@@ -1,7 +1,15 @@
 .user-wall {
-  padding: 40px 0 66px;
+  padding: 0 12px;
+  background-color: $color-gray-5;
 
-  &__row {
+  &__container {
+    width: 1295px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 40px 0 66px;
+  }
+
+  &__wrapper {
     display: flex;
     justify-content: space-between;
 

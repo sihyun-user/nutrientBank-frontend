@@ -18,6 +18,46 @@
   padding: 22px 10px 2px;
 }
 
+.radioMode {
+  font-size: 16px;
+  font-weight: $regular;
+  display: flex;
+  align-items: center;
+
+  &__wrap {
+    position: relative;
+  }
+
+  & input[type="radio"] {
+    display: none;
+
+    & + span::before {
+      content: '';
+      display: flex;
+      width: 20px;
+      height: 20px;
+      border-radius: 100%;
+      border: 2px solid $color-gray-3;
+      margin-right: 10px;
+    }
+
+    &:checked {
+      & + span::after {
+        content: '';
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        background-color: $color-primary;
+  
+        position: absolute;
+        left: 5px;
+        top: 5px;
+      }
+    }
+  }
+}
+
 .baseCard {
   @include baseCard;
 

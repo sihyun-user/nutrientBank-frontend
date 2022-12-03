@@ -1,10 +1,6 @@
 <template>
   <the-header></the-header>
-  <section class="main">
-    <main class="main__container">
-      <router-view></router-view>
-    </main>
-  </section>
+  <router-view></router-view>
 </template>
 
 <script>

@@ -1,0 +1,155 @@
+.user-info {
+  padding: 0 12px;
+
+  &__container {
+    width: 1295px;
+    max-width: 100%;
+    margin: 0 auto;
+    height: calc(100vh - 88px);
+    padding: 70px 0 62px;
+    display: flex;
+  }
+
+  .info-aside {
+    width: 305px;
+    height: 100%;
+    font-weight: $regular;
+    border-right: 1px solid $color-gray-3;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    &__photo {
+      position: relative;
+      width: 105px;
+      height: 105px;
+      display: flex;
+      justify-content: center;
+
+      &--img {
+        i {
+          font-size: 105px;
+        }
+      }
+
+      &--icon {
+        width: 25px;
+        height: 25px;
+        background-color: $color-white;
+        border-radius: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: absolute;
+        right: -8px;
+        bottom: 10px;
+
+        i {
+          font-size: 14px;
+        }
+      }
+    }
+
+    &__name {
+      font-size: 20px;
+      font-weight: $bold;
+      color: $color-gray-4;
+      margin: 16px 0 8px;
+    }
+
+    &__pagination {
+      margin-top: 64px;
+
+      &--item {
+        line-height: 1;
+        margin-bottom: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        i {
+          font-size: 20px;
+          color: $color-gray-1;
+          margin-right: 16px;
+        }
+
+        span {
+          font-size: 18px;
+        }
+      }
+
+      &--item-active {
+        font-weight: $bold;
+        color: $color-gray-4;
+
+        i {
+          color: $color-gray-4;
+        }
+      }
+    }
+  }
+
+  .info-personal {
+    width: 770px;
+    padding: 0 24px;
+    border: 1px solid red;
+
+    &__heder {
+      font-size: 20px;
+      font-weight: $bold;
+      margin: 12px 0 50px;
+    }
+
+    &__form {
+      // width: 400px;
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__ented {
+      @include baseSearch($width:48%, $boderColor:$color-gray-3);
+      position: relative;
+      margin-bottom: 25px;
+
+      &-label {
+        display: block;
+        margin-bottom: 12px;
+      }
+
+      &-wrap {
+        position: relative;
+      }
+
+      &-unit {
+        position: absolute;
+        right: 11px;
+        top: 11px;
+      }
+    }
+
+    &__date {
+      @include baseDatePicker($width:100%, $borderColor:$color-gray-3);
+    }
+
+    &__select {
+      @include baseSelect($width:100%, $boderColor:$color-gray-3);
+    }
+
+    &__sex {
+      display: flex;
+      height: 44px;
+
+      &> label {
+        margin-right: 20px;
+      }
+    }
+
+    &__btn {
+      margin-top: 20px;
+    }
+  }
+}

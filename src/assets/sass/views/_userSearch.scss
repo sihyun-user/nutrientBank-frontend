@@ -1,5 +1,14 @@
 .search-results {
-  padding: 40px 0 50px;
+  padding: 0 12px;
+  background-color: $color-gray-5;
+
+  &__container {
+    width: 1295px;
+    max-width: 100%;
+    margin: 0 auto;
+    height: calc(100vh - 88px);
+    padding: 40px 0 50px;
+  }
 
   .search {
     width: 636px;
@@ -13,19 +22,19 @@
     }
 
     &--select {
-      @include baseSelect($width:196px, $height:44px, $iconSize:16px, $boderColor:$color-gray-3);
+      @include baseSelect($width:196px, $boderColor:$color-gray-3);
 
       @include mobile {
-        @include baseSelect($width:100%, $height:44px, $iconSize:16px, $boderColor:$color-gray-3);
+        @include baseSelect($width:100%, $boderColor:$color-gray-3);
         margin-bottom: 17px;
       }
     }
 
     &--search {
-      @include baseSearch($width:416px, $height:44px, $iconSize:16px, $boderColor:$color-gray-3);
+      @include baseSearch($width:416px, $boderColor:$color-gray-3);
 
       @include mobile {
-        @include baseSearch($width:100%, $height:44px, $iconSize:16px, $boderColor:$color-gray-3);
+        @include baseSearch($width:100%, $boderColor:$color-gray-3);
       }
     }
   }

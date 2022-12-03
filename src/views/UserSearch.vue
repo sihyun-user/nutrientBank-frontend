@@ -1,101 +1,103 @@
 <template>
   <section class="search-results">
-    <form class="search" @submit.prevent="starSearchFood">
-      <div class="search--select">
-        <div class="search--select-text" @click="setFoodMemu">
-          <span>{{foodType}}</span>
-          <div class="search--select-icon">
-            <i v-if="isOpenMeun" class="fa-solid fa-angle-up"></i>
-            <i v-else class="fa-solid fa-angle-down"></i>
+    <div class="search-results__container">
+      <form class="search" @submit.prevent="starSearchFood">
+        <div class="search--select">
+          <div class="search--select-text" @click="setFoodMemu">
+            <span>{{foodType}}</span>
+            <div class="search--select-icon">
+              <i v-if="isOpenMeun" class="fa-solid fa-angle-up"></i>
+              <i v-else class="fa-solid fa-angle-down"></i>
+            </div>
           </div>
-        </div>
-        <ul v-if="isOpenMeun" class="search--select-list">
-          <li v-for="(type, index) in ['食品', '自訂食品', '我的書籤']" :key="index"
-          :class="{ 'search--select-selected': foodType==type }"
-          @click="setFoodType(type)"
-          >
-            <input id="type" type="radio">
-            <label for="type">{{type}}</label>
-          </li>
-        </ul>
-      </div>
-      <div class="search--search">
-        <div class="search--search-text">
-          <input type="text" placeholder="食品搜尋..." v-model="enteredKeyword">
-          <button type="submit" class="search--search-icon">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </div>
-      </div>
-    </form>
-    <div class="not-results " v-if="!isSearchFood">
-      <p>想找什麼內容，首先搜索一下食品吧！</p>
-    </div>
-    <div class="results" v-else>
-      <div class="results__header">
-        <div class="results__header--text">
-          <span v-if="useKeyword!==''">「{{useKeyword}}」</span>共有 {{count}} 筆搜尋結果
-        </div>
-        <div class="results__header--btn">
-          <div class="baseWhiteBtn">
-            <i class="fa-solid fa-plus"></i>
-            <span>新增自訂食品</span>
-          </div>
-        </div>
-      </div>
-      <div class="results__content">
-        <div class="results__list">
-          <div class="results__list-error" v-if="foods.length==0">
-            <p>找不到結果，請重新輸入不同關鍵字再試一次!</p>
-          </div>
-          <div class="results__list-items" v-else>
-            <results-item v-for="food in pagingFoods" :key="food.id"
-            :food="food"
-            :selectFood="selectFood"
-            @select-food="trySelectFood"
-            @update-likes="tryUpdateLikes"
+          <ul v-if="isOpenMeun" class="search--select-list">
+            <li v-for="(type, index) in ['食品', '自訂食品', '我的書籤']" :key="index"
+            :class="{ 'search--select-selected': foodType==type }"
+            @click="setFoodType(type)"
             >
-
-            </results-item>
-          </div>
-        </div>
-        <div class="results__food" v-if="selectFood">
-          <div class="results__food--content">
-            <food-detail :selectFood="selectFood"></food-detail>
-          </div>
-        </div>
-      </div>
-      <div class="results__pagination" v-if="foods.length!==0">
-        <div class="results__pagination--container">
-          <span
-          v-if="curentPage > 1"
-          @click="setPagination(curentPage-1)"
-          class="results__pagination--arrow results__pagination--arrow-left"
-          >
-            <i class="fa-solid fa-chevron-left"></i>
-          </span>
-          <ul class="results__pagination--list">
-            <li v-for="page in pagingNumber" :key="page" 
-            class="results__pagination--item"
-            :class="{'results__pagination--selectItem': curentPage==page}"
-            @click="setPagination(page)"
-            >
-              {{page}}
+              <input id="type" type="radio">
+              <label for="type">{{type}}</label>
             </li>
           </ul>
-          <span
-          v-if="curentPage < Math.ceil(count/6)"
-          @click="setPagination(curentPage+1)"
-          class="results__pagination--arrow results__pagination--arrow-right"
-          >
-            <i class="fa-solid fa-chevron-right"></i>
-          </span>
+        </div>
+        <div class="search--search">
+          <div class="search--search-text">
+            <input type="text" placeholder="食品搜尋..." v-model="enteredKeyword">
+            <button type="submit" class="search--search-icon">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="not-results " v-if="!isSearchFood">
+        <p>想找什麼內容，首先搜索一下食品吧！</p>
+      </div>
+      <div class="results" v-else>
+        <div class="results__header">
+          <div class="results__header--text">
+            <span v-if="useKeyword!==''">「{{useKeyword}}」</span>共有 {{count}} 筆搜尋結果
+          </div>
+          <div class="results__header--btn">
+            <div class="baseWhiteBtn">
+              <i class="fa-solid fa-plus"></i>
+              <span>新增自訂食品</span>
+            </div>
+          </div>
+        </div>
+        <div class="results__content">
+          <div class="results__list">
+            <div class="results__list-error" v-if="foods.length==0">
+              <p>找不到結果，請重新輸入不同關鍵字再試一次!</p>
+            </div>
+            <div class="results__list-items" v-else>
+              <results-item v-for="food in pagingFoods" :key="food.id"
+              :food="food"
+              :selectFood="selectFood"
+              @select-food="trySelectFood"
+              @update-likes="tryUpdateLikes"
+              >
+  
+              </results-item>
+            </div>
+          </div>
+          <div class="results__food" v-if="selectFood">
+            <div class="results__food--content">
+              <food-detail :selectFood="selectFood"></food-detail>
+            </div>
+          </div>
+        </div>
+        <div class="results__pagination" v-if="foods.length!==0">
+          <div class="results__pagination--container">
+            <span
+            v-if="curentPage > 1"
+            @click="setPagination(curentPage-1)"
+            class="results__pagination--arrow results__pagination--arrow-left"
+            >
+              <i class="fa-solid fa-chevron-left"></i>
+            </span>
+            <ul class="results__pagination--list">
+              <li v-for="page in pagingNumber" :key="page" 
+              class="results__pagination--item"
+              :class="{'results__pagination--selectItem': curentPage==page}"
+              @click="setPagination(page)"
+              >
+                {{page}}
+              </li>
+            </ul>
+            <span
+            v-if="curentPage < Math.ceil(count/6)"
+            @click="setPagination(curentPage+1)"
+            class="results__pagination--arrow results__pagination--arrow-right"
+            >
+              <i class="fa-solid fa-chevron-right"></i>
+            </span>
+          </div>
         </div>
       </div>
+      <base-light-box v-if="padMode && showBox" @close="tryClose">
+        <food-detail :selectFood="selectFood"></food-detail>
+      </base-light-box>
     </div>
-    <base-light-box v-if="padMode && showBox" @close="tryClose">
-      <food-detail :selectFood="selectFood"></food-detail>
-    </base-light-box>
   </section>
   <base-spinner v-if="isLoading"></base-spinner>
 </template>

@@ -1,15 +1,15 @@
 <template>
   <section class="user-wall">
-    <week-calendar
-    :weekNutrition="weekNutrition"
-    :selectedDate="selectedDate" 
-    :selectedWeekly="selectedWeekly" 
-    @update-weekly="tryChangeWeekly" 
-    @update-date="tryUpdateDate"
-    >
-    </week-calendar>
-    <div class="user-wall__content">
-      <div class="user-wall__row">
+    <div class="user-wall__container">
+      <week-calendar
+      :weekNutrition="weekNutrition"
+      :selectedDate="selectedDate"
+      :selectedWeekly="selectedWeekly"
+      @update-weekly="tryChangeWeekly"
+      @update-date="tryUpdateDate"
+      >
+      </week-calendar>
+      <div class="user-wall__wrapper">
         <day-record
         :monthDiarys="monthDiarys"
         :selectedDate="selectedDate"
@@ -22,7 +22,7 @@
         >
         </nutrition-record>
       </div>
-      <div class="user-wall__row">
+      <div class="user-wall__wrapper">
         <sport-record></sport-record>
         <week-record :weekNutrition="weekNutrition"></week-record>
       </div>

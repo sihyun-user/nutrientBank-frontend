@@ -9,8 +9,16 @@ const routes = [
     redirect: '/user-wall',
     component: () => import('@/views/UserCenter.vue'),
     children: [
-      { path: '/user-wall', meta: { requiresAuth: true }, component: () => import('@/views/userWall.vue') },
+      { path: '/user-wall', meta: { requiresAuth: true }, component: () => import('@/views/UserWall.vue') },
       { path: '/user-search', meta: { requiresAuth: true }, component: () => import('@/views/UserSearch.vue') }
+    ]
+  },
+  {
+    path: '/info-personal',
+    redirect: '/info-personal',
+    component: () => import('@/views/InfoCenter.vue'),
+    children: [
+      { path: '/info-personal', meta: { requiresAuth: true }, component: () => import('@/views/InfoPersonal.vue') },
     ]
   },
   { path: '/:notFound(.*)', redirect: '/auth' }

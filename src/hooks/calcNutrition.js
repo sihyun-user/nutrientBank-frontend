@@ -8,12 +8,12 @@ const userHealthInfo = {
   age: 25, 
   sex: 0, 
   sportType: 'underSport',
-  fitness_goal: 'gentleLoseFat'
+  fitnessType: 'gentleLoseFat'
 }
 
 // 計算每日營養攝取量
 export const clacIntakes = () => {
-  const { height, weight, age, sex, sportType, fitness_goal } = userHealthInfo
+  const { height, weight, age, sex, sportType, fitnessType } = userHealthInfo
   const dayIntakes = {}
 
   // 1) 基礎代謝率(BMR)
@@ -36,15 +36,15 @@ export const clacIntakes = () => {
 
   // 3) 每日熱量建議攝入量
   let calories
-  if (fitness_goal == 'loseFat') {
+  if (fitnessType == 'loseFat') {
     calories = TDEE * 0.8
-  } else if (fitness_goal == 'gentleLoseFat') {
+  } else if (fitnessType == 'gentleLoseFat') {
     calories = TDEE * 0.9
-  } else if (fitness_goal == 'keepWeight') {
+  } else if (fitnessType == 'keepWeight') {
     calories = TDEE * 1
-  } else if (fitness_goal == 'gentleAddFat') {
+  } else if (fitnessType == 'gentleAddFat') {
     calories = TDEE * 1.1
-  } else if (fitness_goal == 'addFat') {
+  } else if (fitnessType == 'addFat') {
     calories = TDEE * 1.2
   }
   dayIntakes['calories'] = Math.round(calories)

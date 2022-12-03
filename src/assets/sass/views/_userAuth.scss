@@ -1,81 +1,78 @@
 .auth {
-  width: 100%;
-  min-height: 100vh;
-  padding: 0 20px;
-
-  display: flex;
-  justify-content: center;
+  padding: 0 12px;
 
   &__container {
     width: 380px;
     max-width: 100%;
-  }
-}
+    min-height: 100vh;
+    margin: 0 auto;
+    padding-top: 80px;
 
-.user {
-  padding-top: 80px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  @include mobile {
+    @include mobile {
     padding-top: 35px;
   }
-
-  &__logo {
-    width: 280px;
-
-    @include mobile {
-      width: 180px;
-    }
   }
-
-  &__form {
-    width: 100%;
-    margin-top: 50px;
-
-    @include mobile {
-      margin-top: 40px;
-    }
-    
+  
+  .user {
     display: flex;
     flex-direction: column;
-
-    &-title {
-      font-size: 24px;
-      font-weight: $regular;
-      margin-bottom: 20px;
-
+    align-items: center;
+  
+    &__logo {
+      width: 280px;
+  
       @include mobile {
-        font-size: 20px;
+        width: 180px;
       }
     }
-
-    &-entered {
-      margin-bottom: 20px;
-
-      label {
-        font-size: 14px;
-      }
-    }
-
-    &-errorMsg {
-      text-align: center;
-    }
-
-    &-btn {
-      @include baseBtn ($height: 44px);
+  
+    &__form {
       width: 100%;
-      margin-top: 20px;
-    }
-
-    &-direct {
-      text-align: center;
-      margin-top: 20px;
-
-      span {
-        text-decoration: underline;
-        cursor: pointer;
+      margin-top: 50px;
+  
+      @include mobile {
+        margin-top: 40px;
+      }
+      
+      display: flex;
+      flex-direction: column;
+  
+      &-title {
+        font-size: 24px;
+        font-weight: $regular;
+        margin-bottom: 20px;
+  
+        @include mobile {
+          font-size: 20px;
+        }
+      }
+  
+      &-entered {
+        margin-bottom: 20px;
+  
+        label {
+          font-size: 14px;
+        }
+      }
+  
+      &-errorMsg {
+        text-align: center;
+      }
+  
+      &-btn {
+        @include baseBtn ($height: 44px);
+        width: 100%;
+        margin-top: 20px;
+      }
+  
+      &-direct {
+        text-align: center;
+        margin-top: 20px;
+  
+        span {
+          text-decoration: underline;
+          cursor: pointer;
+        }
       }
     }
   }
