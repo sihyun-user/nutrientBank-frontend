@@ -5,11 +5,13 @@
       <div class="info-personal__row">
         <div class="info-personal__ented">
           <label class="info-personal__ented-label">姓名</label>
-          <input class="info-personal__ented-text" type="text" placeholder="請輸入姓名">
+          <input class="info-personal__ented-text" type="text" 
+          placeholder="請輸入姓名" v-model="personalInfo.name">
         </div>
         <div class="info-personal__ented">
           <label class="info-personal__ented-label">E-mail</label>
-          <input class="info-personal__ented-text" type="text" disabled="disabled">
+          <input class="info-personal__ented-text" type="text" disabled="disabled" 
+          v-model="personalInfo.email">
         </div>
       </div>
       <div class="info-personal__row">
@@ -24,14 +26,14 @@
           <div class="info-personal__sex">
             <label class="radio__label radioMode">
               <div class="radioMode__wrap">
-                <input type="radio" name="sex" value="male">
+                <input type="radio" name="sex" value="1" v-model="personalInfo.sex">
                 <span class="checkmark"></span>
               </div>
               男性
             </label>
             <label class="radio_label radioMode">
               <div class="radioMode__wrap">
-                <input type="radio" name="sex" value="female">
+                <input type="radio" name="sex" value="0" v-model="personalInfo.sex">
                 <span class="checkmark"></span>
               </div>
               女性
@@ -43,14 +45,17 @@
         <div class="info-personal__ented">
           <label class="info-personal__ented-label">身高</label>
           <div class="info-personal__ented-wrap">
-            <input class="info-personal__ented-text" type="text" placeholder="請輸入身高">
+            <input class="info-personal__ented-text" 
+            type="number" oninput="if(value.length>3)value=value.slice(0,3)"
+            placeholder="請輸入身高">
             <span class="info-personal__ented-unit">公分</span>
           </div>
         </div>
         <div class="info-personal__ented">
           <label class="info-personal__ented-label">體重</label>
           <div class="info-personal__ented-wrap">
-            <input class="info-personal__ented-text" type="text" placeholder="請輸入體重">
+            <input class="info-personal__ented-text" placeholder="請輸入體重"
+            type="number" oninput="if(value.length>2)value=value.slice(0,2)">
             <span class="info-personal__ented-unit">公斤</span>
           </div>
         </div>
@@ -60,41 +65,40 @@
           <label class="info-personal__ented-label">運動量</label>
           <div class="info-personal__select">
             <div class="info-personal__select-text" @click="setTypeMemu('sport')">
-              <span>{{sportType}}</span>
+              <span>{{sportText}}</span>
               <div class="info-personal__select-icon">
                 <i v-if="isOpenSportMenu" class="fa-solid fa-angle-up"></i>
                 <i v-else class="fa-solid fa-angle-down"></i>
               </div>
             </div>
             <ul v-if="isOpenSportMenu" class="info-personal__select-list">
-              <li v-for="(type, index) in sportArray" :key="index"
-              :class="{ 'info-personal__select-selected': sportType==type }"
+              <li v-for="(type, index) in sportData" :key="index"
+              :class="{ 'info-personal__select-selected': personalInfo.sportType==type.sportType }"
               @click="setTypeValue('sport', type)"
               >
                 <input id="type" type="radio">
-                <label for="type">{{type}}</label>
+                <label for="type">{{type.sportName}}</label>
               </li>
             </ul>
           </div>
         </div>
         <div class="info-personal__ented">
           <label class="info-personal__ented-label">健身目標</label>
-          <!-- <input class="info-personal__ented-text" type="text" placeholder="請選健身目標"> -->
           <div class="info-personal__select">
             <div class="info-personal__select-text" @click="setTypeMemu('fitness')">
-              <span>{{fitnessType}}</span>
+              <span>{{fitnessText}}</span>
               <div class="info-personal__select-icon">
                 <i v-if="isOpenFitnessMenu" class="fa-solid fa-angle-up"></i>
                 <i v-else class="fa-solid fa-angle-down"></i>
               </div>
             </div>
             <ul v-if="isOpenFitnessMenu" class="info-personal__select-list">
-              <li v-for="(type, index) in goalArray" :key="index"
-              :class="{ 'info-personal__select-selected': fitnessType==type }"
+              <li v-for="(type, index) in fitnessData" :key="index"
+              :class="{ 'info-personal__select-selected': personalInfo.fitnessType==type.fitnessType }"
               @click="setTypeValue('fitness', type)"
               >
                 <input id="type" type="radio">
-                <label for="type">{{type}}</label>
+                <label for="type">{{type.fitnessName}}</label>
               </li>
             </ul>
           </div>
@@ -106,23 +110,43 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, reactive, computed } from 'vue'
+import { useStore } from '@/store'
 import BaseDatePicker from '@/components/ui/BaseDatePicker.vue'
+import HEALTH_DATA from '@/service/health.json'
 export default {
   components: {
     BaseDatePicker
   },
   setup() {
-    const sportArray = ['幾乎不運動', '每週運動 1-3 次', '每週運動 3-5 次', '每週運動 6-7 次', '每週運動 6次以上']
-    const goalArray = ['減脂', '溫和減脂 (減少肌肉流失)', '維持體重', '溫和增肌 (減少體質積累)', '增肌']
+    const store = useStore()
+    const sportData = ref(HEALTH_DATA.sport)
+    const fitnessData = ref(HEALTH_DATA.fitness)
+    const sportText = ref('')
+    const fitnessText = ref('')
     const birthday = ref('2000/01/01')
-    const sportType = ref('幾乎不運動')
-    const fitnessType = ref('維持體重')
     const isOpenSportMenu = ref(false)
     const isOpenFitnessMenu = ref(false)
-    
-    //TODO: 身高體重限制數字
+    const personalInfo = reactive({})
 
+    //TODO: 身高體重限制數字
+    const userInfo = computed(() => store.userInfo)
+  
+    // 設置個人資料
+    const setPersonalInfo = () => {
+      Object.assign(personalInfo, userInfo.value)
+      delete personalInfo.isAdmin
+      sportData.value.forEach(item => {
+        if(item.sportType == personalInfo.sportType) {
+          sportText.value = item.sportName
+        }
+      })
+      fitnessData.value.forEach(item => {
+        if(item.fitnessType == personalInfo.fitnessType) {
+          fitnessText.value = item.fitnessName
+        }
+      })
+    }
     // 設置設置運動量、健身目標下拉選單
     const setTypeMemu = (type) => {
       if(type=='sport') {
@@ -135,18 +159,18 @@ export default {
     const setTypeValue = (type, typeValue) => {
       if(type=='sport') {
         isOpenSportMenu.value = false
-        sportType.value = typeValue
+        sportText.value = typeValue.sportName
+        personalInfo.sportType = typeValue.sportType
       }else {
         isOpenFitnessMenu.value = false
-        fitnessType.value = typeValue
+        fitnessText.value = typeValue.fitnessName
+        personalInfo.fitnessType = typeValue.fitnessType
       }
     }
-
     const tryPickTime = (payload) => {
       birthday.value = payload
       console.log('birthday', birthday.value)
     }
-
     window.addEventListener('click',(e) => {
       const $select = e.target.closest('.info-personal__select')
       if($select &&(!isOpenSportMenu.value || !isOpenFitnessMenu.value)) return
@@ -154,14 +178,17 @@ export default {
       isOpenFitnessMenu.value = false
     })
 
+    setPersonalInfo()
+
     return {
-      sportArray,
-      goalArray,
+      sportData,
+      fitnessData,
+      sportText,
+      fitnessText,
       birthday,
-      sportType,
-      fitnessType,
       isOpenSportMenu,
       isOpenFitnessMenu,
+      personalInfo,
       setTypeMemu,
       setTypeValue,
       tryPickTime

@@ -1,0 +1,46 @@
+{
+  "sport": [
+    {
+      "sportName": "幾乎不運動",
+      "sportType": "underSport"
+    },
+    {
+      "sportName": "每週運動 1-3 次",
+      "sportType": "normalSport"
+    },
+    {
+      "sportName": "每週運動 3-5 次",
+      "sportType": "moderateSport"
+    },
+    {
+      "sportName": "每週運動 6-7 次",
+      "sportType": "severeSport"
+    },
+    {
+      "sportName": "每週運動 6次以上",
+      "sportType": "overSport"
+    }
+  ],
+  "fitness": [
+    {
+      "fitnessName": "減脂",
+      "fitnessType": "loseFat"
+    },
+    {
+      "fitnessName": "溫和減脂 (減少肌肉流失)",
+      "fitnessType": "gentleLoseFat"
+    },
+    {
+      "fitnessName": "維持體重",
+      "fitnessType": "keepWeight"
+    },
+    {
+      "fitnessName": "溫和增肌 (減少體質積累)",
+      "fitnessType": "gentleAddFat"
+    },
+    {
+      "fitnessName": "增肌",
+      "fitnessType": "addFat"
+    }
+  ]
+}
