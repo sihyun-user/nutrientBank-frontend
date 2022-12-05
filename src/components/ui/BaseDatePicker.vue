@@ -5,7 +5,7 @@
     </div>
     <datepicker
     v-model="selectedTime"
-    inputFormat="yyyy/MM/dd"
+    inputFormat="yyyy-MM-dd"
     class="date-picker__input"
     >
     </datepicker>
@@ -31,7 +31,7 @@ export default {
     watch(selectedTime, () => handleSelectTime())
 
     const handleSelectTime = () => {
-      const date = moment(selectedTime.value).format('YYYY/MM/DD')
+      const date = moment(selectedTime.value).format('YYYY-MM-DD')
       context.emit('pick-time', date)
     }
 

@@ -86,12 +86,28 @@ export const useStore = defineStore('main', {
     async getUserInfo() {
       try {
         this.$patch({ isLoading: true })
-        const res = await appApi.apiGetUserInfo()
+        const res = await appApi.apiGetProfile()
 
         this.$patch({ isLoading: false, userInfo: res.data.data })
         checkConsole('取得會員資成功', res.data)
       } catch (error) {
         appError(error, '取得會員資料失敗')
+      }
+    },
+    // 編輯會員資料
+    async updateProfile(payload) {
+      try {
+        this.$patch({ isLoading: true })
+
+        const res = await appApi.apiUpdateProfile(payload)
+
+        this.getUserInfo()
+
+        this.$patch({ isLoading: false, userInfo: res.data.data })
+        checkConsole('編輯會員資料成功', res.data)
+        alert('編輯會員資料成功')
+      } catch (error) {
+        appError(error, '編輯會員資料失敗')
       }
     },
     // 取得營養日記列表

@@ -28,7 +28,9 @@ export const apiUserLogin = payload => baseRequest.post('/user/login', payload)
 // 註冊
 export const apiUserSignup = payload => baseRequest.post('/user/signup', payload)
 // 取得會員資料
-export const apiGetUserInfo = () => userRequest.get(`/user/profile`)
+export const apiGetProfile = () => userRequest.get(`/user/profile`)
+// 編輯會員資料
+export const apiUpdateProfile = payload => userRequest.patch(`/user/profile`, payload)
 
 // 取得今月營養日記
 export const apiGetDiarys = payload => userRequest.get(`/diarys?entry_date=${payload}`)

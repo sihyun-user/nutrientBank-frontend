@@ -1,12 +1,12 @@
 <template>
   <div class="info-personal">
     <div class="info-personal__heder">個人檔案</div>
-    <form class="info-personal__form">
+    <form class="info-personal__form" @submit.prevent="updateProfile">
       <div class="info-personal__row">
         <div class="info-personal__ented">
-          <label class="info-personal__ented-label">姓名</label>
+          <label class="info-personal__ented-label">暱稱</label>
           <input class="info-personal__ented-text" type="text" 
-          placeholder="請輸入姓名" v-model="personalInfo.name">
+          placeholder="請輸入暱稱" v-model="personalInfo.name">
         </div>
         <div class="info-personal__ented">
           <label class="info-personal__ented-label">E-mail</label>
@@ -18,7 +18,7 @@
         <div class="info-personal__ented">
           <label class="info-personal__ented-label">生日</label>
           <div class="info-personal__date">
-            <base-datePicker :date="birthday" @pick-time="tryPickTime"></base-datePicker>
+            <base-datePicker :date="personalInfo.birthday" @pick-time="tryPickTime"></base-datePicker>
           </div>
         </div>
         <div class="info-personal__ented">
@@ -45,17 +45,18 @@
         <div class="info-personal__ented">
           <label class="info-personal__ented-label">身高</label>
           <div class="info-personal__ented-wrap">
-            <input class="info-personal__ented-text" 
+            <input class="info-personal__ented-text"
             type="number" oninput="if(value.length>3)value=value.slice(0,3)"
-            placeholder="請輸入身高">
+            v-model="personalInfo.height" placeholder="請輸入身高">
             <span class="info-personal__ented-unit">公分</span>
           </div>
         </div>
         <div class="info-personal__ented">
           <label class="info-personal__ented-label">體重</label>
           <div class="info-personal__ented-wrap">
-            <input class="info-personal__ented-text" placeholder="請輸入體重"
-            type="number" oninput="if(value.length>2)value=value.slice(0,2)">
+            <input class="info-personal__ented-text"
+            type="number" oninput="if(value.length>2)value=value.slice(0,2)"
+            v-model="personalInfo.weight" placeholder="請輸入體重">
             <span class="info-personal__ented-unit">公斤</span>
           </div>
         </div>
@@ -104,9 +105,11 @@
           </div>
         </div>
       </div>
+      <div v-if="errorMsg" class="errorMsg info-personal__errorMsg">{{errorMsg}}</div>
       <button type="submit" class="info-personal__btn orangeBigBtn">更新個人檔案</button>
     </form>
   </div>
+  <base-spinner v-if="isLoading"></base-spinner>
 </template>
 
 <script>
@@ -124,12 +127,12 @@ export default {
     const fitnessData = ref(HEALTH_DATA.fitness)
     const sportText = ref('')
     const fitnessText = ref('')
-    const birthday = ref('2000/01/01')
     const isOpenSportMenu = ref(false)
     const isOpenFitnessMenu = ref(false)
     const personalInfo = reactive({})
 
-    //TODO: 身高體重限制數字
+    const errorMsg = computed(() => store.errorMsg)
+    const isLoading = computed(() => store.isLoading)
     const userInfo = computed(() => store.userInfo)
   
     // 設置個人資料
@@ -167,9 +170,14 @@ export default {
         personalInfo.fitnessType = typeValue.fitnessType
       }
     }
+    // 更新個人資料
+    const updateProfile = () => {
+      console.log(personalInfo)
+      store.updateProfile(personalInfo)
+    }
+
     const tryPickTime = (payload) => {
-      birthday.value = payload
-      console.log('birthday', birthday.value)
+      personalInfo.birthday = payload
     }
     window.addEventListener('click',(e) => {
       const $select = e.target.closest('.info-personal__select')
@@ -185,12 +193,14 @@ export default {
       fitnessData,
       sportText,
       fitnessText,
-      birthday,
       isOpenSportMenu,
       isOpenFitnessMenu,
       personalInfo,
+      errorMsg,
+      isLoading,
       setTypeMemu,
       setTypeValue,
+      updateProfile,
       tryPickTime
     }
   }

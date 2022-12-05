@@ -1,19 +1,21 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useStore } from '@/store'
 import NUTRITION_DATA from '@/service/nutrition.json'
 import moment from 'moment'
+const store = useStore()
 
-const userHealthInfo = {
-  height: 154, 
-  weight: 74, 
-  age: 25, 
-  sex: 0, 
-  sportType: 'underSport',
-  fitnessType: 'gentleLoseFat'
+const calculateAge = (birthday) => {
+  const ageDifMs = Date.now() - new Date(birthday).getTime()
+  const ageDate = new Date(ageDifMs)
+  return Math.abs(ageDate.getUTCFullYear() - 1970)
 }
 
 // 計算每日營養攝取量
 export const clacIntakes = () => {
-  const { height, weight, age, sex, sportType, fitnessType } = userHealthInfo
+  const userInfo = computed(() => store.userInfo)
+  console.log(userInfo.value)
+  const { sex, height, weight, birthday, sportType, fitnessType } = userInfo.value
+  const age = calculateAge(birthday)
   const dayIntakes = {}
 
   // 1) 基礎代謝率(BMR)

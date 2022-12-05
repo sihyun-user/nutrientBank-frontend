@@ -79,10 +79,14 @@ export default {
     watch([monthDiarys, selectedDate], () => getDayNutrition())
 
     const date = computed(() => {
-      const dateFormat = (date) => moment(date).format('YYYY/MM/DD')
-
-      return dateFormat() == dateFormat(selectedDate.value) 
-      ? '今日' : dateFormat(selectedDate.value) + ' '
+      const todayFormat = () => moment().format('YYYY-MM-DD')
+      const renderDate = (date) => {
+        const new_date = moment(date).format('YYYY-MM-DD').split('-')
+        return `${new_date[0]}, ${new_date[1]}月 ${new_date[2]} `
+      }
+  
+      return todayFormat() == selectedDate.value
+      ? '今日' : renderDate(selectedDate.value)
     })
 
     const getDayNutrition = () => {
