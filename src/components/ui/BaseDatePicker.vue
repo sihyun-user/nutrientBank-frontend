@@ -31,7 +31,7 @@ export default {
     watch(selectedTime, () => handleSelectTime())
 
     const handleSelectTime = () => {
-      let date = moment(selectedTime.value).format('YYYY/MM/DD')
+      const date = moment(selectedTime.value).format('YYYY/MM/DD')
       context.emit('pick-time', date)
     }
 

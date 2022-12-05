@@ -169,14 +169,14 @@ export default {
       const paramData = { 
         meal, 
         type: selectFood.value.type, 
-        quantity: quantity.value 
+        quantity: quantity.value,
+        dateTime: mealDate.value
       }
       store.createOneDiary({foodId, paramData})
     }
 
     const tryPickTime = (payload) => {
       mealDate.value = payload
-      console.log('mealDate', payload)
     }
 
     document.addEventListener('click',(e) => {

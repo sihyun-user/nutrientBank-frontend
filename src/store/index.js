@@ -111,9 +111,9 @@ export const useStore = defineStore('main', {
     async createOneDiary(payload) {
       try {
         this.$patch({ isLoading: true })
-        const { foodId, entry_date, paramData } = payload
+        const { foodId, paramData } = payload
 
-        const res = await appApi.apiCreateOneDiary({ foodId, entry_date, paramData })
+        const res = await appApi.apiCreateOneDiary({ foodId, paramData })
 
         this.$patch({ isLoading: false })
         checkConsole('新增一筆營養日記成功', res.data)
