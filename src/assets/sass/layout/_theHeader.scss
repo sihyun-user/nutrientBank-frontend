@@ -85,7 +85,15 @@
 
       li {
         text-align: end;
-        padding: 12px;
+  
+        a {
+          padding: 12px;
+          display: block;
+        }
+
+        &:last-child {
+          padding: 12px;
+        }
 
         &:hover {
           color: $color-white;

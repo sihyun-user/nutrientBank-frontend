@@ -16,9 +16,9 @@
           <span>{{userInfo.name}}</span>
         </div>
         <ul class="theHeader__nav--user-list" v-if="isOpenMenu">
-          <li>個人檔案</li>
-          <li>修改密碼</li>
-          <li>我的食品</li>
+          <li><router-link to="info-personal">個人檔案</router-link></li>
+          <li><router-link to="">修改密碼</router-link></li>
+          <li><router-link to="">我的食品</router-link></li>
           <li @click="logout">登出</li>
         </ul>
       </div>
@@ -27,11 +27,12 @@
           <i class="fa-solid fa-bars"></i>
         </div>
         <ul class="theHeader__nav--user-list" v-if="isOpenMenu">
-          <li>我的紀錄</li>
-          <li>食品搜尋</li>
-          <li>個人檔案</li>
-          <li>修改密碼</li>
-          <li>我的食品</li>
+          <li><router-link to="">我的紀錄</router-link></li>
+          <li><router-link to="user-search">食品搜尋</router-link></li>
+          <li><router-link to="">我的食品</router-link></li>
+          <li><router-link to="info-personal">個人檔案</router-link></li>
+          <li><router-link to="">修改密碼</router-link></li>
+          <li><router-link to="">我的食品</router-link></li>
           <li @click="logout">登出</li>
         </ul>
       </div>

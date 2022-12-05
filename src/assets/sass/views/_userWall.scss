@@ -6,23 +6,18 @@
     width: 1295px;
     max-width: 100%;
     margin: 0 auto;
-    padding: 40px 0 66px;
+    padding: 40px 0 50px;
   }
 
   &__wrapper {
     display: flex;
     justify-content: space-between;
 
-    &:first-child {
-      margin-bottom: 24px;
-    }
+    margin-bottom: 24px;
 
     @include pad {
       flex-direction: column;
-
-      &:first-child {
-        margin-bottom: 0;
-      }
+      margin-bottom: 0;
     }
   }
 }
@@ -56,13 +51,26 @@
       flex-direction: column;
       align-items: center;
 
+      @include mobile {
+        @include baseCard(5px 10px);
+        max-width: 44px;
+      }
+
       &--week {
         color: $color-gray-1;
+        
+        @include mobile {
+          font-size: 14px;
+        }
       }
 
       &--date {
         font-size: 24px;
         color: $color-primary;
+
+        @include mobile {
+          font-size: 18px;
+        }
       }
 
       &--record {
@@ -79,6 +87,10 @@
 
       &:not(:last-of-type) {
         margin-right: 28px;
+
+        @include mobile {
+          margin-right: 5px;
+        }
       }
 
       &:hover {
@@ -99,10 +111,26 @@
 
       &--left {
         margin-right: 38px;
+
+        @include mobile {
+          margin-right: 13px;
+        }
+
+        @include mobileM {
+          margin-right: 6px;
+        }
       }
   
       &--right {
         margin-left: 38px;
+
+        @include mobile {
+          margin-left: 13px;
+        }
+
+        @include mobileM {
+          margin-left: 6px;
+        }
       }
     }
 
@@ -309,7 +337,7 @@
     margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
-    align-items: center
+    align-items: center;
   }
 
   &__title {
