@@ -13,7 +13,6 @@ const calculateAge = (birthday) => {
 // 計算每日營養攝取量
 export const clacIntakes = () => {
   const userInfo = computed(() => store.userInfo)
-  console.log(userInfo.value)
   const { sex, height, weight, birthday, sportType, fitnessType } = userInfo.value
   const age = calculateAge(birthday)
   const dayIntakes = {}

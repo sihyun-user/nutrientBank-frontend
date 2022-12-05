@@ -60,10 +60,17 @@
       display: flex;
       align-items: center;
 
+      &-photo {
+        width: 35px;
+        height: 35px;
+        border-radius: 100%;
+        overflow: hidden;
+        margin-right: 10px;
+      }
+
       i {
         font-size: 35px;
         color: $color-gray-1;
-        margin-right: 10px;
       }
     }
 

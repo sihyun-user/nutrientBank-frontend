@@ -172,7 +172,13 @@ export default {
     }
     // 更新個人資料
     const updateProfile = () => {
-      console.log(personalInfo)
+      if (personalInfo.name.length < 2) {
+        return store.$patch({ errorMsg: '暱稱低於2個字元' })
+      } else if (personalInfo.height <= 0) {
+        return store.$patch({ errorMsg: '身高未填寫正確' })
+      } else if (personalInfo.weight <= 0) {
+        return store.$patch({ errorMsg: '體重未填寫正確' })
+      }
       store.updateProfile(personalInfo)
     }
 

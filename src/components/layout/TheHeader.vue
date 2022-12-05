@@ -12,7 +12,10 @@
           <router-link to="user-search">食品搜尋</router-link>
         </div>
         <div class="theHeader__nav--item theHeader__nav--user theHeader__nav--dropdown" @click="switchOpenMenu">
-          <i class="fa-solid fa-circle-user"></i>
+          <div class="theHeader__nav--user-photo">
+            <img v-if="userInfo.photo" :src="userInfo.photo">
+            <i v-else class="fa-solid fa-circle-user"></i>
+          </div>
           <span>{{userInfo.name}}</span>
         </div>
         <ul class="theHeader__nav--user-list" v-if="isOpenMenu">
@@ -31,7 +34,7 @@
           <li><router-link to="user-search">食品搜尋</router-link></li>
           <li><router-link to="">我的食品</router-link></li>
           <li><router-link to="info-personal">個人檔案</router-link></li>
-          <li><router-link to="">修改密碼</router-link></li>
+          <li><router-link to="edit-password">修改密碼</router-link></li>
           <li><router-link to="">我的食品</router-link></li>
           <li @click="logout">登出</li>
         </ul>

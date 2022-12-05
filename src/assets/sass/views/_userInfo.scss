@@ -30,12 +30,15 @@
 
     &__photo {
       position: relative;
-      width: 105px;
-      height: 105px;
       display: flex;
       justify-content: center;
 
       &--img {
+        width: 105px;
+        height: 105px;
+        border-radius: 100%;
+        overflow: hidden;
+
         i {
           font-size: 105px;
         }
@@ -73,7 +76,6 @@
       &--item {
         line-height: 1;
         margin-bottom: 24px;
-        cursor: pointer;
         display: flex;
         align-items: center;
 
@@ -99,7 +101,8 @@
     }
   }
 
-  .info-personal {
+  .info-personal,
+  .edit-password {
     width: 770px;
     max-width: 100%;
     padding: 0 24px;
@@ -117,7 +120,9 @@
         margin: 0 0 24px;
       }
     }
+  }
 
+  .info-personal {
     &__row {
       display: flex;
       justify-content: space-between;
@@ -176,6 +181,24 @@
 
     &__btn {
       margin-top: 20px;
+    }
+  }
+
+  .edit-password {
+    &__ented {
+      @include baseText($width:48%, $boderColor:$color-gray-3);
+      position: relative;
+      margin-bottom: 25px;
+
+      @include mobile {
+        @include baseSearch($width:100%, $boderColor:$color-gray-3);
+        margin-bottom: 15px;
+      }
+
+      &-label {
+        display: block;
+        margin-bottom: 12px;
+      }
     }
   }
 }

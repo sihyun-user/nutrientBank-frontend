@@ -19,6 +19,7 @@ const routes = [
     component: () => import('@/views/InfoCenter.vue'),
     children: [
       { path: '/info-personal', meta: { requiresAuth: true }, component: () => import('@/views/InfoPersonal.vue') },
+      { path: '/edit-password', meta: { requiresAuth: true }, component: () => import('@/views/EditPassword.vue') },
     ]
   },
   { path: '/:notFound(.*)', redirect: '/auth' }
