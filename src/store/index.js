@@ -103,11 +103,27 @@ export const useStore = defineStore('main', {
 
         this.getUserInfo()
 
-        this.$patch({ isLoading: false, userInfo: res.data.data })
+        this.$patch({ isLoading: false })
         checkConsole('編輯會員資料成功', res.data)
         alert('編輯會員資料成功')
       } catch (error) {
         appError(error, '編輯會員資料失敗')
+      }
+    },
+    // 編輯會員密碼
+    async updatePassword(payload) {
+      try {
+        this.$patch({ isLoading: true })
+
+        const { password, confirmPassword } = payload
+
+        const res = await appApi.apiUpdatePassword({ password, confirmPassword })
+  
+        this.$patch({ isLoading: false })
+        checkConsole('編輯會員密碼成功', res.data)
+        alert('編輯會員密碼成功')
+      } catch (error) {
+        appError(error, '編輯會員密碼失敗')
       }
     },
     // 取得營養日記列表

@@ -29,9 +29,9 @@
         </router-link>
       </li>
       <li class="info-aside__pagination--item"
-      :class="{'info-aside__pagination--item-active':route.path=='/'}"
+      :class="{'info-aside__pagination--item-active':route.path=='/edit-foods'}"
       >
-        <router-link to="">
+        <router-link to="edit-foods">
           <i class="fa-solid fa-list-ul"></i>
           <span>我的食品</span>
         </router-link>

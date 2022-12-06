@@ -106,7 +106,9 @@
         </div>
       </div>
       <div v-if="errorMsg" class="errorMsg info-personal__errorMsg">{{errorMsg}}</div>
-      <button type="submit" class="info-personal__btn orangeBigBtn">更新個人檔案</button>
+      <div class="info-personal__btn">
+        <button type="submit" class="orangeBigBtn">更新個人檔案</button>
+      </div>
     </form>
   </div>
   <base-spinner v-if="isLoading"></base-spinner>
