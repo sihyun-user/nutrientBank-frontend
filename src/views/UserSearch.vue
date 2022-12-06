@@ -1,7 +1,7 @@
 <template>
   <section class="search-results">
     <div class="search-results__container">
-      <form class="search" @submit.prevent="starSearchFood">
+      <form class="search" @submit.prevent="searchEntered">
         <div class="search--select">
           <div class="search--select-text" @click="setFoodMemu">
             <span>{{foodType}}</span>
@@ -20,10 +20,10 @@
             </li>
           </ul>
         </div>
-        <div class="search--search">
-          <div class="search--search-text">
+        <div class="search--entered">
+          <div class="search--entered-text">
             <input type="text" placeholder="食品搜尋..." v-model="enteredKeyword">
-            <button type="submit" class="search--search-icon">
+            <button type="submit" class="search--entered-icon">
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
@@ -49,16 +49,15 @@
             <div class="results__list-error" v-if="foods.length==0">
               <p>找不到結果，請重新輸入不同關鍵字再試一次!</p>
             </div>
-            <div class="results__list-items" v-else>
-              <results-item v-for="food in pagingFoods" :key="food.id"
+            <ul class="results__list-items" v-else>
+              <food-item v-for="food in pagingFoods" :key="food.id"
               :food="food"
               :selectFood="selectFood"
               @select-food="trySelectFood"
-              @update-likes="tryUpdateLikes"
+              @update-like="tryUpdateLike"
               >
-  
-              </results-item>
-            </div>
+              </food-item>
+            </ul>
           </div>
           <div class="results__food" v-if="selectFood">
             <div class="results__food--content">
@@ -107,12 +106,12 @@ import { ref, computed } from 'vue'
 import { useStore } from '@/store'
 import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 import FoodDetail from '@/components/FoodDetail.vue'
-import ResultsItem from '@/components/ResultsItem.vue'
+import FoodItem from '@/components/FoodItem.vue'
 export default {
   components: {
     BaseLightBox,
     FoodDetail,
-    ResultsItem
+    FoodItem
   },
   setup() {
     const store = useStore()
@@ -166,7 +165,7 @@ export default {
       curentPage.value = page
     }
     // 搜尋食品
-    const starSearchFood = () => {
+    const searchEntered = () => {
       curentPage.value = 1
       isSearchFood.value = true
       useKeyword.value = enteredKeyword.value
@@ -198,7 +197,7 @@ export default {
       trySelectFood(foods.value[0])
     }
     // 更新食品書籤(同步更新DOM)
-    const tryUpdateLikes = (newFood) => {
+    const tryUpdateLike = (newFood) => {
       foods.value.find(food => {
         if (food.id == newFood.id) food.likes = newFood.likes
       })
@@ -243,10 +242,10 @@ export default {
       pagingNumber,
       setFoodMemu,
       setFoodType,
-      starSearchFood,
+      searchEntered,
       setPagination,
       trySelectFood,
-      tryUpdateLikes,
+      tryUpdateLike,
       tryClose
     }
   }

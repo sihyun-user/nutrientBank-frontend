@@ -6,11 +6,13 @@
     width: 1295px;
     max-width: 100%;
     margin: 0 auto;
-    height: calc(100vh - 88px);
+    min-height: calc(100vh - 88px);
+    height: 100%;
     padding: 40px 0 50px;
 
     @include pad {
-      height: calc(100vh - 64px);
+      min-height: calc(100vh - 64px);
+      height: 100%;
     }
   }
 
@@ -34,7 +36,7 @@
       }
     }
 
-    &--search {
+    &--entered {
       @include baseSearch($width:416px, $boderColor:$color-gray-3);
 
       @include mobile {
@@ -98,115 +100,13 @@
         width: 100%;
         margin-right: 0;
       }
-    }
-    
-    &__item {
-      background-color: $color-white;
-      border-radius: 8px;
-      border: 1px solid $color-gray-3;
-      padding: 20px 24px;
 
-      &:not(:last-of-type) {
+      @include baseFoodItem($type:'box');
+      .food__item:not(:last-of-type) {
         margin-bottom: 8px;
       }
-
-      &--header {
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        &-name {
-          font-size: 20px;
-          font-weight: $bold;
-          color: $color-gray-4;
-        }
-
-        &-marks {
-          display: flex;
-
-        }
-
-        &-customMark {
-          font-size: 12px;
-          font-weight: $bold;
-          width: 40px;
-          height: 22px;
-          line-height: 22px;
-          color: $color-white;
-          background-color: $color-secondary;
-          border-radius: 2px;
-          text-align: center;
-          margin-right: 14px;
-        }
-  
-        &-bookmark {
-          cursor: pointer;
-
-          img {
-            width: 16.5px;
-            display: block;
-          }
-        }
-      }
-
-      &--kcal {
-        margin-bottom: 5px;
-        font-weight: $regular;
-        display: flex;
-        align-items: flex-end;
-  
-        &-main {
-          font-size: 14px;
-          color: $color-brown-light-1;
-
-          span {
-            font-size: 20px;
-            font-weight: $bold;
-          } 
-        }
-
-        &-sub {
-          font-size: 12px;
-
-          span {
-            margin: 0 4px;
-          }
-        }
-      }
-
-      &--intakes {
-        display: flex;
-        flex-wrap: wrap;
-        max-width: 400px;
-
-        @include mobile {
-          justify-content: space-between;
-        }
-      }
-
-      &--intakeItem {
-        font-size: 12px;
-        font-weight: $regular;
-        white-space: nowrap;
-
-        &:not(:last-child) {
-          margin-right: 15px;
-
-          @include mobile {
-            margin-right: 0;
-          }
-        }
-
-        span {
-          margin-left: 4px;
-        }
-      }
-
-      &--select {
-        border: 2px solid $color-brown-light-1;
-      }
     }
+    
 
     &__food {
       width: 592px;

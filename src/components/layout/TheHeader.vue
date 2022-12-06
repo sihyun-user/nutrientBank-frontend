@@ -13,7 +13,7 @@
         </div>
         <div class="theHeader__nav--item theHeader__nav--user theHeader__nav--dropdown" @click="switchOpenMenu">
           <div class="theHeader__nav--user-photo">
-            <img v-if="userInfo.photo" :src="userInfo.photo">
+            <img v-if="userInfo.photo" :src="userInfo.photo" referrerpolicy="no-referrer">
             <i v-else class="fa-solid fa-circle-user"></i>
           </div>
           <span>{{userInfo.name}}</span>

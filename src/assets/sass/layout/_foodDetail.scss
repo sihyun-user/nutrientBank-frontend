@@ -27,7 +27,7 @@
 
   &__form {
     padding: 40px;
-    background-color: #FAFAFA;
+    background-color: $color-gray-6;
     border-radius: 8px;
 
     @include mobile {
