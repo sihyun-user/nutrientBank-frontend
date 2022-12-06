@@ -12,9 +12,9 @@
     <div class="info-aside__name">{{userInfo.name}}</div>
     <div class="info-aside__email">{{userInfo.email}}</div>
     <ul class="info-aside__pagination">
-      <router-link to="info-personal">
+      <router-link to="edit-personal">
         <li class="info-aside__pagination--item" 
-        :class="{'info-aside__pagination--item-active':route.path=='/info-personal'}"
+        :class="{'info-aside__pagination--item-active':route.path=='/edit-personal'}"
         >
           <i class="fa-regular fa-user"></i>
           <span>個人檔案</span>

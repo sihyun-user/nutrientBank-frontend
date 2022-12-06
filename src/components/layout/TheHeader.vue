@@ -19,7 +19,7 @@
           <span>{{userInfo.name}}</span>
         </div>
         <ul class="theHeader__nav--user-list" v-if="isOpenMenu">
-          <li><router-link to="info-personal">個人檔案</router-link></li>
+          <li><router-link to="edit-personal">個人檔案</router-link></li>
           <li><router-link to="edit-password">修改密碼</router-link></li>
           <li><router-link to="edit-foods">我的食品</router-link></li>
           <li @click="logout">登出</li>
@@ -32,7 +32,7 @@
         <ul class="theHeader__nav--user-list" v-if="isOpenMenu">
           <li><router-link to="">我的紀錄</router-link></li>
           <li><router-link to="user-search">食品搜尋</router-link></li>
-          <li><router-link to="info-personal">個人檔案</router-link></li>
+          <li><router-link to="edit-personal">個人檔案</router-link></li>
           <li><router-link to="edit-password">修改密碼</router-link></li>
           <li><router-link to="edit-foods">我的食品</router-link></li>
           <li @click="logout">登出</li>

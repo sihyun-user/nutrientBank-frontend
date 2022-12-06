@@ -14,11 +14,11 @@ const routes = [
     ]
   },
   {
-    path: '/info-personal',
-    redirect: '/info-personal',
+    path: '/edit-personal',
+    redirect: '/edit-personal',
     component: () => import('@/views/InfoCenter.vue'),
     children: [
-      { path: '/info-personal', meta: { requiresAuth: true }, component: () => import('@/views/InfoPersonal.vue') },
+      { path: '/edit-personal', meta: { requiresAuth: true }, component: () => import('@/views/EditPersonal.vue') },
       { path: '/edit-password', meta: { requiresAuth: true }, component: () => import('@/views/EditPassword.vue') },
       { path: '/edit-foods', meta: { requiresAuth: true }, component: () => import('@/views/EditFoods.vue') },
     ]

@@ -1,29 +1,29 @@
 <template>
-  <div class="info-personal">
-    <div class="info-personal__heder">個人檔案</div>
-    <form class="info-personal__form" @submit.prevent="updateProfile">
-      <div class="info-personal__row">
-        <div class="info-personal__ented">
-          <label class="info-personal__ented-label">暱稱</label>
-          <input class="info-personal__ented-text" type="text" 
+  <div class="edit-personal">
+    <div class="edit-personal__heder">個人檔案</div>
+    <form class="edit-personal__form" @submit.prevent="updateProfile">
+      <div class="edit-personal__row">
+        <div class="edit-personal__ented">
+          <label class="edit-personal__ented-label">暱稱</label>
+          <input class="edit-personal__ented-text" type="text" 
           placeholder="請輸入暱稱" v-model="personalInfo.name">
         </div>
-        <div class="info-personal__ented">
-          <label class="info-personal__ented-label">E-mail</label>
-          <input class="info-personal__ented-text" type="text" disabled="disabled" 
+        <div class="edit-personal__ented">
+          <label class="edit-personal__ented-label">E-mail</label>
+          <input class="edit-personal__ented-text" type="text" disabled="disabled" 
           v-model="personalInfo.email">
         </div>
       </div>
-      <div class="info-personal__row">
-        <div class="info-personal__ented">
-          <label class="info-personal__ented-label">生日</label>
-          <div class="info-personal__date">
+      <div class="edit-personal__row">
+        <div class="edit-personal__ented">
+          <label class="edit-personal__ented-label">生日</label>
+          <div class="edit-personal__date">
             <base-datePicker :date="personalInfo.birthday" @pick-time="tryPickTime"></base-datePicker>
           </div>
         </div>
-        <div class="info-personal__ented">
-          <label class="info-personal__ented-label">性別</label>
-          <div class="info-personal__sex">
+        <div class="edit-personal__ented">
+          <label class="edit-personal__ented-label">性別</label>
+          <div class="edit-personal__sex">
             <label class="radio__label radioMode">
               <div class="radioMode__wrap">
                 <input type="radio" name="sex" value="1" v-model="personalInfo.sex">
@@ -41,40 +41,40 @@
           </div>
         </div>
       </div>
-      <div class="info-personal__row">
-        <div class="info-personal__ented">
-          <label class="info-personal__ented-label">身高</label>
-          <div class="info-personal__ented-wrap">
-            <input class="info-personal__ented-text"
+      <div class="edit-personal__row">
+        <div class="edit-personal__ented">
+          <label class="edit-personal__ented-label">身高</label>
+          <div class="edit-personal__ented-wrap">
+            <input class="edit-personal__ented-text"
             type="number" oninput="if(value.length>3)value=value.slice(0,3)"
             v-model="personalInfo.height" placeholder="請輸入身高">
-            <span class="info-personal__ented-unit">公分</span>
+            <span class="edit-personal__ented-unit">公分</span>
           </div>
         </div>
-        <div class="info-personal__ented">
-          <label class="info-personal__ented-label">體重</label>
-          <div class="info-personal__ented-wrap">
-            <input class="info-personal__ented-text"
+        <div class="edit-personal__ented">
+          <label class="edit-personal__ented-label">體重</label>
+          <div class="edit-personal__ented-wrap">
+            <input class="edit-personal__ented-text"
             type="number" oninput="if(value.length>2)value=value.slice(0,2)"
             v-model="personalInfo.weight" placeholder="請輸入體重">
-            <span class="info-personal__ented-unit">公斤</span>
+            <span class="edit-personal__ented-unit">公斤</span>
           </div>
         </div>
       </div>
-      <div class="info-personal__row">
-        <div class="info-personal__ented">
-          <label class="info-personal__ented-label">運動量</label>
-          <div class="info-personal__select">
-            <div class="info-personal__select-text" @click="setTypeMemu('sport')">
+      <div class="edit-personal__row">
+        <div class="edit-personal__ented">
+          <label class="edit-personal__ented-label">運動量</label>
+          <div class="edit-personal__select">
+            <div class="edit-personal__select-text" @click="setTypeMemu('sport')">
               <span>{{sportText}}</span>
-              <div class="info-personal__select-icon">
+              <div class="edit-personal__select-icon">
                 <i v-if="isOpenSportMenu" class="fa-solid fa-angle-up"></i>
                 <i v-else class="fa-solid fa-angle-down"></i>
               </div>
             </div>
-            <ul v-if="isOpenSportMenu" class="info-personal__select-list">
+            <ul v-if="isOpenSportMenu" class="edit-personal__select-list">
               <li v-for="(type, index) in sportData" :key="index"
-              :class="{ 'info-personal__select-selected': personalInfo.sportType==type.sportType }"
+              :class="{ 'edit-personal__select-selected': personalInfo.sportType==type.sportType }"
               @click="setTypeValue('sport', type)"
               >
                 <input id="type" type="radio">
@@ -83,19 +83,19 @@
             </ul>
           </div>
         </div>
-        <div class="info-personal__ented">
-          <label class="info-personal__ented-label">健身目標</label>
-          <div class="info-personal__select">
-            <div class="info-personal__select-text" @click="setTypeMemu('fitness')">
+        <div class="edit-personal__ented">
+          <label class="edit-personal__ented-label">健身目標</label>
+          <div class="edit-personal__select">
+            <div class="edit-personal__select-text" @click="setTypeMemu('fitness')">
               <span>{{fitnessText}}</span>
-              <div class="info-personal__select-icon">
+              <div class="edit-personal__select-icon">
                 <i v-if="isOpenFitnessMenu" class="fa-solid fa-angle-up"></i>
                 <i v-else class="fa-solid fa-angle-down"></i>
               </div>
             </div>
-            <ul v-if="isOpenFitnessMenu" class="info-personal__select-list">
+            <ul v-if="isOpenFitnessMenu" class="edit-personal__select-list">
               <li v-for="(type, index) in fitnessData" :key="index"
-              :class="{ 'info-personal__select-selected': personalInfo.fitnessType==type.fitnessType }"
+              :class="{ 'edit-personal__select-selected': personalInfo.fitnessType==type.fitnessType }"
               @click="setTypeValue('fitness', type)"
               >
                 <input id="type" type="radio">
@@ -105,8 +105,8 @@
           </div>
         </div>
       </div>
-      <div v-if="errorMsg" class="errorMsg info-personal__errorMsg">{{errorMsg}}</div>
-      <div class="info-personal__btn">
+      <div v-if="errorMsg" class="errorMsg edit-personal__errorMsg">{{errorMsg}}</div>
+      <div class="edit-personal__btn">
         <button type="submit" class="orangeBigBtn">更新個人檔案</button>
       </div>
     </form>
@@ -188,7 +188,7 @@ export default {
       personalInfo.birthday = payload
     }
     window.addEventListener('click',(e) => {
-      const $select = e.target.closest('.info-personal__select')
+      const $select = e.target.closest('.edit-personal__select')
       if($select &&(!isOpenSportMenu.value || !isOpenFitnessMenu.value)) return
       isOpenSportMenu.value = false
       isOpenFitnessMenu.value = false

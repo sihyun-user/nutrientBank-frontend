@@ -101,7 +101,7 @@
     }
   }
 
-  .info-personal,
+  .edit-personal,
   .edit-password,
   .edit-foods {
     width: 770px;
@@ -127,7 +127,7 @@
     }
   }
 
-  .info-personal {
+  .edit-personal {
     &__row {
       display: flex;
       justify-content: space-between;
@@ -200,6 +200,6 @@
   }
 
   .edit-foods {
-
+    
   }
 }
