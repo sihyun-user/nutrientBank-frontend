@@ -1,6 +1,6 @@
 <template>
   <div class="edit-password">
-    <div class="edit-password__heder">修改密碼</div>
+    <div class="edit-password__header">修改密碼</div>
     <form @submit.prevent="updatePassword">
       <div class="edit-password__ented">
         <label class="edit-password__ented-label">新密碼</label>

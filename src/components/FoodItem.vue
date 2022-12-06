@@ -6,13 +6,21 @@
     <div class="food__item--header">
       <div class="food__item--header-name">{{food.name}}</div>
       <div class="food__item--header-icons">
-        <div class="food__item--header-icons--custom" v-if="food.type=='customFood'">自訂</div>
-        <div class="food__item--header-icons--books">
-          <div class="food__item--header-icons--book" v-if="!isLikeFood" @click="setFoodLike('add')" >
+        <div class="food__item--header-icons--custom" v-if="food.type=='customFood'&&!isEdit">自訂</div>
+        <div class="food__item--header-icons--books" v-if="!isEdit">
+          <div class="food__item--header-icons--book" v-if="!isLikeFood" @click="setFoodLike('add')">
             <img src="@/assets/img/book-mark.svg">
           </div>
-          <div class="results__item--header-icons--book" v-else @click="setFoodLike('cancel')">
+          <div class="food__item--header-icons--book" v-else @click="setFoodLike('cancel')">
             <img src="@/assets/img/book-mark-color.svg">
+          </div>
+        </div>
+        <div class="food__item--header-icons--edits" v-else>
+          <div class="food__item--header-icons--edit">
+            <i class="fa-solid fa-pen"></i>
+          </div>
+          <div class="food__item--header-icons--cancel">
+            <i class="fa-solid fa-x"></i>
           </div>
         </div>
       </div>
@@ -44,6 +52,10 @@ export default {
     },
     selectFood: {
       type: Object
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, context) {

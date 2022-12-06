@@ -290,11 +290,11 @@
         display: flex;
   
         &--custom {
-          font-size: 12px;
+          font-size: 13px;
           font-weight: $bold;
-          width: 40px;
-          height: 22px;
-          line-height: 22px;
+          width: 42px;
+          height: 25px;
+          line-height: 25px;
           color: $color-white;
           background-color: $color-secondary;
           border-radius: 2px;
@@ -306,12 +306,25 @@
           cursor: pointer;
     
           img {
-            width: 16.5px;
+            height: 25px;
             display: block;
           }
         }
+
+        &--edits {
+          display: flex;
+          font-size: 18px;
+
+          i {
+            cursor: pointer;
+          }
+        }
+
+        &--edit {
+          margin-right: 14px;
+        }
       }
-  
+
     }
   
     &--kcal {

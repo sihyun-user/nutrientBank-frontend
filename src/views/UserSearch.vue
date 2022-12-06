@@ -4,7 +4,7 @@
       <form class="search" @submit.prevent="searchEntered">
         <div class="search--select">
           <div class="search--select-text" @click="setFoodMemu">
-            <span>{{foodType}}</span>
+            <span>{{foodMode}}</span>
             <div class="search--select-icon">
               <i v-if="isOpenMeun" class="fa-solid fa-angle-up"></i>
               <i v-else class="fa-solid fa-angle-down"></i>
@@ -12,7 +12,7 @@
           </div>
           <ul v-if="isOpenMeun" class="search--select-list">
             <li v-for="(type, index) in ['食品', '自訂食品', '我的書籤']" :key="index"
-            :class="{ 'search--select-selected': foodType==type }"
+            :class="{ 'search--select-selected': foodMode==type }"
             @click="setFoodType(type)"
             >
               <input id="type" type="radio">
@@ -115,7 +115,7 @@ export default {
   },
   setup() {
     const store = useStore()
-    const foodType = ref('食品')
+    const foodMode = ref('食品')
     const enteredKeyword = ref('')
     const useKeyword = ref('')
     const foods = ref([])
@@ -158,7 +158,7 @@ export default {
     // 設置搜尋食品類別
     const setFoodType = (type) => {
       isOpenMeun.value = false
-      foodType.value = type
+      foodMode.value = type
     }
     // 設置分頁
     const setPagination = (page=1) => {
@@ -178,12 +178,11 @@ export default {
       showBox.value = false
     }
     // 取得食品、自訂食品、書籤列表
-    //!TODO:書籤列表暫時無法撈取頁數
     const getTypeFoods = async() => {
       let data, paramData = { search: useKeyword.value }
-      if (foodType.value=='食品') {
+      if (foodMode.value=='食品') {
         data = await store.getAllFood(paramData)
-      }else if (foodType.value=='自訂食品') {
+      }else if (foodMode.value=='自訂食品') {
         data = await store.getAllCustomFood(paramData)
       }else {
         data = await store.getAllLikes(paramData)
@@ -226,7 +225,7 @@ export default {
     switchPadMode()
 
     return {
-      foodType,
+      foodMode,
       enteredKeyword,
       useKeyword,
       foods,

@@ -73,7 +73,7 @@ export default {
     const switchModeCaption = computed(() => mode.value === 'login' ? '會員登入' : '會員註冊')
     const emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/
 
-    // 設置切換登入/註冊
+    // 切換登入/註冊
     const switchAuthMode = () => {
       clearForm()
       mode.value === 'login' ? mode.value = 'signup' : mode.value = 'login'
