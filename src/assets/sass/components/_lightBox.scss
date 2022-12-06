@@ -18,8 +18,13 @@
   &__close {
     cursor: pointer;
     position: absolute;
-    right: 15px;
-    top: 15px;
+    right: 30px;
+    top: 20px;
+
+    @include mobile {
+      right: 15px;
+      top: 15px;
+    }
 
     i {
       font-size: 18px;
@@ -29,7 +34,11 @@
 
   &__content {
     padding: 24px 32px;
-    max-height: calc(100vh - 120px);
+    max-height: calc(100vh - 160px);
     overflow: auto;
+
+    @include mobile {
+      max-height: calc(100vh - 130px);
+    }
   }
 }

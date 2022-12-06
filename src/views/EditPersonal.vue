@@ -1,6 +1,6 @@
 <template>
   <div class="edit-personal">
-    <div class="edit-personal__header">個人檔案</div>
+    <div class="edit-personal__heder">個人檔案</div>
     <form class="edit-personal__form" @submit.prevent="updateProfile">
       <div class="edit-personal__row">
         <div class="edit-personal__ented">

@@ -47,14 +47,6 @@
     "percent": 0,
     "unit": "g"
   },
-  "sodium": { 
-    "id":"sodium",
-    "name":"納",
-    "content":0,
-    "intake":0,
-    "percent": 0,
-    "unit": "mg"
-  },
   "sugar": {
     "id":"sugar",
     "name":"糖",
@@ -62,5 +54,13 @@
     "intake":0,
     "percent": 0,
     "unit": "g"
+  },
+  "sodium": { 
+    "id":"sodium",
+    "name":"納",
+    "content":0,
+    "intake":0,
+    "percent": 0,
+    "unit": "mg"
   }
 }
