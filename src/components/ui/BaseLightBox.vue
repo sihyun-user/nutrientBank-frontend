@@ -7,7 +7,7 @@
       <slot></slot>
     </div>
   </div>
-  <div class="baseMask"></div>
+  <div class="baseMask" @click="tryClose"></div>
 </template>
 
 <script>
@@ -18,12 +18,6 @@ export default {
     const tryClose = () => {
       context.emit('close')
     }
-
-    window.addEventListener('click',(e) => {
-      const $mask = e.target.closest('.baseMask')
-      if(!$mask) return
-      tryClose()
-    })
 
     return {
       tryClose

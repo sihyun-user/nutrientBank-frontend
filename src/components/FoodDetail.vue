@@ -33,7 +33,7 @@
             @click="setMealType(type)"
             >
               <input v-model="mealType" id="type" type="radio">
-              <label for="type">{{type}}</label>
+              <span>{{type}}</span>
             </li>
           </ul>
         </div>
@@ -146,9 +146,9 @@ export default {
 
       // 3) 計算份數含量
       for(let key in calc_data) {
-          let value = calc_data[key].content * quantity.value
-          calc_data[key].content = +value.toFixed(1)
-        }
+        let value = calc_data[key].content * quantity.value
+        calc_data[key].content = +value.toFixed(1)
+      }
 
       return calc_data
     }

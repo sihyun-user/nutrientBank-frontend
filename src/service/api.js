@@ -44,6 +44,7 @@ export const apiGetAllfFood = payload => userRequest.get(`/foods?search=${payloa
 
 // 取得自訂食品列表
 export const apiGetAllCustomFood = payload => userRequest.get(`/customFoods?search=${payload.search}`)
+export const apiUpdateCustomFood = payload => userRequest.patch(`/customFood/${payload.foodId}`, payload.paramData)
 
 // 取得食品書籤列表
 export const apiGetAllLikes = payload => userRequest.get(`/likes?search=${payload.search}`)

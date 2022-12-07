@@ -1,7 +1,7 @@
 <template>
   <li class="food__item"
   :class="{'food__item--select': selectFood&&selectFood.id==food.id}"
-  @click="handleSelectFood(food)"
+  @click="handleSelectFood"
   >
     <div class="food__item--header">
       <div class="food__item--header-name">{{food.name}}</div>
@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="food__item--header-icons--edits" v-else>
-          <div class="food__item--header-icons--edit">
+          <div class="food__item--header-icons--edit" @click="handleCustomFood">
             <i class="fa-solid fa-pen"></i>
           </div>
           <div class="food__item--header-icons--cancel">
@@ -45,7 +45,7 @@
 import { computed, toRefs } from 'vue'
 import { useStore } from '@/store'
 export default {
-  emits: ['select-food', 'update-like'],
+  emits: ['select-food', 'update-like', 'update-customFood'],
   props: {
     food: {
       type: Object
@@ -81,15 +81,19 @@ export default {
       }
       getOneLike(payload)
     }
-
-    const handleSelectFood = (food) => {
-      context.emit('select-food', food)
+    const handleSelectFood = (event) => {
+      context.emit('select-food', food.value, event)
+    }
+    const handleCustomFood = async () => {
+      context.emit('update-customFood', food.value)
+      context.emit('select-food', food.value)
     }
 
     return {
       isLikeFood,
       setFoodLike,
       handleSelectFood,
+      handleCustomFood
     }
   }  
 }

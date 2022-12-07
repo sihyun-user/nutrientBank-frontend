@@ -183,6 +183,22 @@ export const useStore = defineStore('main', {
         appError(error, '取得自訂食品列表失敗')
       }
     },
+    // 編輯一筆自訂食品
+    async updateCustomFood(payload) {
+      try {
+        this.$patch({ isLoading: true })
+        const { foodId, paramData } = payload
+
+        const res = await appApi.apiUpdateCustomFood({foodId, paramData})
+
+        this.$patch({ isLoading: false })
+        checkConsole('編輯一筆自訂食品成功', res.data)
+        alert('編輯一筆自訂食品成功')
+      } catch (error) {
+        appError(error, '編輯一筆自訂食品失敗')
+        alert('編輯一筆自訂食品失敗，請稍後再試')
+      }
+    },
     // 取得食品書籤列表
     async getAllLikes(payload) {
       try {

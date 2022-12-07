@@ -124,7 +124,8 @@ export const useCalcNutrition = (monthDiarys, selectedWeekly) => {
         if (!acc[key]) {
           acc[key] = 0
         }
-        acc[key] += Math.round(curr.food.nutrition[key])
+        console.log(curr)
+        acc[key] += Math.round(curr.food.nutrition[key] * curr.quantity)
       }
       return acc
     }, {})

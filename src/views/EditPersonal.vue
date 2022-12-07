@@ -78,7 +78,7 @@
               @click="setTypeValue('sport', type)"
               >
                 <input id="type" type="radio">
-                <label for="type">{{type.sportName}}</label>
+                <span>{{type.sportName}}</span>
               </li>
             </ul>
           </div>
@@ -99,7 +99,7 @@
               @click="setTypeValue('fitness', type)"
               >
                 <input id="type" type="radio">
-                <label for="type">{{type.fitnessName}}</label>
+                <span>{{type.fitnessName}}</span>
               </li>
             </ul>
           </div>
@@ -183,7 +183,6 @@ export default {
       }
       store.updateProfile(personalInfo)
     }
-
     const tryPickTime = (payload) => {
       personalInfo.birthday = payload
     }

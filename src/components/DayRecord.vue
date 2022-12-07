@@ -5,7 +5,7 @@
       <div class="amount__circle">
         <div class="amount__circle-text">
           <span class="amount__circle-text--word">尚可攝取</span>
-          <span class="amount__circle-text--value">{{intake - content}}</span>
+          <span class="amount__circle-text--value">{{(intake - content < 0 ? 0 : intake - content)}}</span>
           <span class="amount__circle-text--kcal">kcal</span>
 
         </div>

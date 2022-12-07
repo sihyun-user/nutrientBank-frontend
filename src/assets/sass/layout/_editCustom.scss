@@ -1,0 +1,58 @@
+.edit-custom {
+  &__header {
+    font-size: 24px;
+    font-weight: $bold;
+    color: $color-gray-4;
+    margin-bottom: 30px;
+
+    @include mobile {
+      font-size: 22px;
+      margin-bottom: 25px;
+    }
+  }
+
+  &__subHeader {
+    font-size: 18px;
+    font-weight: $medium;
+    color: $color-gray-4;
+    margin-bottom: 15px;
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    @include mobile {
+      flex-direction: column;
+    }
+  }
+
+  &__ented {
+    @include baseEnted;
+  }
+
+  &__units {
+    &-list {
+      display: flex;
+    }
+    
+    &-item {
+      line-height: 1;
+      color: $color-primary;
+      background-color: $color-gray-3;
+      width: 50px;
+      height: 44px;
+      line-height: 44px;
+      text-align: center;
+      border-radius: 7px;
+      margin-right: 20px;
+      cursor: pointer;
+
+      &--active {
+        color: $color-white;
+        background-color: $color-secondary;
+      }
+    }
+  }
+}

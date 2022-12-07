@@ -9,10 +9,10 @@
       >我的書籤 ({{likeFoods.count}})</span>
     </div>
     <form @submit.prevent="searchEntered">
-      <div class="edit-foods__entered">
-        <div class="edit-foods__entered-text">
+      <div class="edit-foods__search">
+        <div class="edit-foods__search-text">
           <input type="text" placeholder="食品搜尋..." v-model="enteredKeyword">
-          <button type="submit" class="edit-foods__entered-icon">
+          <button type="submit" class="edit-foods__search-icon">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
@@ -21,20 +21,29 @@
     <ul class="edit-foods__list" v-if="foodMode=='自訂食品'">
       <food-item v-for="food in customData" :key="food.id"
       :food="food"
-      :is-edit=true
-      @update-like="tryUpdateLike"
+      :selectFood="selectFood"
+      :isEdit=true
+      @select-food="trySelectFood"
+      @update-customFood="tryUpdateCustomFood"
       >
       </food-item>
     </ul>
     <ul class="edit-foods__list" v-else>
       <food-item v-for="food in likeData" :key="food.id"
       :food="food"
+      :selectFood="selectFood"
+      @select-food="trySelectFood"
       @update-like="tryUpdateLike"
       >
       </food-item>
     </ul>
   </div>
-  <edit-customFood></edit-customFood>
+  <base-light-box v-if="selectFood&&showEditBox" @close="tryClose">
+    <edit-customFood :selectFood="selectFood"></edit-customFood>
+  </base-light-box>
+  <base-light-box v-if="selectFood&&showSelectBox" @close="tryClose">
+    <food-detail :selectFood="selectFood"></food-detail>
+  </base-light-box>
   <base-spinner v-if="isLoading"></base-spinner>
 </template>
 
@@ -43,10 +52,14 @@ import { ref, reactive, computed } from 'vue'
 import { useStore } from '@/store'
 import FoodItem from '@/components/FoodItem.vue'
 import EditCustomFood from '@/components/EditCustomFood.vue'
+import FoodDetail from '@/components/FoodDetail.vue'
+import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 export default {
   components: {
     FoodItem,
-    EditCustomFood
+    EditCustomFood,
+    FoodDetail,
+    BaseLightBox
   },
   setup() {
     const store = useStore()
@@ -56,6 +69,9 @@ export default {
     const likeFoods = reactive({ list: [], count: 0 })
     const customData = ref([])
     const likeData = ref([])
+    const selectFood = ref(null)
+    const showSelectBox = ref(false)
+    const showEditBox = ref(false)
 
     const isLoading = computed(() => store.isLoading)
 
@@ -104,6 +120,25 @@ export default {
 
       if (foodMode.value == '我的書籤') getLikeFoods()
     }
+    // 設置選擇的食品
+    const trySelectFood = (food, event) => {
+      document.querySelector
+      selectFood.value = food
+      if (!event) return
+    
+      const $select = event.target.closest('.food__item--header-icons--edit')
+      if ($select) return
+      showSelectBox.value = true
+    }
+    // 編輯自訂食品
+    const tryUpdateCustomFood = () => {
+      showEditBox.value = true
+      showSelectBox.value = false
+    }
+    const tryClose = () => {
+      showSelectBox.value = false
+      showEditBox.value = false
+    }
 
     getCustomFoods()
     getLikeFoods()
@@ -115,10 +150,16 @@ export default {
       likeFoods,
       customData,
       likeData,
+      selectFood,
+      showSelectBox,
+      showEditBox,
       isLoading,
       switchMode,
       searchEntered,
+      trySelectFood,
       tryUpdateLike,
+      tryUpdateCustomFood,
+      tryClose
     }
   }
 }

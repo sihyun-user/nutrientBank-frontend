@@ -16,7 +16,7 @@
             @click="setFoodType(type)"
             >
               <input id="type" type="radio">
-              <label for="type">{{type}}</label>
+              <span>{{type}}</span>
             </li>
           </ul>
         </div>
