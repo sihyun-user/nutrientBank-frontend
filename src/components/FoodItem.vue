@@ -45,7 +45,7 @@
 import { computed, toRefs } from 'vue'
 import { useStore } from '@/store'
 export default {
-  emits: ['select-food', 'update-like', 'update-customFood'],
+  emits: ['select-food', 'update-like', 'open-customFood'],
   props: {
     food: {
       type: Object
@@ -85,7 +85,7 @@ export default {
       context.emit('select-food', food.value, event)
     }
     const handleCustomFood = async () => {
-      context.emit('update-customFood', food.value)
+      context.emit('open-customFood', food.value)
       context.emit('select-food', food.value)
     }
 

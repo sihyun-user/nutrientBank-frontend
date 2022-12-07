@@ -70,10 +70,12 @@ export default {
       const data = await store.getDiarys(selectedDate.value)
       monthDiarys.value = data
     }
+    // 設置選擇星期
     const tryChangeWeekly = (payload) => {
       selectedWeekly.value = payload
       updateNutrition()
     }
+    // 設置選擇日期
     const tryUpdateDate = (payload) => {
       selectedDate.value = payload
     }

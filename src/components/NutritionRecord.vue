@@ -3,14 +3,14 @@
     <div class="nutrition__header">
       <div class="nutrition__title baseTitle">今日紀錄</div>
       <div class="nutrition__btns">
-        <div class="baseWhiteBtn">
+        <div class="baseWhiteBtn" @click="setCustomFood">
           <i class="fa-solid fa-plus"></i>
           <span>新增自訂食品</span>
         </div>
-        <div class="baseBtn">
+        <router-link to="user-search" class="baseBtn">
           <i class="fa-solid fa-plus"></i>
           <span>新增營養紀錄</span>
-        </div>
+        </router-link>
       </div>
     </div>
     <div class="skillBar skillBar__web">
@@ -152,13 +152,20 @@
       </base-card>
     </div>
   </base-card>
+  <base-light-box v-if="showBox" @close="tryClose">
+    <edit-customFood title="新增自訂食品" @handle-customFood="tryCreateCustomFood"></edit-customFood>
+  </base-light-box>
 </template>
 
 <script>
-import { reactive, toRefs, watch } from 'vue'
+import { ref, reactive, toRefs, watch } from 'vue'
+import { useStore } from '@/store'
 import BaseCard from '@/components/ui/BaseCard.vue'
 import NUTRITION_DATA from '@/service/nutrition.json'
+import EditCustomFood from '@/components/EditCustomFood.vue'
+import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 export default {
+  emits: ['create-customFood'],
   props: {
     weekNutrition: {
       type: Object
@@ -168,21 +175,44 @@ export default {
     }
   },
   components: {
-    BaseCard
+    BaseCard,
+    EditCustomFood,
+    BaseLightBox
   },
   setup(props) {
-    const { weekNutrition, selectedDate } = toRefs(props)
+    const srore = useStore()
+    const showBox = ref(false)
     const dayRecord = reactive(NUTRITION_DATA)
+    const { weekNutrition, selectedDate } = toRefs(props)
 
     watch([weekNutrition, selectedDate], () => setDayRecord())
 
+    // 設置每日營養資料
     const setDayRecord = () => {
       const record = weekNutrition.value[selectedDate.value]
       Object.assign(dayRecord, record)
     }
+    // 設置自訂食品彈窗
+    const setCustomFood = () => {
+      showBox.value = true
+    }
+    // 新增自訂食品
+    const tryCreateCustomFood = () => {
+      tryClose()
+      store.createCustomFood()
+    }
+
+    const tryClose = () => {
+      showBox.value = false
+    }
 
     return {
-      ...toRefs(dayRecord)
+      ...toRefs(dayRecord),
+      showBox,
+      setCustomFood,
+      createCustomFood,
+      tryCreateCustomFood,
+      tryClose
     }
   }
 }

@@ -24,7 +24,7 @@
       :selectFood="selectFood"
       :isEdit=true
       @select-food="trySelectFood"
-      @update-customFood="tryUpdateCustomFood"
+      @open-customFood="tryOpenCustomFood"
       >
       </food-item>
     </ul>
@@ -39,7 +39,11 @@
     </ul>
   </div>
   <base-light-box v-if="selectFood&&showEditBox" @close="tryClose">
-    <edit-customFood :selectFood="selectFood"></edit-customFood>
+    <edit-customFood
+    title="編輯自訂食品"
+    :selectFood="selectFood"
+    @handle-customFood="tryUpdateCustomFood">
+    </edit-customFood>
   </base-light-box>
   <base-light-box v-if="selectFood&&showSelectBox" @close="tryClose">
     <food-detail :selectFood="selectFood"></food-detail>
@@ -126,14 +130,20 @@ export default {
       selectFood.value = food
       if (!event) return
     
-      const $select = event.target.closest('.food__item--header-icons--edit')
-      if ($select) return
+      const $edit = event.target.closest('.food__item--header-icons--edit')
+      const $book = event.target.closest('.food__item--header-icons--book')
+      if ($edit || $book) return
       showSelectBox.value = true
+    }
+    // 設置編輯自訂食品彈窗
+    const tryOpenCustomFood = () => {
+      showEditBox.value = true
+      showSelectBox.value = false
     }
     // 編輯自訂食品
     const tryUpdateCustomFood = () => {
-      showEditBox.value = true
-      showSelectBox.value = false
+      tryClose()
+      getCustomFoods()
     }
     const tryClose = () => {
       showSelectBox.value = false
@@ -158,6 +168,7 @@ export default {
       searchEntered,
       trySelectFood,
       tryUpdateLike,
+      tryOpenCustomFood,
       tryUpdateCustomFood,
       tryClose
     }

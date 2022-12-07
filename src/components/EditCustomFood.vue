@@ -1,21 +1,21 @@
 <template>
-  <form class="edit-custom" @click.prevent="">
-    <div class="edit-custom__header">修改自訂食品</div>
+  <form class="edit-custom" @submit.prevent="handleCustomFood">
+    <div class="edit-custom__header">{{title}}</div>
     <div class="edit-custom__row">
       <div class="edit-custom__ented">
         <label class="edit-custom__ented-label">食品名稱</label>
         <input class="edit-custom__ented-text" type="text"
-        placeholder="請輸入食品名稱(必填)" v-model="editFoodData.name">
+        placeholder="請輸入食品名稱(必填)" v-model="editFoodInfo.name">
       </div>
       <div class="edit-custom__ented">
         <label class="edit-custom__ented-label">食品英文名稱</label>
         <input class="edit-custom__ented-text" type="text" 
-        placeholder="請輸入食品英文名稱" v-model="editFoodData.subName">
+        placeholder="請輸入食品英文名稱" v-model="editFoodInfo.subName">
       </div>
       <div class="edit-custom__ented">
         <label class="edit-custom__ented-label">品牌名稱</label>
         <input class="edit-custom__ented-text" type="text" 
-        placeholder="請輸入品牌名稱" v-model="editFoodData.brand">
+        placeholder="請輸入品牌名稱" v-model="editFoodInfo.brand">
       </div>
     </div>
     <div class="edit-custom__subHeader">份數</div>
@@ -23,23 +23,23 @@
       <div class="edit-custom__ented">
         <label class="edit-custom__ented-label">每一份量含</label>
         <input class="edit-custom__ented-text" type="number"
-        placeholder="請輸入每一份量含(必填)" v-model="editFoodData.perUnitWeight">
+        placeholder="請輸入每一份量含(必填)" v-model="editFoodInfo.perUnitWeight">
       </div>
       <div class="edit-custom__ented edit-custom__units">
         <label class="edit-custom__ented-label">單位</label>
         <ul class="edit-custom__units-list">
           <li class="edit-custom__units-item"
-          :class="{'edit-custom__units-item--active': editFoodData.unit == 'g'}"
+          :class="{'edit-custom__units-item--active': editFoodInfo.unit == 'g'}"
           @click="switchUiitType('g')"
           >
-            <input id="type" type="radio" v-model="editFoodData.unit">
+            <input id="type" type="radio" v-model="editFoodInfo.unit">
             <span>g</span>
           </li>
           <li class="edit-custom__units-item"
-          :class="{'edit-custom__units-item--active': editFoodData.unit == 'ml'}"
+          :class="{'edit-custom__units-item--active': editFoodInfo.unit == 'ml'}"
           @click="switchUiitType('ml')"
           >
-            <input id="type" type="radio" v-model="editFoodData.unit">
+            <input id="type" type="radio" v-model="editFoodInfo.unit">
             <span>ml</span>
           </li>
         </ul>
@@ -50,16 +50,16 @@
       <div class="edit-custom__ented">
         <label class="edit-custom__ented-label">熱量</label>
         <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text"
-          type="number" placeholder="請輸入熱量(必填)">
+          <input class="edit-custom__ented-text" type="number" step=0.1
+          placeholder="請輸入熱量(必填)" v-model="editFoodInfo.nutrition.calories">
           <span class="edit-custom__ented-unit">kcal</span>
         </div>
       </div>
       <div class="edit-custom__ented">
         <label class="edit-custom__ented-label">碳水化合物</label>
         <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text"
-          type="number" placeholder="請輸入碳水化合物(必填)">
+          <input class="edit-custom__ented-text" type="number" step=0.1
+          placeholder="請輸入碳水化合物(必填)" v-model="editFoodInfo.nutrition.carbohydrates">
           <span class="edit-custom__ented-unit">g</span>
         </div>
       </div>
@@ -68,16 +68,16 @@
       <div class="edit-custom__ented">
         <label class="edit-custom__ented-label">蛋白質</label>
         <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text"
-          type="number" placeholder="請輸入蛋白質(必填)">
+          <input class="edit-custom__ented-text" type="number" step=0.1
+          placeholder="請輸入蛋白質(必填)" v-model="editFoodInfo.nutrition.protein">
           <span class="edit-custom__ented-unit">g</span>
         </div>
       </div>
       <div class="edit-custom__ented">
         <label class="edit-custom__ented-label">脂肪</label>
         <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text"
-          type="number" placeholder="請輸入脂肪(必填)">
+          <input class="edit-custom__ented-text" type="number" step=0.1
+          placeholder="請輸入脂肪(必填)" v-model="editFoodInfo.nutrition.fat">
           <span class="edit-custom__ented-unit">g</span>
         </div>
       </div>
@@ -86,16 +86,16 @@
       <div class="edit-custom__ented">
         <label class="edit-custom__ented-label">飽和脂肪</label>
         <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text"
-          type="number" placeholder="請輸入飽和脂肪(必填)">
+          <input class="edit-custom__ented-text" type="number" step=0.1
+          placeholder="請輸入飽和脂肪(必填)" v-model="editFoodInfo.nutrition.saturated_fat">
           <span class="edit-custom__ented-unit">g</span>
         </div>
       </div>
       <div class="edit-custom__ented">
         <label class="edit-custom__ented-label">反式脂肪</label>
         <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text"
-          type="number" placeholder="請輸入反式脂肪(必填)">
+          <input class="edit-custom__ented-text" type="number" step=0.1
+          placeholder="請輸入反式脂肪(必填)" v-model="editFoodInfo.nutrition.trans_fat">
           <span class="edit-custom__ented-unit">g</span>
         </div>
       </div>
@@ -104,53 +104,87 @@
       <div class="edit-custom__ented">
         <label class="edit-custom__ented-label">糖</label>
         <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text"
-          type="number" placeholder="請輸入糖(必填)">
+          <input class="edit-custom__ented-text" type="number" step=0.1
+          placeholder="請輸入糖(必填)" v-model="editFoodInfo.nutrition.sugar">
           <span class="edit-custom__ented-unit">g</span>
         </div>
       </div>
       <div class="edit-custom__ented">
         <label class="edit-custom__ented-label">納</label>
         <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text"
-          type="number" placeholder="請輸入納(必填)">
+          <input class="edit-custom__ented-text" type="number" step=0.1
+          placeholder="請輸入納(必填)" v-model="editFoodInfo.nutrition.sodium">
           <span class="edit-custom__ented-unit">mg</span>
         </div>
       </div>
     </div>
-    <!-- <div v-if="errorMsg" class="errorMsg edit-custom__errorMsg">{{errorMsg}}</div> -->
+    <div v-if="errorMsg" class="errorMsg edit-custom__errorMsg">{{errorMsg}}</div>
     <div class="edit-custom__btn">
-      <button type="submit" class="orangeBigBtn">修改自訂食品</button>
+      <button type="submit" class="orangeBigBtn">編輯自訂食品</button>
     </div>
   </form>
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
+import { useStore } from '@/store'
 export default {
+  emits: ['handle-customFood'],
   props: {
+    title: {
+      type: String
+    },  
     selectFood: {
-      type: Object
+      type: Object,
+      default: null
     }
   },
-  setup(props) {
-    const editFoodData = reactive({})
+  setup(props, context) {
+    const store = useStore()
+    const editFoodInfo = reactive({
+      name: '', 
+      subName: '',
+      brand: '', 
+      perUnitWeight: '',
+      unit: 'g',
+      nutrition: {}
+    })
+
+    const errorMsg = computed(() => store.errorMsg)
 
     // 切換單位
     const switchUiitType = (type) => {
-      editFoodData.unit = type
+      editFoodInfo.unit = type
     }
-    
-    const setEditData = () => {
-      Object.assign(editFoodData, props.selectFood)
-      console.log(editFoodData)
+    // 設置食品資料
+    const setEditInfo = () => {
+      if (!props.selectFood) return
+      const copy_data = JSON.parse(JSON.stringify(props.selectFood)) // 深層拷貝，去除反應式
+      delete copy_data.id, delete copy_data.likes, delete copy_data.type
+      Object.assign(editFoodInfo, copy_data)
+    }
+    // 新增、編輯一筆自訂食品
+    const handleCustomFood = async() => {
+      store.$patch({ errorMsg: '' })
+      if (editFoodInfo.name.trim() == '') {
+        return store.$patch({ errorMsg: '食品名稱為必填欄位' })
+      } else if (editFoodInfo.perUnitWeight == '') {
+        return store.$patch({ errorMsg: '食品每一份量含為必填欄位' })
+      }
+      const payload = { foodId: props.selectFood.id, paramData: editFoodInfo }
+      const result = await store.handleCustomFood(payload)
+      if (!result) return
+      context.emit('handle-customFood')
     }
 
-    setEditData()
+    setEditInfo()
 
     return {
-      editFoodData,
-      switchUiitType
+      errorMsg,
+      editFoodInfo,
+      setEditInfo,
+      switchUiitType,
+      handleCustomFood
     }
   } 
 }
