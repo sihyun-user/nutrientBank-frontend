@@ -39,11 +39,11 @@
     </ul>
   </div>
   <base-light-box v-if="selectFood&&showEditBox" @close="tryClose">
-    <edit-customFood
+    <edit-food-detail
     title="編輯自訂食品"
     :selectFood="selectFood"
-    @handle-customFood="tryUpdateCustomFood">
-    </edit-customFood>
+    @handle-food="tryUpdateCustomFood">
+    </edit-food-detail>
   </base-light-box>
   <base-light-box v-if="selectFood&&showSelectBox" @close="tryClose">
     <food-detail :selectFood="selectFood"></food-detail>
@@ -55,13 +55,13 @@
 import { ref, reactive, computed } from 'vue'
 import { useStore } from '@/store'
 import FoodItem from '@/components/FoodItem.vue'
-import EditCustomFood from '@/components/EditCustomFood.vue'
+import EditFoodDetail from '@/components/EditFoodDetail.vue'
 import FoodDetail from '@/components/FoodDetail.vue'
 import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 export default {
   components: {
     FoodItem,
-    EditCustomFood,
+    EditFoodDetail,
     FoodDetail,
     BaseLightBox
   },

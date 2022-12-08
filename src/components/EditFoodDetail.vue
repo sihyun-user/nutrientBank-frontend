@@ -1,5 +1,5 @@
 <template>
-  <form class="edit-custom" @submit.prevent="handleCustomFood">
+  <form class="edit-custom" @submit.prevent="handleFood">
     <div class="edit-custom__header">{{title}}</div>
     <div class="edit-custom__row">
       <div class="edit-custom__ented">
@@ -129,7 +129,7 @@
 import { reactive, computed } from 'vue'
 import { useStore } from '@/store'
 export default {
-  emits: ['handle-customFood'],
+  emits: ['handle-food'],
   props: {
     title: {
       type: String
@@ -163,8 +163,8 @@ export default {
       delete copy_data.id, delete copy_data.likes, delete copy_data.type
       Object.assign(editFoodInfo, copy_data)
     }
-    // 新增、編輯一筆自訂食品
-    const handleCustomFood = async() => {
+    // 新增、編輯一筆食品
+    const handleFood = async() => {
       store.$patch({ errorMsg: '' })
       if (editFoodInfo.name.trim() == '') {
         return store.$patch({ errorMsg: '食品名稱為必填欄位' })
@@ -172,9 +172,9 @@ export default {
         return store.$patch({ errorMsg: '食品每一份量含為必填欄位' })
       }
       const payload = { foodId: props.selectFood.id, paramData: editFoodInfo }
-      const result = await store.handleCustomFood(payload)
+      const result = await store.handleFood(payload)
       if (!result) return
-      context.emit('handle-customFood')
+      context.emit('handle-food')
     }
 
     setEditInfo()
@@ -184,7 +184,7 @@ export default {
       editFoodInfo,
       setEditInfo,
       switchUiitType,
-      handleCustomFood
+      handleFood
     }
   } 
 }

@@ -153,7 +153,7 @@
     </div>
   </base-card>
   <base-light-box v-if="showBox" @close="tryClose">
-    <edit-customFood title="新增自訂食品" @handle-customFood="tryCreateCustomFood"></edit-customFood>
+    <edit-food-detail title="新增自訂食品" @handle-food="tryCreateCustomFood"></edit-food-detail>
   </base-light-box>
 </template>
 
@@ -162,7 +162,7 @@ import { ref, reactive, toRefs, watch } from 'vue'
 import { useStore } from '@/store'
 import BaseCard from '@/components/ui/BaseCard.vue'
 import NUTRITION_DATA from '@/service/nutrition.json'
-import EditCustomFood from '@/components/EditCustomFood.vue'
+import EditFoodDetail from '@/components/EditFoodDetail.vue'
 import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 export default {
   emits: ['create-customFood'],
@@ -176,7 +176,7 @@ export default {
   },
   components: {
     BaseCard,
-    EditCustomFood,
+    EditFoodDetail,
     BaseLightBox
   },
   setup(props) {
@@ -210,7 +210,6 @@ export default {
       ...toRefs(dayRecord),
       showBox,
       setCustomFood,
-      createCustomFood,
       tryCreateCustomFood,
       tryClose
     }

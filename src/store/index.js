@@ -183,6 +183,21 @@ export const useStore = defineStore('main', {
         appError(error, '取得自訂食品列表失敗')
       }
     },
+    // 新增一筆自訂食品
+    async createCustomFood(payload) {
+      try {
+        this.$patch({ isLoading: true })
+        const { foodId, paramData } = payload
+
+        const res = appApi.apiCreateCustomFood({foodId, paramData})
+        this.$patch({ isLoading: false })
+        checkConsole('新增一筆自訂食品成功', res.data)
+        alert('新增一筆自訂食品成功')
+      } catch (error) {
+        appError(error, '新增一筆自訂食品失敗')
+        alert('新增一筆自訂食品失敗，請稍後再試')
+      }
+    },
     // 編輯一筆自訂食品
     async updateCustomFood(payload) {
       try {
@@ -200,19 +215,19 @@ export const useStore = defineStore('main', {
         alert('編輯一筆自訂食品失敗，請稍後再試')
       }
     },
-    // 新增一筆自訂食品
-    async createCustomFood(payload) {
+    // 刪除一筆自訂食品
+    async deleteCustomFood(payload) {
       try {
         this.$patch({ isLoading: true })
-        const { foodId, paramData } = payload
 
-        const res = appApi.apiCreateCustomFood({foodId, paramData})
+        const res = await appApi.apiDeleteCustomFood(payload)
+
         this.$patch({ isLoading: false })
-        checkConsole('新增一筆自訂食品成功', res.data)
-        alert('新增一筆自訂食品成功')
+        checkConsole('刪除一筆自訂食品成功', res.data)
+        alert('刪除一筆自訂食品成功')
       } catch (error) {
-        appError(error, '新增一筆自訂食品失敗')
-        alert('新增一筆自訂食品失敗，請稍後再試')
+        appError(error, '刪除一筆自訂食品失敗')
+        alert('刪除一筆自訂食品失敗，請稍後再試')
       }
     },
     // 取得食品書籤列表
