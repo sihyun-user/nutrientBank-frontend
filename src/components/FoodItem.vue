@@ -16,10 +16,10 @@
           </div>
         </div>
         <div class="food__item--header-icons--edits" v-else>
-          <div class="food__item--header-icons--edit" @click="handleCustomFood">
+          <div class="food__item--header-icons--edit" @click="handleUpdateFood">
             <i class="fa-solid fa-pen"></i>
           </div>
-          <div class="food__item--header-icons--cancel">
+          <div class="food__item--header-icons--cancel" @click="handleDeleteFood">
             <i class="fa-solid fa-x"></i>
           </div>
         </div>
@@ -45,7 +45,7 @@
 import { computed, toRefs } from 'vue'
 import { useStore } from '@/store'
 export default {
-  emits: ['select-food', 'update-like', 'open-customFood'],
+  emits: ['select-food', 'update-like', 'open-food-window', 'delete-food'],
   props: {
     food: {
       type: Object
@@ -84,16 +84,20 @@ export default {
     const handleSelectFood = (event) => {
       context.emit('select-food', food.value, event)
     }
-    const handleCustomFood = async () => {
-      context.emit('open-customFood', food.value)
+    const handleUpdateFood = async () => {
+      context.emit('open-food-window', food.value)
       context.emit('select-food', food.value)
+    }
+    const handleDeleteFood = () => {
+      context.emit('delete-food', { foodId: food.value.id })
     }
 
     return {
       isLikeFood,
       setFoodLike,
       handleSelectFood,
-      handleCustomFood
+      handleUpdateFood,
+      handleDeleteFood
     }
   }  
 }

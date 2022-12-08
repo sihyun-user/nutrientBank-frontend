@@ -28,18 +28,18 @@
       </div>
     </div>
   </section>
+  <base-spinner v-if="isLoading"></base-spinner>
 </template>
 
 <script>
-import { ref, watch, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useStore } from '@/store'
-import { useCalcNutrition } from '@/hooks/calcNutrition'
+import useSetMonthNutrition from '@/hooks/setMonthNutrition'
 import WeekCalendar from '@/components/WeekCalendar.vue'
 import DayRecord from '@/components/DayRecord.vue'
 import NutritionRecord from '@/components/NutritionRecord.vue'
 import SportRecord from '@/components/SportRecord.vue'
 import WeekRecord from '@/components/WeekRecord.vue'
-import moment from 'moment'
 export default {
   components: {
     WeekCalendar,
@@ -50,45 +50,21 @@ export default {
   },
   setup() {
     const store = useStore()
-    const monthDiarys = ref([])
-    const selectedDate = ref(null)
-    const selectedWeekly = ref(null)
-    const { updateNutrition, weekNutrition } = useCalcNutrition(monthDiarys, selectedWeekly)
+    const { 
+      selectedDate, selectedWeekly, monthDiarys, weekNutrition, 
+      tryChangeWeekly, tryUpdateDate
+    } = useSetMonthNutrition()
 
-    watch(monthDiarys, () => updateNutrition())
-
-    onMounted(() => getMonthDiarys())
-
-    // 設置今日日期
-    const setTodayDate = () => {
-      const today = moment().format('YYYY-MM-DD')
-      selectedDate.value = today
-      selectedWeekly.value = today
-    }
-    // 取得今月日記 
-    const getMonthDiarys = async() => {
-      const data = await store.getDiarys(selectedDate.value)
-      monthDiarys.value = data
-    }
-    // 設置選擇星期
-    const tryChangeWeekly = (payload) => {
-      selectedWeekly.value = payload
-      updateNutrition()
-    }
-    // 設置選擇日期
-    const tryUpdateDate = (payload) => {
-      selectedDate.value = payload
-    }
-
-    setTodayDate()
+    const isLoading = computed(() => store.isLoading)
 
     return {
-      monthDiarys,
-      weekNutrition,
-      selectedDate,
-      selectedWeekly,
-      tryChangeWeekly,
-      tryUpdateDate
+      isLoading,
+      selectedDate, 
+      selectedWeekly, 
+      monthDiarys, 
+      weekNutrition, 
+      tryChangeWeekly, 
+      tryUpdateDate,
     }
   }
 }

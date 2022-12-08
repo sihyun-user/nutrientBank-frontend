@@ -180,7 +180,7 @@ export default {
     BaseLightBox
   },
   setup(props) {
-    const srore = useStore()
+    const store = useStore()
     const showBox = ref(false)
     const dayRecord = reactive(NUTRITION_DATA)
     const { weekNutrition, selectedDate } = toRefs(props)
@@ -197,9 +197,11 @@ export default {
       showBox.value = true
     }
     // 新增自訂食品
-    const tryCreateCustomFood = () => {
+    const tryCreateCustomFood = async(payload) => {
+      const results = await store.createCustomFood(payload)
+      if (!results) return
+
       tryClose()
-      store.createCustomFood()
     }
 
     const tryClose = () => {

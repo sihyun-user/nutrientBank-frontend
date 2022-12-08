@@ -83,7 +83,7 @@
 <script>
 import { ref, computed, toRefs, watch } from 'vue'
 import { useStore } from '@/store'
-import { clacIntakes, clacIntakePercent } from '@/hooks/calcNutrition'
+import useCalcNutrition from '@/hooks/calcNutrition'
 import Datepicker from 'vue3-datepicker'
 import BaseDatePicker from '@/components/ui/BaseDatePicker.vue'
 export default {
@@ -103,6 +103,7 @@ export default {
     const isOpenMeal = ref(false)
     const mealDate = ref(Date.now())
     const { selectFood } = toRefs(props)
+    const { clacIntakes, clacIntakePercent } = useCalcNutrition()
 
     watch(selectFood, () => quantity.value=1)
 

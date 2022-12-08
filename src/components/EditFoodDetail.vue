@@ -51,7 +51,7 @@
         <label class="edit-custom__ented-label">熱量</label>
         <div class="edit-custom__ented-wrap">
           <input class="edit-custom__ented-text" type="number" step=0.1
-          placeholder="請輸入熱量(必填)" v-model="editFoodInfo.nutrition.calories">
+          placeholder="請輸入熱量" v-model="editFoodInfo.nutrition.calories">
           <span class="edit-custom__ented-unit">kcal</span>
         </div>
       </div>
@@ -59,7 +59,7 @@
         <label class="edit-custom__ented-label">碳水化合物</label>
         <div class="edit-custom__ented-wrap">
           <input class="edit-custom__ented-text" type="number" step=0.1
-          placeholder="請輸入碳水化合物(必填)" v-model="editFoodInfo.nutrition.carbohydrates">
+          placeholder="請輸入碳水化合物" v-model="editFoodInfo.nutrition.carbohydrates">
           <span class="edit-custom__ented-unit">g</span>
         </div>
       </div>
@@ -69,7 +69,7 @@
         <label class="edit-custom__ented-label">蛋白質</label>
         <div class="edit-custom__ented-wrap">
           <input class="edit-custom__ented-text" type="number" step=0.1
-          placeholder="請輸入蛋白質(必填)" v-model="editFoodInfo.nutrition.protein">
+          placeholder="請輸入蛋白質" v-model="editFoodInfo.nutrition.protein">
           <span class="edit-custom__ented-unit">g</span>
         </div>
       </div>
@@ -77,7 +77,7 @@
         <label class="edit-custom__ented-label">脂肪</label>
         <div class="edit-custom__ented-wrap">
           <input class="edit-custom__ented-text" type="number" step=0.1
-          placeholder="請輸入脂肪(必填)" v-model="editFoodInfo.nutrition.fat">
+          placeholder="請輸入脂肪" v-model="editFoodInfo.nutrition.fat">
           <span class="edit-custom__ented-unit">g</span>
         </div>
       </div>
@@ -87,7 +87,7 @@
         <label class="edit-custom__ented-label">飽和脂肪</label>
         <div class="edit-custom__ented-wrap">
           <input class="edit-custom__ented-text" type="number" step=0.1
-          placeholder="請輸入飽和脂肪(必填)" v-model="editFoodInfo.nutrition.saturated_fat">
+          placeholder="請輸入飽和脂肪" v-model="editFoodInfo.nutrition.saturated_fat">
           <span class="edit-custom__ented-unit">g</span>
         </div>
       </div>
@@ -95,7 +95,7 @@
         <label class="edit-custom__ented-label">反式脂肪</label>
         <div class="edit-custom__ented-wrap">
           <input class="edit-custom__ented-text" type="number" step=0.1
-          placeholder="請輸入反式脂肪(必填)" v-model="editFoodInfo.nutrition.trans_fat">
+          placeholder="請輸入反式脂肪" v-model="editFoodInfo.nutrition.trans_fat">
           <span class="edit-custom__ented-unit">g</span>
         </div>
       </div>
@@ -105,7 +105,7 @@
         <label class="edit-custom__ented-label">糖</label>
         <div class="edit-custom__ented-wrap">
           <input class="edit-custom__ented-text" type="number" step=0.1
-          placeholder="請輸入糖(必填)" v-model="editFoodInfo.nutrition.sugar">
+          placeholder="請輸入糖" v-model="editFoodInfo.nutrition.sugar">
           <span class="edit-custom__ented-unit">g</span>
         </div>
       </div>
@@ -113,7 +113,7 @@
         <label class="edit-custom__ented-label">納</label>
         <div class="edit-custom__ented-wrap">
           <input class="edit-custom__ented-text" type="number" step=0.1
-          placeholder="請輸入納(必填)" v-model="editFoodInfo.nutrition.sodium">
+          placeholder="請輸入納" v-model="editFoodInfo.nutrition.sodium">
           <span class="edit-custom__ented-unit">mg</span>
         </div>
       </div>
@@ -147,7 +147,16 @@ export default {
       brand: '', 
       perUnitWeight: '',
       unit: 'g',
-      nutrition: {}
+      nutrition: {
+        calories: '',
+        carbohydrates: '',
+        protein: '',
+        fat: '',
+        saturated_fat: '',
+        trans_fat: '',
+        sugar: '',
+        sodium: ''
+      }
     })
 
     const errorMsg = computed(() => store.errorMsg)
@@ -171,10 +180,12 @@ export default {
       } else if (editFoodInfo.perUnitWeight == '') {
         return store.$patch({ errorMsg: '食品每一份量含為必填欄位' })
       }
-      const payload = { foodId: props.selectFood.id, paramData: editFoodInfo }
-      const result = await store.handleFood(payload)
-      if (!result) return
-      context.emit('handle-food')
+
+      let payload = { paramData: editFoodInfo }
+      if (props.selectFood) {
+        payload.foodId  = props.selectFood.id
+      }
+      context.emit('handle-food', payload)
     }
 
     setEditInfo()

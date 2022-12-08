@@ -7,7 +7,9 @@
         </router-link>
       </div>
       <div class="theHeader__nav theHeader__nav--web">
-        <div class="theHeader__nav--item">我的紀錄</div>
+        <div class="theHeader__nav--item">
+          <router-link to="user-record">我的紀錄</router-link>
+        </div>
         <div class="theHeader__nav--item">
           <router-link to="user-search">食品搜尋</router-link>
         </div>
@@ -30,7 +32,7 @@
           <i class="fa-solid fa-bars"></i>
         </div>
         <ul class="theHeader__nav--user-list" v-if="isOpenMenu">
-          <li><router-link to="">我的紀錄</router-link></li>
+          <li><router-link to="user-record">我的紀錄</router-link></li>
           <li><router-link to="user-search">食品搜尋</router-link></li>
           <li><router-link to="edit-personal">個人檔案</router-link></li>
           <li><router-link to="edit-password">修改密碼</router-link></li>

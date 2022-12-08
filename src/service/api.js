@@ -45,7 +45,7 @@ export const apiGetAllfFood = payload => userRequest.get(`/foods?search=${payloa
 // 取得自訂食品列表
 export const apiGetAllCustomFood = payload => userRequest.get(`/customFoods?search=${payload.search}`)
 // 新增一筆自訂食品
-export const apiCreateCustomFood = payload => userRequest.post(`/customFood/${payload.foodId}`, payload.paramData)
+export const apiCreateCustomFood = payload => userRequest.post(`/customFood`, payload.paramData)
 // 編輯一筆自訂食品
 export const apiUpdateCustomFood = payload => userRequest.patch(`/customFood/${payload.foodId}`, payload.paramData)
 // 刪除一筆自訂食品

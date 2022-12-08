@@ -24,7 +24,8 @@
       :selectFood="selectFood"
       :isEdit=true
       @select-food="trySelectFood"
-      @open-customFood="tryOpenCustomFood"
+      @open-food-window="tryOpenFoodWindow"
+      @delete-food="tryDeleteCustomFood"
       >
       </food-item>
     </ul>
@@ -126,23 +127,34 @@ export default {
     }
     // 設置選擇的食品
     const trySelectFood = (food, event) => {
-      document.querySelector
       selectFood.value = food
       if (!event) return
     
       const $edit = event.target.closest('.food__item--header-icons--edit')
+      const $delete = event.target.closest('.food__item--header-icons--cancel')
       const $book = event.target.closest('.food__item--header-icons--book')
-      if ($edit || $book) return
+      if ($edit || $delete || $book) return
       showSelectBox.value = true
     }
     // 設置編輯自訂食品彈窗
-    const tryOpenCustomFood = () => {
+    const tryOpenFoodWindow = () => {
+      store.$patch({ errorMsg: '' })
       showEditBox.value = true
       showSelectBox.value = false
     }
-    // 編輯自訂食品
-    const tryUpdateCustomFood = () => {
+    // 編輯一筆自訂食品
+    const tryUpdateCustomFood = async(payload) => {
+      const results = await store.updateCustomFood(payload)
+      if (!results) return   
+
       tryClose()
+      getCustomFoods()
+    }
+    // 刪除一筆自訂食品
+    const tryDeleteCustomFood = async(payload) => {
+      const results = await store.deleteCustomFood(payload)
+      if (!results) return
+
       getCustomFoods()
     }
     const tryClose = () => {
@@ -168,8 +180,9 @@ export default {
       searchEntered,
       trySelectFood,
       tryUpdateLike,
-      tryOpenCustomFood,
+      tryOpenFoodWindow,
       tryUpdateCustomFood,
+      tryDeleteCustomFood,
       tryClose
     }
   }
