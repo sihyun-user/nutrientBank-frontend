@@ -148,7 +148,6 @@ export default {
   
       let start = current - Math.floor(page_length / 2)
       start = Math.max(start, min)
-      start = Math.min(start, min + total_pages - page_length)
       return Array.from({length: page_length}, (el, i) => start + i)
     })
     // 設置搜尋下拉選單

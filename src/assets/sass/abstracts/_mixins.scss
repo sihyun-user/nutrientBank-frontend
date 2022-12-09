@@ -411,3 +411,60 @@
     top: 11px;
   }
 }
+
+@mixin basePagination() {
+  display: flex;
+  justify-content: center;
+  
+  @include pad {
+    width: 100%;
+  }
+
+  &--container {
+    max-width: 160px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  &--arrow {
+    cursor: pointer;
+    position: absolute;
+
+    &-left {
+      left: 0;
+      top: 0;
+    }
+
+    &-right {
+      top: 0;
+      right: 0;
+    }
+
+    i {
+      font-size: 12px;
+    }
+  }
+
+  &--list {
+    max-width: 120px;
+    display: flex;
+    justify-content: space-between;
+
+    li {
+      font-weight: $regular;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      border-radius: 50px;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+
+  &--selectItem {
+    color: $color-white;
+    background-color: $color-secondary;
+  }
+}

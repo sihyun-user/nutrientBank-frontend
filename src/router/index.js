@@ -4,6 +4,7 @@ import { useStore } from '@/store'
 const routes = [
   { path: '/', redirect: '/user-wall' },
   { path: '/auth', meta: { requiresUnauth: true }, component: () => import('@/views/UserAuth.vue') },
+  { path: '/admin', meta: { requiresAuth: true }, component: () => import('@/views/AdminData.vue') },
   {
     path: '/user-wall',
     redirect: '/user-wall',

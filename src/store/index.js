@@ -156,7 +156,7 @@ export const useStore = defineStore('main', {
       }
     },
     // 取得食品列表
-    async getAllFood(payload) {
+    async getAllFood(payload={search: ''}) {
       try {
         this.$patch({ isLoading: true })
 

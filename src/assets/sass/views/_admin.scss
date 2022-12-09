@@ -1,0 +1,72 @@
+.admin {
+  display: flex;
+  background-color: $color-white;
+
+  .admin-aside {
+    font-weight: $regular;
+    color: $color-white;
+    background-color: $color-secondary;
+    min-width: 270px;
+    height: 100vh;
+    border-right: 1px solid $color-gray-3;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  
+    &__header {
+      width: 100%;
+      font-size: 22px;
+      border-bottom: 1px solid $color-white;
+      text-align: center;
+      padding: 20px 0;
+    }
+  
+    &__pagination {
+      margin-top: 40px;
+  
+      &--item {
+        line-height: 1;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+  
+        i {
+          font-size: 20px;
+          margin-right: 16px;
+        }
+  
+        span {
+          font-size: 18px;
+        }
+      }
+  
+      &--item-active {
+        font-weight: $bold;
+        color: $color-gray-4;
+  
+        i {
+          color: $color-gray-4;
+        }
+      }
+    }
+  }
+
+  .admin-info {
+    width: 100%;
+    padding: 48px 48px 0;
+
+    &__search {
+      @include baseSearch($width:500px, $height:48px, $bgColor:$color-gray-6);
+      margin-bottom: 40px;
+    }
+
+    &__list {
+      @include baseFoodItem($type:'line');
+    }
+
+    &__pagination {
+      @include basePagination;
+      margin-top: 50px;
+    }
+  }
+}

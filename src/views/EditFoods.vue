@@ -8,14 +8,12 @@
       :class="{'edit-foods__nav--item-active': foodMode=='我的書籤'}"
       >我的書籤 ({{likeFoods.count}})</span>
     </div>
-    <form @submit.prevent="searchEntered">
-      <div class="edit-foods__search">
-        <div class="edit-foods__search-text">
-          <input type="text" placeholder="食品搜尋..." v-model="enteredKeyword">
-          <button type="submit" class="edit-foods__search-icon">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </div>
+    <form class="edit-foods__search" @submit.prevent="searchEntered">
+      <div class="edit-foods__search-text">
+        <input type="text" placeholder="食品搜尋..." v-model="enteredKeyword">
+        <button type="submit" class="edit-foods__search-icon">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
       </div>
     </form>
     <ul class="edit-foods__list" v-if="foodMode=='自訂食品'">
