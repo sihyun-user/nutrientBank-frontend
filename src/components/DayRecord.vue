@@ -1,6 +1,6 @@
 <template>
   <base-card class="amount">
-    <div class="amount__title baseTitle">{{date}}額度</div>
+    <div class="amount__title">{{date}}額度</div>
     <div class="amount__content">
       <div class="amount__circle">
         <div class="amount__circle-text">

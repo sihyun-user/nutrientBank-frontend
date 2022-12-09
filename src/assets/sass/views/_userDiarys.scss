@@ -1,0 +1,23 @@
+.user-diarys {
+  padding: 0 12px;
+  background-color: $color-gray-5;
+
+  &__container {
+    width: 1295px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 40px 0 50px;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+
+    @include pad {
+      flex-direction: column;
+      margin-bottom: 0;
+    }
+  }
+}

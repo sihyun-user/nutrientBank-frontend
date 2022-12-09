@@ -1,7 +1,7 @@
 <template>
   <base-card class="week-record">
     <div class="week-record__header">
-      <div class="week-record__title baseTitle">當週成效</div>
+      <div class="week-record__title">當週成效</div>
       <div class="week-record__word">
         攝取 {{contentValue}} kcal<span></span>消耗 {{sportValue}} kcal
       </div>

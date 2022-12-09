@@ -1,0 +1,562 @@
+.calendar {
+  font-family: 'Monda', sans-serif;
+  font-weight: $regular;
+  margin-bottom: 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__date {
+    font-size: 28px;
+    color: $color-brown-dark;
+    margin-bottom: 32px;
+  }
+
+  &__weekly {
+    display: flex;
+    align-items: center;
+
+    &-item {
+      @include baseCard(16px 15px);
+      position: relative;
+      width: 68px;
+      cursor: pointer;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      @include mobile {
+        @include baseCard(5px 10px);
+        max-width: 44px;
+      }
+
+      &--week {
+        color: $color-gray-1;
+        
+        @include mobile {
+          font-size: 14px;
+        }
+      }
+
+      &--date {
+        font-size: 24px;
+        color: $color-primary;
+
+        @include mobile {
+          font-size: 18px;
+        }
+      }
+
+      &--record {
+        width: 7px;
+        height: 7px;
+        background-color: $color-secondary;
+        border-radius: 10px;
+
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -20px;
+      }
+
+      &:not(:last-of-type) {
+        margin-right: 28px;
+
+        @include mobile {
+          margin-right: 5px;
+        }
+      }
+
+      &:hover {
+        background-color: $color-gray-1;
+
+        .calendar__weekly-item--week {
+          color: $color-gray-2;
+        }
+
+        .calendar__weekly-item--date {
+          color: $color-white;
+        }
+      }
+    }
+
+    &-arrow {
+      cursor: pointer;
+
+      &--left {
+        margin-right: 38px;
+
+        @include mobile {
+          margin-right: 13px;
+        }
+
+        @include mobileM {
+          margin-right: 6px;
+        }
+      }
+  
+      &--right {
+        margin-left: 38px;
+
+        @include mobile {
+          margin-left: 13px;
+        }
+
+        @include mobileM {
+          margin-left: 6px;
+        }
+      }
+    }
+
+  }
+
+  .selectedDat {
+    background-color: $color-gray-1;
+
+    .calendar__weekly-item--week {
+      color: $color-gray-2;
+    }
+
+    .calendar__weekly-item--date {
+      color: $color-white;
+    }
+  }
+
+  .todayDate {
+    background-color: #FFD9C3 !important; 
+
+    .calendar__weekly-item--week {
+      color: $color-brown-light-1 !important;
+    }
+
+    .calendar__weekly-item--date {
+      color: $color-brown-light-2 !important;
+    }
+  }
+}
+
+.amount {
+  max-width: 526px;
+  min-width: 450px;
+  height: 410px;
+  margin-right: 24px;
+
+  @include pad {
+    max-width: 100%;
+    min-width: 100%;
+    height: auto;
+    margin-bottom: 16px;
+  }
+  
+  &__title {
+    @include baseTitle;
+    margin-bottom: 30px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__circle {
+    margin-bottom: 30px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 195px;
+    height: 195px;
+
+    @include mobile {
+      width: 170px;
+      height: 170px;
+    }
+
+    &-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      &--word {
+        font-size: 14px;
+        font-weight: $regular;
+        color: $color-brown-light-2;
+      }
+
+      &--value {
+        font-size: 48px;
+        font-weight: $bold;
+        color: $color-secondary;
+        margin: 15px 0 12px;
+
+        @include mobile {
+          font-size: 40px;
+        }
+      }
+
+      &--kcal {
+        font-size: 14px;
+        font-weight: $regular;
+        color: $color-gray-1;
+      }
+    }
+  }
+
+  &__quota {
+    display: flex;
+    align-items: center;
+
+    &-item {
+      min-width: 180px;
+      display: flex;
+      align-items: center;
+
+      @include mobile {
+        min-width: 135px;
+      }
+    }
+
+    &-icon {
+      width: 50px;
+
+      @include mobile {
+        width: 32px;
+      }
+    }
+
+    &-wrap {
+      margin-left: 16px;
+      display: flex;
+      flex-direction: column;
+
+      @include mobile {
+        margin-left: 12px;
+      }
+    }
+
+    &-word {
+      font-size: 14px;
+      font-weight: $regular;
+      line-height: 1;
+
+      @include mobile {
+        font-size: 12px;
+      }
+    }
+
+    &-value {
+      font-size: 32px;
+      font-weight: $bold;
+      margin-top: 8px;
+
+      @include mobile {
+        font-size: 24px;
+      }
+
+      span {
+        font-size: 14px;
+        font-weight: $regular;
+        color: $color-gray-1;
+        margin-left: 9px;
+
+        @include mobile {
+          font-size: 12px;
+        }
+      }
+
+      &--yellow {
+        color: $color-yellow-dark;
+      }
+
+      &--blue {
+        color: $color-blue-dark;
+      }
+    }
+
+    &-block {
+      &:after {
+        content: '';
+        display: inline-block;
+        height: 40px;
+        border-right: 1px solid $color-gray-3;
+        margin: 0 30px;
+        
+
+        @include mobile {
+          margin: 0 17px;
+        }
+      }
+    }
+  }
+}
+
+.nutrition-record {
+  max-width: 746px;
+  min-width: 53%;
+  height: 410px;
+
+  @include pad {
+    max-width: 100%;
+    min-width: 100%;
+    height: auto;
+    margin-bottom: 16px;
+  }
+
+  &__header {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    @include baseTitle;
+  }
+
+  &__btns {
+    display: flex;
+
+    .baseWhiteBtn {
+      margin-right: 16px;
+    }
+  } 
+}
+
+.sport-record {
+  max-width: 745px;
+  min-width: 570px;
+  height: 268px;
+  margin-right: 24px;
+
+  @include pad {
+    max-width: 100%;
+    min-width: 100%;
+    height: auto;
+    margin-bottom: 16px;
+  }
+
+  &__header {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+  }
+
+  &__wrap {
+    display: flex;
+  }
+
+  &__title {
+    @include baseTitle($color: $color-green-dark);
+  }
+
+  &__consume {
+    font-weight: $regular;
+    color: $color-green-dark;
+    margin-left: 8px;
+  }
+
+  &__list {
+    @include mobile {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &-row {
+      &:first-child {
+        margin-bottom: 32px;
+
+        @include mobile {
+          margin-bottom: 0;
+        }
+      }
+
+      display: flex;
+      justify-content: space-between;
+
+      @include mobile {
+        flex-direction: column;
+      }
+    }
+  }
+
+  &__item {
+    width: 127px;
+    display: flex;
+    align-items: center;
+
+    @include mobile {
+      &:not(:last-of-type) {
+        margin-bottom: 40px;
+      }
+    }
+
+    &-icon {
+      width: 50px;
+      height: 50px;
+      background-color: $color-gray-2;
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        font-size: 20px;
+        color: $color-gray-1;
+      }
+    }
+
+    &-type {
+      font-size: 14px;
+      font-weight: $regular;
+      color: $color-gray-1;
+      margin-left: 12px;
+
+      &--time {
+        font-size: 24px;
+
+        span {
+          font-size: 14px;
+          font-weight: $regular;
+          margin-left: 7px;
+        }
+      }
+    }
+  }
+
+  &__active {
+    .sport-record__item-icon {
+      background-color: $color-green-light;
+
+      i {
+        color: $color-white;
+      }
+    }
+
+    .sport-record__item-type {
+      color: $color-green-dark;
+      font-weight: $bold;
+    }
+  }
+}
+
+.week-record {
+  max-width: 526px;
+  min-width: 35%;
+  height: 268px;
+  background-color: $color-orange-light;
+
+  @include pad {
+    max-width: 100%;
+    min-width: 100%;
+  }
+
+  &__header {
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    @include baseTitle($color: $color-white);
+  }
+
+  &__word {
+    font-weight: $bold;
+    color: $color-white;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+
+    span {
+      &:after {
+        content: '';
+        display: inline-block;
+        height: 24px;
+        border-right: 1px solid $color-gray-3;
+        margin: 0 12px;
+        
+
+        @include mobile {
+          margin: 0 17px;
+        }
+      }
+    }
+  }
+
+  &__spline {
+    height: 180px;
+
+    .c3-line {
+      stroke-width: 4px;
+    }
+
+    .c3-grid line,
+    .c3-axis path,
+    .c3-axis line {
+      stroke: $color-white;
+    }
+
+    .c3-axis text,
+    .c3-legend-item {
+      font-size: 12px;
+      font-weight: $regular;
+      fill: $color-white;
+    }
+
+    .c3-tooltip td {
+      font-size: 14px;
+      background-color: $color-gray-3;
+    }
+  }
+}
+
+.diary-record {
+  @include pad {
+    margin-bottom: 16px;
+  }
+
+  &__header {
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    @include baseTitle;
+  }
+
+  &__table {
+    td {
+      border: 1px solid red;
+    }
+
+    &--header {
+      width: 100%;
+      text-align: start;
+      padding: 8px 0;
+    }
+
+    &--item {
+      min-width: 100px;
+      text-align: end;
+      padding: 8px 10px;
+    }
+
+    &--edit,
+    &--delete {
+      min-width: 55px;
+      text-align: end;
+      padding: 8px 10px;
+    }
+  }
+}

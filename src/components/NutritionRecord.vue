@@ -1,8 +1,8 @@
 <template>
-  <base-card class="nutrition">
-    <div class="nutrition__header">
-      <div class="nutrition__title baseTitle">今日紀錄</div>
-      <div class="nutrition__btns">
+  <base-card class="nutrition-record">
+    <div class="nutrition-record__header">
+      <div class="nutrition-record__title">今日紀錄</div>
+      <div class="nutrition-record__btns">
         <div class="baseWhiteBtn" @click="setCustomFood">
           <i class="fa-solid fa-plus"></i>
           <span>新增自訂食品</span>

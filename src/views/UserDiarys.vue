@@ -1,6 +1,6 @@
 <template>
-  <section class="user-wall">
-    <div class="user-wall__container">
+  <section class="user-diarys">
+    <div class="user-diarys__container">
       <week-calendar
       :weekNutrition="weekNutrition"
       :selectedDate="selectedDate"
@@ -9,7 +9,10 @@
       @update-date="tryUpdateDate"
       >
       </week-calendar>
-      <div class="user-wall__wrapper">
+      <div class="user-diarys__wrapper">
+        <diary-record></diary-record>
+      </div>
+      <div class="user-diarys__wrapper">
         <day-record
         :monthDiarys="monthDiarys"
         :selectedDate="selectedDate"
@@ -21,10 +24,6 @@
         :weekNutrition="weekNutrition"
         >
         </nutrition-record>
-      </div>
-      <div class="user-wall__wrapper">
-        <sport-record></sport-record>
-        <week-record :weekNutrition="weekNutrition"></week-record>
       </div>
     </div>
   </section>
@@ -38,15 +37,13 @@ import useSetMonthNutrition from '@/hooks/setMonthNutrition'
 import WeekCalendar from '@/components/WeekCalendar.vue'
 import DayRecord from '@/components/DayRecord.vue'
 import NutritionRecord from '@/components/NutritionRecord.vue'
-import SportRecord from '@/components/SportRecord.vue'
-import WeekRecord from '@/components/WeekRecord.vue'
+import DiaryRecord from '@/components/DiaryRecord.vue'
 export default {
   components: {
     WeekCalendar,
     DayRecord,
     NutritionRecord,
-    SportRecord,
-    WeekRecord
+    DiaryRecord
   },
   setup() {
     const store = useStore()

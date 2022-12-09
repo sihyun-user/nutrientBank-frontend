@@ -11,7 +11,7 @@ const routes = [
     children: [
       { path: '/user-wall', meta: { requiresAuth: true }, component: () => import('@/views/UserWall.vue') },
       { path: '/user-search', meta: { requiresAuth: true }, component: () => import('@/views/UserSearch.vue') },
-      { path: '/user-record', meta: { requiresAuth: true }, component: () => import('@/views/UserRecord.vue') }
+      { path: '/user-diarys', meta: { requiresAuth: true }, component: () => import('@/views/UserDiarys.vue') }
     ]
   },
   {
