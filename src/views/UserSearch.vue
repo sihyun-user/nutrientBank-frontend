@@ -104,12 +104,10 @@
 <script>
 import { ref, computed } from 'vue'
 import { useStore } from '@/store'
-import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 import FoodDetail from '@/components/FoodDetail.vue'
 import FoodItem from '@/components/FoodItem.vue'
 export default {
   components: {
-    BaseLightBox,
     FoodDetail,
     FoodItem
   },
@@ -148,6 +146,7 @@ export default {
   
       let start = current - Math.floor(page_length / 2)
       start = Math.max(start, min)
+      start = Math.min(start, min + total_pages - page_length)
       return Array.from({length: page_length}, (el, i) => start + i)
     })
     // 設置搜尋下拉選單

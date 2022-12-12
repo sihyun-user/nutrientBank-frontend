@@ -1,6 +1,11 @@
 <template>
   <base-card class="amount">
-    <div class="amount__title">{{date}}額度</div>
+    <div class="amount__header">
+      <div class="amount__title">{{date}}額度</div>
+      <div class="amount__subTitle" v-if="!isfinalHealth">
+        ! 尚未完成健康資訊，前往 <router-link to="edit-personal">個人檔案</router-link> 填寫
+      </div>
+    </div>
     <div class="amount__content">
       <div class="amount__circle">
         <div class="amount__circle-text">
@@ -27,7 +32,7 @@
           <div class="amount__quota-wrap">
             <span class="amount__quota-word">目標</span>
             <p class="amount__quota-value amount__quota-value--yellow">
-              {{intake}}<span>kcal</span>
+              {{intake < 0 ? 0 : intake}}<span>kcal</span>
             </p>
           </div>
         </div>
@@ -47,7 +52,8 @@
 </template>
 
 <script>
-import {  reactive, computed, watch, toRefs } from 'vue'
+import { reactive, computed, watch, toRefs } from 'vue'
+import { useStore } from '@/store'
 import moment from 'moment'
 import BaseCard from '@/components/ui/BaseCard.vue'
 import CircleProgress from 'vue3-circle-progress'
@@ -69,12 +75,15 @@ export default {
     CircleProgress
   },
   setup(props) {
+    const store = useStore()
     const { monthDiarys, selectedDate, weekNutrition } = toRefs(props)
     const calories = reactive({
       content: 0,
       intake: 0,
       percent: 0
     })
+
+    const isfinalHealth = computed(() => store.userInfo.height > 0 && store.userInfo.weight > 0)
 
     watch([monthDiarys, selectedDate], () => getDayNutrition())
 
@@ -98,6 +107,7 @@ export default {
 
     return {
       date,
+      isfinalHealth,
       ...toRefs(calories)
     }
   }

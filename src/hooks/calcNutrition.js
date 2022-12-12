@@ -89,7 +89,7 @@ const useCalcNutrition = (monthDiarys, selectedWeekly) => {
     for (let key in calc_data) {
       for (let name in dayIntakes) {
         if (calc_data[key].id == name) {
-          calc_data[key].intake = dayIntakes[name]
+          calc_data[key].intake = dayIntakes[name] < 0 ? 0 : dayIntakes[name]
         }
       }
     }

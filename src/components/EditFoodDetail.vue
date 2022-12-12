@@ -1,42 +1,42 @@
 <template>
-  <form class="edit-custom" @submit.prevent="handleFood">
-    <div class="edit-custom__header">{{title}}</div>
-    <div class="edit-custom__row">
-      <div class="edit-custom__ented">
-        <label class="edit-custom__ented-label">食品名稱</label>
-        <input class="edit-custom__ented-text" type="text"
+  <form class="edit-food" @submit.prevent="handleFood">
+    <div class="edit-food__header">{{title}}</div>
+    <div class="edit-food__row">
+      <div class="edit-food__ented">
+        <label class="edit-food__ented-label">食品名稱</label>
+        <input class="edit-food__ented-text" type="text"
         placeholder="請輸入食品名稱(必填)" v-model="editFoodInfo.name">
       </div>
-      <div class="edit-custom__ented">
-        <label class="edit-custom__ented-label">食品英文名稱</label>
-        <input class="edit-custom__ented-text" type="text" 
+      <div class="edit-food__ented">
+        <label class="edit-food__ented-label">食品英文名稱</label>
+        <input class="edit-food__ented-text" type="text" 
         placeholder="請輸入食品英文名稱" v-model="editFoodInfo.subName">
       </div>
-      <div class="edit-custom__ented">
-        <label class="edit-custom__ented-label">品牌名稱</label>
-        <input class="edit-custom__ented-text" type="text" 
+      <div class="edit-food__ented">
+        <label class="edit-food__ented-label">品牌名稱</label>
+        <input class="edit-food__ented-text" type="text" 
         placeholder="請輸入品牌名稱" v-model="editFoodInfo.brand">
       </div>
     </div>
-    <div class="edit-custom__subHeader">份數</div>
-    <div class="edit-custom__row">
-      <div class="edit-custom__ented">
-        <label class="edit-custom__ented-label">每一份量含</label>
-        <input class="edit-custom__ented-text" type="number"
+    <div class="edit-food__subHeader">份數</div>
+    <div class="edit-food__row">
+      <div class="edit-food__ented">
+        <label class="edit-food__ented-label">每一份量含</label>
+        <input class="edit-food__ented-text" type="number"
         placeholder="請輸入每一份量含(必填)" v-model="editFoodInfo.perUnitWeight">
       </div>
-      <div class="edit-custom__ented edit-custom__units">
-        <label class="edit-custom__ented-label">單位</label>
-        <ul class="edit-custom__units-list">
-          <li class="edit-custom__units-item"
-          :class="{'edit-custom__units-item--active': editFoodInfo.unit == 'g'}"
+      <div class="edit-food__ented edit-food__units">
+        <label class="edit-food__ented-label">單位</label>
+        <ul class="edit-food__units-list">
+          <li class="edit-food__units-item"
+          :class="{'edit-food__units-item--active': editFoodInfo.unit == 'g'}"
           @click="switchUiitType('g')"
           >
             <input id="type" type="radio" v-model="editFoodInfo.unit">
             <span>g</span>
           </li>
-          <li class="edit-custom__units-item"
-          :class="{'edit-custom__units-item--active': editFoodInfo.unit == 'ml'}"
+          <li class="edit-food__units-item"
+          :class="{'edit-food__units-item--active': editFoodInfo.unit == 'ml'}"
           @click="switchUiitType('ml')"
           >
             <input id="type" type="radio" v-model="editFoodInfo.unit">
@@ -45,82 +45,82 @@
         </ul>
       </div>
     </div>
-    <div class="edit-custom__subHeader">營養成分</div>
-    <div class="edit-custom__row">
-      <div class="edit-custom__ented">
-        <label class="edit-custom__ented-label">熱量</label>
-        <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text" type="number" step=0.1
+    <div class="edit-food__subHeader">營養成分</div>
+    <div class="edit-food__row">
+      <div class="edit-food__ented">
+        <label class="edit-food__ented-label">熱量</label>
+        <div class="edit-food__ented-wrap">
+          <input class="edit-food__ented-text" type="number" step=0.1
           placeholder="請輸入熱量" v-model="editFoodInfo.nutrition.calories">
-          <span class="edit-custom__ented-unit">kcal</span>
+          <span class="edit-food__ented-unit">kcal</span>
         </div>
       </div>
-      <div class="edit-custom__ented">
-        <label class="edit-custom__ented-label">碳水化合物</label>
-        <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text" type="number" step=0.1
+      <div class="edit-food__ented">
+        <label class="edit-food__ented-label">碳水化合物</label>
+        <div class="edit-food__ented-wrap">
+          <input class="edit-food__ented-text" type="number" step=0.1
           placeholder="請輸入碳水化合物" v-model="editFoodInfo.nutrition.carbohydrates">
-          <span class="edit-custom__ented-unit">g</span>
+          <span class="edit-food__ented-unit">g</span>
         </div>
       </div>
     </div>
-    <div class="edit-custom__row">
-      <div class="edit-custom__ented">
-        <label class="edit-custom__ented-label">蛋白質</label>
-        <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text" type="number" step=0.1
+    <div class="edit-food__row">
+      <div class="edit-food__ented">
+        <label class="edit-food__ented-label">蛋白質</label>
+        <div class="edit-food__ented-wrap">
+          <input class="edit-food__ented-text" type="number" step=0.1
           placeholder="請輸入蛋白質" v-model="editFoodInfo.nutrition.protein">
-          <span class="edit-custom__ented-unit">g</span>
+          <span class="edit-food__ented-unit">g</span>
         </div>
       </div>
-      <div class="edit-custom__ented">
-        <label class="edit-custom__ented-label">脂肪</label>
-        <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text" type="number" step=0.1
+      <div class="edit-food__ented">
+        <label class="edit-food__ented-label">脂肪</label>
+        <div class="edit-food__ented-wrap">
+          <input class="edit-food__ented-text" type="number" step=0.1
           placeholder="請輸入脂肪" v-model="editFoodInfo.nutrition.fat">
-          <span class="edit-custom__ented-unit">g</span>
+          <span class="edit-food__ented-unit">g</span>
         </div>
       </div>
     </div>
-    <div class="edit-custom__row">
-      <div class="edit-custom__ented">
-        <label class="edit-custom__ented-label">飽和脂肪</label>
-        <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text" type="number" step=0.1
+    <div class="edit-food__row">
+      <div class="edit-food__ented">
+        <label class="edit-food__ented-label">飽和脂肪</label>
+        <div class="edit-food__ented-wrap">
+          <input class="edit-food__ented-text" type="number" step=0.1
           placeholder="請輸入飽和脂肪" v-model="editFoodInfo.nutrition.saturated_fat">
-          <span class="edit-custom__ented-unit">g</span>
+          <span class="edit-food__ented-unit">g</span>
         </div>
       </div>
-      <div class="edit-custom__ented">
-        <label class="edit-custom__ented-label">反式脂肪</label>
-        <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text" type="number" step=0.1
+      <div class="edit-food__ented">
+        <label class="edit-food__ented-label">反式脂肪</label>
+        <div class="edit-food__ented-wrap">
+          <input class="edit-food__ented-text" type="number" step=0.1
           placeholder="請輸入反式脂肪" v-model="editFoodInfo.nutrition.trans_fat">
-          <span class="edit-custom__ented-unit">g</span>
+          <span class="edit-food__ented-unit">g</span>
         </div>
       </div>
     </div>
-    <div class="edit-custom__row">
-      <div class="edit-custom__ented">
-        <label class="edit-custom__ented-label">糖</label>
-        <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text" type="number" step=0.1
+    <div class="edit-food__row">
+      <div class="edit-food__ented">
+        <label class="edit-food__ented-label">糖</label>
+        <div class="edit-food__ented-wrap">
+          <input class="edit-food__ented-text" type="number" step=0.1
           placeholder="請輸入糖" v-model="editFoodInfo.nutrition.sugar">
-          <span class="edit-custom__ented-unit">g</span>
+          <span class="edit-food__ented-unit">g</span>
         </div>
       </div>
-      <div class="edit-custom__ented">
-        <label class="edit-custom__ented-label">納</label>
-        <div class="edit-custom__ented-wrap">
-          <input class="edit-custom__ented-text" type="number" step=0.1
+      <div class="edit-food__ented">
+        <label class="edit-food__ented-label">納</label>
+        <div class="edit-food__ented-wrap">
+          <input class="edit-food__ented-text" type="number" step=0.1
           placeholder="請輸入納" v-model="editFoodInfo.nutrition.sodium">
-          <span class="edit-custom__ented-unit">mg</span>
+          <span class="edit-food__ented-unit">mg</span>
         </div>
       </div>
     </div>
-    <div v-if="errorMsg" class="errorMsg edit-custom__errorMsg">{{errorMsg}}</div>
-    <div class="edit-custom__btn">
-      <button type="submit" class="orangeBigBtn">編輯自訂食品</button>
+    <div v-if="errorMsg" class="errorMsg edit-food__errorMsg">{{errorMsg}}</div>
+    <div class="edit-food__btn">
+      <button type="submit" class="orangeBigBtn">{{title}}</button>
     </div>
   </form>
 </template>

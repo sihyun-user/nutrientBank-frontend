@@ -8,6 +8,7 @@ import VueAxios from 'vue-axios'
 import '@/assets/sass/main.scss'
 
 import BaseSpinner from '@/components/ui/BaseSpinner.vue'
+import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -18,5 +19,6 @@ app.use(router)
 app.use(VueAxios, axios)
 
 app.component('BaseSpinner', BaseSpinner)
+app.component('BaseLightBox', BaseLightBox)
 
 app.mount('#app')

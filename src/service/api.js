@@ -41,6 +41,12 @@ export const apiCreateOneDiary = payload => userRequest.post(`/diary/${payload.f
 
 // 取得食品列表
 export const apiGetAllfFood = payload => userRequest.get(`/foods?search=${payload.search}`)
+// 新增一筆食品
+export const apiCreateOneFood = payload => userRequest.post('/food', payload.paramData)
+// 編輯一筆食品
+export const apiUpdateOneFood = payload => userRequest.patch(`/food/${payload.foodId}`, payload.paramData)
+// 刪除一筆食品
+export const apiDeleteOneFood = payload => userRequest.delete(`/food/${payload.foodId}`)
 
 // 取得自訂食品列表
 export const apiGetAllCustomFood = payload => userRequest.get(`/customFoods?search=${payload.search}`)

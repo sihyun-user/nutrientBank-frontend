@@ -56,13 +56,11 @@ import { useStore } from '@/store'
 import FoodItem from '@/components/FoodItem.vue'
 import EditFoodDetail from '@/components/EditFoodDetail.vue'
 import FoodDetail from '@/components/FoodDetail.vue'
-import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 export default {
   components: {
     FoodItem,
     EditFoodDetail,
-    FoodDetail,
-    BaseLightBox
+    FoodDetail
   },
   setup() {
     const store = useStore()
@@ -134,7 +132,7 @@ export default {
       if ($edit || $delete || $book) return
       showSelectBox.value = true
     }
-    // 設置編輯自訂食品彈窗
+    // 設置編輯食品彈窗
     const tryOpenFoodWindow = () => {
       store.$patch({ errorMsg: '' })
       showEditBox.value = true

@@ -163,7 +163,6 @@ import { useStore } from '@/store'
 import BaseCard from '@/components/ui/BaseCard.vue'
 import NUTRITION_DATA from '@/service/nutrition.json'
 import EditFoodDetail from '@/components/EditFoodDetail.vue'
-import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 export default {
   emits: ['create-customFood'],
   props: {
@@ -176,8 +175,7 @@ export default {
   },
   components: {
     BaseCard,
-    EditFoodDetail,
-    BaseLightBox
+    EditFoodDetail
   },
   setup(props) {
     const store = useStore()

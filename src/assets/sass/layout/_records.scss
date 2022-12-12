@@ -149,10 +149,37 @@
     height: auto;
     margin-bottom: 16px;
   }
+
+  &__header {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+
+    @include mobile {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
   
   &__title {
     @include baseTitle;
-    margin-bottom: 30px;
+
+    @include pad {
+      text-align: center;
+    }
+  }
+
+  &__subTitle {
+    font-weight: $regular;
+
+    @include mobile {
+      margin-top: 15px;
+    }
+
+    a {
+      color: $color-red;
+      border-bottom: 1px solid;
+    }
   }
 
   &__content {
@@ -214,13 +241,8 @@
     align-items: center;
 
     &-item {
-      min-width: 180px;
       display: flex;
       align-items: center;
-
-      @include mobile {
-        min-width: 135px;
-      }
     }
 
     &-icon {
@@ -290,7 +312,7 @@
         
 
         @include mobile {
-          margin: 0 17px;
+          margin: 0 25px;
         }
       }
     }

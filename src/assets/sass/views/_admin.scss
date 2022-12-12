@@ -2,6 +2,10 @@
   display: flex;
   background-color: $color-white;
 
+  @include pad {
+    flex-direction: column;
+  }
+
   .admin-aside {
     font-weight: $regular;
     color: $color-white;
@@ -12,6 +16,14 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+
+    @include pad {
+      height: 60px;
+      flex-direction: row;
+      justify-content: space-between;
+      border: none;
+      padding: 0 12px;
+    }
   
     &__header {
       width: 100%;
@@ -19,34 +31,68 @@
       border-bottom: 1px solid $color-white;
       text-align: center;
       padding: 20px 0;
+
+      @include pad {
+        width: auto;
+        border: none;
+      }
+
+      @include mobile {
+        font-size: 16px;
+      }
     }
   
     &__pagination {
       margin-top: 40px;
+
+      @include pad {
+        margin-top: 0;
+        display: flex;
+        align-items: center;
+      }
   
       &--item {
         line-height: 1;
         margin-bottom: 24px;
+        cursor: pointer;
         display: flex;
         align-items: center;
+
+        @include pad {
+          margin-bottom: 0;
+          &:last-child {
+            padding-left: 30px;
+          }
+        }
+
+        @include mobile {
+          &:last-child {
+            padding-left: 15px;
+          }
+        }
   
         i {
           font-size: 20px;
           margin-right: 16px;
+
+          @include mobile {
+            font-size: 16px;
+            margin-right: 8px;
+          }
         }
   
         span {
           font-size: 18px;
+
+          @include mobile {
+            font-size: 14px;
+          }
         }
       }
   
       &--item-active {
         font-weight: $bold;
         color: $color-gray-4;
-  
-        i {
-          color: $color-gray-4;
-        }
       }
     }
   }
@@ -55,18 +101,46 @@
     width: 100%;
     padding: 48px 48px 0;
 
+    @include mobile {
+      padding: 36px 12px;
+    }
+
+    &__header {
+      margin-bottom: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
     &__search {
       @include baseSearch($width:500px, $height:48px, $bgColor:$color-gray-6);
-      margin-bottom: 40px;
+
+      @include mobile {
+        @include baseSearch($width:54%, $height:36px, $bgColor:$color-gray-6);
+      }
+    }
+
+    &__foods {
+      &--btn {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+      }
     }
 
     &__list {
       @include baseFoodItem($type:'line');
+
+      @include mobile {   
+        .food__item {
+          padding: 20px 10px;
+        }
+      }
     }
 
     &__pagination {
       @include basePagination;
-      margin-top: 50px;
+      margin-top: 45px;
     }
   }
 }

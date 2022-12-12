@@ -16,7 +16,7 @@
         <li class="info-aside__pagination--item" 
         :class="{'info-aside__pagination--item-active':route.path=='/edit-personal'}"
         >
-          <i class="fa-regular fa-user"></i>
+          <i class="fa-solid fa-user"></i>
           <span>個人檔案</span>
         </li>
       </router-link>

@@ -8,7 +8,7 @@
         <div class="user__form">
           <div class="user__form-title">{{switchModeCaption}}</div>
           <!-- 登入 -->
-          <div v-if="mode=='login'" class="user__form-login">
+          <form v-if="mode=='login'" class="user__form-login" @submit.prevent="login">
             <div class="user__form-entered">
               <label for="login-email">信箱</label>
               <input id="login-email" class="inputMode" type="email" v-model="auth.email">
@@ -18,12 +18,12 @@
               <input id="login-password" class="inputMode" type="password" v-model="auth.password">
             </div>
             <p v-if="errorMsg" class="user__form-errorMsg errorMsg">{{errorMsg}}</p>
-            <button class="user__form-btn" @click="login">登入</button>
+            <button type="submit" class="user__form-btn">登入</button>
             <div class="user__form-direct">還不是會員，<span @click="switchAuthMode">加入會員</span></div>
-          </div>
+          </form>
 
           <!-- 註冊 -->
-          <div v-else class="user__form-register">
+          <form v-else class="user__form-register" @submit.prevent="signup">
             <div class="user__form-entered">
               <label for="register-name">暱稱</label>
               <input id="register-name" class="inputMode" type="text" v-model="auth.name">
@@ -41,9 +41,9 @@
               <input id="register-confirmPassword" class="inputMode" type="password" v-model="auth.confirmPassword">
             </div>
             <p v-if="errorMsg" class="user__form-errorMsg errorMsg">{{errorMsg}}</p>
-            <button class="user__form-btn" @click="signup">註冊</button>
+            <button type="submit" class="user__form-btn">註冊</button>
             <div class="user__form-direct">已經是會員，<span @click="switchAuthMode">直接登入</span></div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

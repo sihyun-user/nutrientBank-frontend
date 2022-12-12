@@ -7,6 +7,9 @@
         </router-link>
       </div>
       <div class="theHeader__nav theHeader__nav--web">
+        <div class="theHeader__nav--item" v-if="isAdmin">
+          <router-link to="admin">後臺管理</router-link>
+        </div>
         <div class="theHeader__nav--item">
           <router-link to="user-diarys">我的紀錄</router-link>
         </div>
@@ -32,11 +35,12 @@
           <i class="fa-solid fa-bars"></i>
         </div>
         <ul class="theHeader__nav--user-list" v-if="isOpenMenu">
-          <li><router-link to="user-diarys">我的紀錄</router-link></li>
           <li><router-link to="user-search">食品搜尋</router-link></li>
+          <li><router-link to="user-diarys">我的紀錄</router-link></li>
           <li><router-link to="edit-personal">個人檔案</router-link></li>
           <li><router-link to="edit-password">修改密碼</router-link></li>
           <li><router-link to="edit-foods">我的食品</router-link></li>
+          <li><router-link to="admin" v-if="isAdmin">後臺管理</router-link></li>
           <li @click="logout">登出</li>
         </ul>
       </div>
@@ -52,6 +56,7 @@ export default {
     const store = useStore()
     const isOpenMenu = ref(false)
 
+    const isAdmin = computed(() => store.isAdmin)
     const userInfo = computed(() => store.userInfo)
 
     const switchOpenMenu = () => {
@@ -70,6 +75,7 @@ export default {
 
     return {
       isOpenMenu,
+      isAdmin,
       userInfo,
       switchOpenMenu,
       logout

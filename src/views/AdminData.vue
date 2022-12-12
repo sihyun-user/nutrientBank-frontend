@@ -3,17 +3,9 @@
     <div class="admin-aside">
       <div class="admin-aside__header">營養日記後臺管理系統</div>
       <ul class="admin-aside__pagination">
-        <router-link to="edit-personal">
-          <li class="admin-aside__pagination--item admin-aside__pagination--item-active">
-            <i class="fa-regular fa-user"></i>
-            <span>會員資料</span>
-          </li>
-        </router-link>
-        <li class="admin-aside__pagination--item">
-          <router-link to="edit-password">
-            <i class="fa-solid fa-utensils"></i>
-            <span>食品資料</span>
-          </router-link>
+        <li class="admin-aside__pagination--item admin-aside__pagination--item-active">
+          <i class="fa-solid fa-utensils"></i>
+          <span>食品資料</span>
         </li>
         <li class="admin-aside__pagination--item">
           <router-link to="user-wall">
@@ -24,21 +16,27 @@
       </ul>
     </div>
     <div class="admin-info">
-      <form class="admin-info__search" @submit.prevent="">
-        <div class="admin-info__search-text">
-          <input type="text" placeholder="食品搜尋...">
-          <button type="submit" class="admin-info__search-icon">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
+      <div class="admin-info__header">
+        <form class="admin-info__search" @submit.prevent="handelSearch">
+          <div class="admin-info__search-text">
+            <input type="text" placeholder="關鍵字搜尋..." v-model="entered">
+            <button type="submit" class="admin-info__search-icon">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </form>
+        <div class="admin-info__btn baseBtn" @click="setNewFoodWindow">
+          <i class="fa-solid fa-plus"></i>
+          <span>新增食品</span>
         </div>
-      </form>
-      <ul class="admin-info__list">
+      </div>
+      <ul class="admin-info__list admin-info__list--food">
         <food-item v-for="food in pagingFoods" :key="food.id"
         :food="food"
         :selectFood="selectFood"
         :isEdit=true
         @select-food="trySelectFood"
-        >
+        @delete-food="tryDeleteFood">
         </food-item>
       </ul>
       <div class="admin-info__pagination" v-if="foods.length!==0">
@@ -69,27 +67,29 @@
         </div>
       </div>
     </div>
-    <base-light-box v-if="selectFood&&showBox" @close="tryClose">
+    <base-light-box v-if="selectFood&&showEditBox" @close="tryClose">
       <edit-food-detail
       title="編輯食品"
-      :selectFood="selectFood">
+      :selectFood="selectFood"
+      @handle-food="tryUpdateFood">
       </edit-food-detail>
     </base-light-box>
+    <base-light-box v-if="showCreateBox" @close="tryClose">
+      <edit-food-detail title="新增食品" @handle-food="tryCreateOneFood"></edit-food-detail>
+    </base-light-box>
+    <base-spinner v-if="isLoading"></base-spinner>
   </section>
 </template>
 
 <script>
-import { ref, reactive, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useStore } from '@/store'
 import FoodItem from '@/components/FoodItem.vue'
 import EditFoodDetail from '@/components/EditFoodDetail.vue'
-import FoodDetail from '@/components/FoodDetail.vue'
-import BaseLightBox from '@/components/ui/BaseLightBox.vue'
 export default {
   components: {
     FoodItem,
-    EditFoodDetail,
-    BaseLightBox
+    EditFoodDetail
   },
   setup() {
     const store = useStore()
@@ -97,8 +97,12 @@ export default {
     const count = ref(0)
     const curentPage = ref(1)
     const selectFood = ref(null)
-    const showBox = ref(false)
+    const entered = ref('')
+    const showEditBox = ref(false)
+    const showCreateBox = ref(false)
 
+    const isLoading = computed(() => store.isLoading)
+    
     // 各分頁食品結果
     const pagingFoods = computed(() => {
       const page = curentPage.value
@@ -118,6 +122,7 @@ export default {
   
       let start = current - Math.floor(page_length / 2)
       start = Math.max(start, min)
+      start = Math.min(start, min + total_pages - page_length)
       return Array.from({length: page_length}, (el, i) => start + i)
     })
     // 設置分頁
@@ -131,17 +136,49 @@ export default {
     
       const $edit = event.target.closest('.food__item--header-icons--edit')
       if (!$edit) return
-      showBox.value = true
+      showEditBox.value = true
+    }
+    // 關鍵字搜尋
+    const handelSearch = () => {
+      getFoods()
+      entered.value = ''
+    }
+    // 設置新增食品彈窗
+    const setNewFoodWindow = () => {
+      store.$patch({ errorMsg: '' })
+      showCreateBox.value = true
+    }
+    // 新增一筆食品 
+    const tryCreateOneFood = async(payload) => {
+      const results = await store.createOneFood(payload)
+      if (!results) return
+
+      tryClose()
+    }
+    // 編輯一筆食品
+    const tryUpdateFood = async(payload) => {
+      const results = await store.updateOneFood(payload)
+      if (!results) return   
+
+      tryClose()
+      getFoods()
+    }
+    // 刪除一筆食品
+    const tryDeleteFood = async(payload) => {
+      const results = await store.deleteOneFood(payload)
+      if (!results) return
+
+      getFoods()
     }
     // 取得食品列表
     const getFoods = async() => {
-      const data = await store.getAllFood()
+      const data = await store.getAllFood({ search: entered.value })
       foods.value = data.list
       count.value = data.count
     }
-
     const tryClose = () => {
-      showBox.value = false
+      showEditBox.value = false
+      showCreateBox.value = false
     }
 
     getFoods()
@@ -153,9 +190,17 @@ export default {
       pagingFoods,
       pagingNumber,
       selectFood,
-      showBox,
-      trySelectFood,
+      entered,
+      showEditBox,
+      showCreateBox,
+      isLoading,
       setPagination,
+      handelSearch,
+      setNewFoodWindow,
+      trySelectFood,
+      tryCreateOneFood,
+      tryUpdateFood,
+      tryDeleteFood,
       tryClose
     }
   }

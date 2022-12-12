@@ -9,6 +9,7 @@ export const useStore = defineStore('main', {
     errorMsg: '',
     isLogin: false,
     isLoading: false,
+    isAdmin: false,
     userInfo: {}
   }),
   actions: {
@@ -58,7 +59,7 @@ export const useStore = defineStore('main', {
         this.tryAuth({ token: data.token, userId: data.user.id })
         this.getUserInfo()
         
-        this.$patch({ isLoading: false, isLogin: true })
+        this.$patch({ isLoading: false, isLogin: true, isAdmin: data.user.isAdmin })
         checkConsole('登入成功', res.data)
         router.push('user-wall')
         alert('登入成功')
@@ -152,7 +153,6 @@ export const useStore = defineStore('main', {
         alert('新增營養日記成功')
       } catch (error) {
         appError(error, '新增一筆營養日記失敗')
-        alert('新增營養日記失敗，請稍後再試')
       }
     },
     // 取得食品列表
@@ -167,6 +167,50 @@ export const useStore = defineStore('main', {
         return res.data.data
       } catch (error) {
         appError(error, '取得食品列表失敗')
+      }
+    },
+    // 新增一筆食品
+    async createOneFood(payload) {
+      try {
+        this.$patch({ isLoading: true })
+  
+        const res = await appApi.apiCreateOneFood(payload)
+  
+        this.$patch({ isLoading: false })
+        checkConsole('新增一筆食品成功', res.data)
+        alert('新增一筆食品成功')
+        return true
+      } catch (error) {
+        appError(error, '新增一筆食品失敗')
+      }
+    },
+    // 編輯一筆食品
+    async updateOneFood(payload) {
+      try {
+        this.$patch({ isLoading: true })
+        const { foodId, paramData } = payload
+        const res = await appApi.apiUpdateOneFood({foodId, paramData})
+  
+        this.$patch({ isLoading: false })
+        checkConsole('編輯一筆食品成功', res.data)
+        alert('編輯一筆食品成功')
+        return true
+      } catch (error) {
+        appError(error, '編輯一筆食品失敗')
+      }
+    },
+    // 刪除一筆食品
+    async deleteOneFood(payload) {
+      try {
+        this.$patch({ isLoading: true })
+        const res = await appApi.apiDeleteOneFood(payload)
+  
+        this.$patch({ isLoading: false })
+        checkConsole('刪除一筆食品成功', res.data)
+        alert('刪除一筆食品成功')
+        return true
+      } catch (error) {
+        appError(error, '刪除一筆食品失敗')
       }
     },
     // 取得自訂食品列表
@@ -189,6 +233,7 @@ export const useStore = defineStore('main', {
         this.$patch({ isLoading: true })
 
         const res = await appApi.apiCreateCustomFood(payload)
+
         this.$patch({ isLoading: false })
         checkConsole('新增一筆自訂食品成功', res.data)
         alert('新增一筆自訂食品成功')
@@ -218,8 +263,6 @@ export const useStore = defineStore('main', {
       try {
         this.$patch({ isLoading: true })
 
-        console.log(payload)
-
         const res = await appApi.apiDeleteCustomFood(payload)
 
         this.$patch({ isLoading: false })
@@ -228,7 +271,6 @@ export const useStore = defineStore('main', {
         return true
       } catch (error) {
         appError(error, '刪除一筆自訂食品失敗')
-        alert('刪除一筆自訂食品失敗，請稍後再試')
       }
     },
     // 取得食品書籤列表
