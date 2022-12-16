@@ -6,23 +6,24 @@
       :selectedDate="selectedDate"
       :selectedWeekly="selectedWeekly"
       @update-weekly="tryChangeWeekly"
-      @update-date="tryUpdateDate"
-      >
+      @update-date="tryUpdateDate">
       </week-calendar>
       <div class="user-diarys__wrapper">
-        <diary-record></diary-record>
+        <diary-record
+        :selectedDate="selectedDate" 
+        :diaryRecords="diaryRecords"
+        @update-diary="tryUpdateDiary">
+        </diary-record>
       </div>
       <div class="user-diarys__wrapper">
         <day-record
         :monthDiarys="monthDiarys"
         :selectedDate="selectedDate"
-        :weekNutrition="weekNutrition"
-        >
+        :weekNutrition="weekNutrition">
         </day-record>
         <nutrition-record 
         :selectedDate="selectedDate"
-        :weekNutrition="weekNutrition"
-        >
+        :weekNutrition="weekNutrition">
         </nutrition-record>
       </div>
     </div>
@@ -48,20 +49,27 @@ export default {
   setup() {
     const store = useStore()
     const { 
-      selectedDate, selectedWeekly, monthDiarys, weekNutrition, 
-      tryChangeWeekly, tryUpdateDate
+      selectedDate, selectedWeekly, monthDiarys, weekNutrition,
+      diaryRecords, getMonthDiarys, tryChangeWeekly, tryUpdateDate
     } = useSetMonthNutrition()
 
     const isLoading = computed(() => store.isLoading)
+
+    // 重新撈取營養日記
+    const tryUpdateDiary = (() => {
+      getMonthDiarys()
+    })
 
     return {
       isLoading,
       selectedDate, 
       selectedWeekly, 
       monthDiarys, 
-      weekNutrition, 
+      weekNutrition,
+      diaryRecords,
       tryChangeWeekly, 
       tryUpdateDate,
+      tryUpdateDiary
     }
   }
 }

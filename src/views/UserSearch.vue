@@ -38,7 +38,7 @@
             <span v-if="useKeyword!==''">「{{useKeyword}}」</span>共有 {{count}} 筆搜尋結果
           </div>
           <div class="results__header--btn">
-            <div class="baseWhiteBtn">
+            <div class="baseWhiteBtn" @click="setCustomWindow">
               <i class="fa-solid fa-plus"></i>
               <span>新增自訂食品</span>
             </div>
@@ -96,6 +96,9 @@
       <base-light-box v-if="padMode && showBox" @close="tryClose">
         <food-detail :selectFood="selectFood"></food-detail>
       </base-light-box>
+      <base-light-box v-if="showCustomBox" @close="tryClose">
+        <edit-food-detail title="新增自訂食品" @handle-food="tryCreateCustomFood"></edit-food-detail>
+      </base-light-box>
     </div>
   </section>
   <base-spinner v-if="isLoading"></base-spinner>
@@ -106,10 +109,12 @@ import { ref, computed } from 'vue'
 import { useStore } from '@/store'
 import FoodDetail from '@/components/FoodDetail.vue'
 import FoodItem from '@/components/FoodItem.vue'
+import EditFoodDetail from '@/components/EditFoodDetail.vue'
 export default {
   components: {
     FoodDetail,
-    FoodItem
+    FoodItem,
+    EditFoodDetail
   },
   setup() {
     const store = useStore()
@@ -123,6 +128,7 @@ export default {
     const isOpenMeun = ref(false)
     const isSearchFood = ref(false)
     const showBox = ref(false)
+    const showCustomBox = ref(false)
     const padMode = ref(false)
 
     const isLoading = computed(() => store.isLoading)
@@ -193,6 +199,17 @@ export default {
       if (foods.value.length==0 || window.innerWidth < 1023) return
       trySelectFood(foods.value[0])
     }
+    // 設置自訂食品彈窗
+    const setCustomWindow = () => {
+      showCustomBox.value = true
+    }
+    // 新增自訂食品
+    const tryCreateCustomFood = async(payload) => {
+      const results = await store.createCustomFood(payload)
+      if (!results) return
+
+      tryClose()
+    }
     // 更新食品書籤(同步更新DOM)
     const tryUpdateLike = (newFood) => {
       foods.value.find(food => {
@@ -206,6 +223,7 @@ export default {
     }
     const tryClose = () => {
       showBox.value = false
+      showCustomBox.value = false
     }
     const switchPadMode = (() => {
       const currentWidth = window.innerWidth
@@ -234,6 +252,7 @@ export default {
       isSearchFood,
       showBox,
       padMode,
+      showCustomBox,
       isLoading,
       pagingFoods,
       pagingNumber,
@@ -241,8 +260,10 @@ export default {
       setFoodType,
       searchEntered,
       setPagination,
+      setCustomWindow,
       trySelectFood,
       tryUpdateLike,
+      tryCreateCustomFood,
       tryClose
     }
   }

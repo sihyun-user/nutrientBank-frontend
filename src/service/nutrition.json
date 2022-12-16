@@ -7,17 +7,17 @@
     "percent": 0,
     "unit": "kcal"
   },
-  "carbohydrates": { 
-    "id":"carbohydrates", 
-    "name":"碳水化合物",
+  "protein": {
+    "id":"protein",
+    "name":"蛋白質",
     "content":0,
     "intake":0,
     "percent": 0,
     "unit": "g"
   },
-  "protein": {
-    "id":"protein",
-    "name":"蛋白質",
+  "carbohydrates": { 
+    "id":"carbohydrates", 
+    "name":"碳水化合物",
     "content":0,
     "intake":0,
     "percent": 0,

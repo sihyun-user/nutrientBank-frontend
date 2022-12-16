@@ -38,6 +38,10 @@ export const apiUpdatePassword = payload =>  userRequest.patch(`/user/password`,
 export const apiGetDiarys = payload => userRequest.get(`/diarys?entry_date=${payload}`)
 // 新增一則營養日記
 export const apiCreateOneDiary = payload => userRequest.post(`/diary/${payload.foodId}`, payload.paramData)
+// 編輯一筆營養日記
+export const apiUpdateOneDiary = payload => userRequest.patch(`/diary/${payload.diaryId}`, payload.paramData)
+// 刪除一筆營養日記
+export const apiDeleteOneDiary = payload => userRequest.delete(`/diary/${payload.diaryId}`)
 
 // 取得食品列表
 export const apiGetAllfFood = payload => userRequest.get(`/foods?search=${payload.search}`)

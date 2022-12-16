@@ -8,7 +8,7 @@ export const useSetMonthNutrition = () => {
   const monthDiarys = ref([])
   const selectedDate = ref(null)
   const selectedWeekly = ref(null)
-  const { updateNutrition, weekNutrition } = useCalcNutrition(monthDiarys, selectedWeekly)
+  const { updateNutrition, weekNutrition, diaryRecords } = useCalcNutrition(monthDiarys, selectedWeekly)
 
   onMounted(() => getMonthDiarys())
 
@@ -42,6 +42,7 @@ export const useSetMonthNutrition = () => {
     weekNutrition,
     selectedDate,
     selectedWeekly,
+    diaryRecords,
     getMonthDiarys,
     tryChangeWeekly,
     tryUpdateDate

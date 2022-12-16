@@ -558,20 +558,70 @@
   }
 
   &__table {
-    td {
-      border: 1px solid red;
+    font-weight: $regular;
+
+    @include desktop {
+      overflow-y: hidden;
+      width: 100%;
     }
 
     &--header {
+      min-width: 1200px;
+      border-bottom: 1px solid $color-brown-light-2;
+      padding-bottom: 8px;
+      display: flex;
+      
+      @include pad {
+        font-size: 14px;
+        min-width: 980px;
+      }
+    }
+
+    &--row {
+      min-width: 1200px;
+      @include pad {
+        min-width: 980px;
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid $color-gray-3;
+        padding-bottom: 8px;
+      }
+    }
+
+    &--main {
+      min-width: 150px;
       width: 100%;
       text-align: start;
       padding: 8px 0;
+
+      &-1 {
+        font-weight: $bold;
+      }
+
+      &-2 {
+        color: $color-brown-light-2;
+      }
+    }
+
+    &--content {
+      display: flex;
     }
 
     &--item {
-      min-width: 100px;
+      min-width: 105px;
       text-align: end;
       padding: 8px 10px;
+
+      @include pad {
+        min-width: 90px;
+        padding: 8px;
+      }
+
+      &-kacl {
+        color: $color-brown-light-2;
+        font-weight: $bold;
+      }
     }
 
     &--edit,
@@ -579,6 +629,11 @@
       min-width: 55px;
       text-align: end;
       padding: 8px 10px;
+      cursor: pointer;
+
+      @include pad {
+        font-size: 14px;
+      }
     }
   }
 }

@@ -14,6 +14,7 @@ const useCalcNutrition = (monthDiarys, selectedWeekly) => {
   const weekDiarys = ref([])
   const weekly = ref([])
   const weekNutrition = ref({})
+  const diaryRecords = ref({})
 
   // 取得週日記
   const getWeekly = () => {
@@ -124,18 +125,37 @@ const useCalcNutrition = (monthDiarys, selectedWeekly) => {
         if (!acc[key]) {
           acc[key] = 0
         }
-        acc[key] += Math.round(curr.food.nutrition[key] * curr.quantity)
+        acc[key] += curr.food.nutrition[key] * curr.quantity
       }
       return acc
     }, {})
 
+    for (let key in total) total[key] = Math.round(total[key])
+
     return total
+  }
+
+  // 統整記錄
+  const getDiaryRecord = () => {
+    const copy_data = JSON.parse(JSON.stringify(weekDiarys.value))
+    weekly.value.forEach(date => {
+      let newData = { breakfast: [], lunch: [], dinner: [], dessert: [] }
+      let data = copy_data.filter(item => date == item.date)
+      if (data.length !== 0) {
+        for (let key in newData) {
+          let value = data.filter(item => key == item.meal)
+          newData[key].push(...value)
+        }   
+      } 
+      diaryRecords.value[date] = newData
+    })
   }
 
   const updateNutrition = () => {
 
-    // 1) 取得週日記
+    // 1) 取得週日記、統整記錄
     getWeekly()
+    getDiaryRecord() 
 
     // 2) 每日營養攝取量
     const calc_data = clacIntakes()
@@ -144,13 +164,8 @@ const useCalcNutrition = (monthDiarys, selectedWeekly) => {
     weekNutrition.value = {}
     weekly.value.forEach(date => {
       let data = []
-      weekDiarys.value.forEach(item => {
-        if(date == item.date) {
-          data.push(item)
-        }
-      })
-      
-      
+      data = weekDiarys.value.filter(item => date == item.date)
+    
       // 整合攝取量、累加值、攝取百分比
       const total_data = calcNutrition(data)
       const copy_data = JSON.parse(JSON.stringify(calc_data)) // 深拷貝
@@ -166,7 +181,8 @@ const useCalcNutrition = (monthDiarys, selectedWeekly) => {
     clacIntakes,
     clacIntakePercent,
     updateNutrition,
-    weekNutrition
+    weekNutrition,
+    diaryRecords
   }
 }
 

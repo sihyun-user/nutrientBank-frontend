@@ -155,6 +155,36 @@ export const useStore = defineStore('main', {
         appError(error, '新增一筆營養日記失敗')
       }
     },
+    // 編輯一筆營養日記
+    async updateOneDiary(payload) {
+      try {
+        this.$patch({ isLoading: true })
+        const { diaryId, paramData } = payload
+
+        const res = await appApi.apiUpdateOneDiary({ diaryId, paramData })
+
+        this.$patch({ isLoading: false })
+        checkConsole('編輯一筆營養日記成功', res.data)
+        alert('編輯營養日記成功')
+        return true
+      } catch (error) {
+        appError(error, '編輯一筆營養日記失敗')
+      }
+    },
+    // 刪除一筆營養日記
+    async deleteOneDiary(payload) {
+      try {
+        this.$patch({ isLoading: true })
+        const res = await appApi.apiDeleteOneDiary(payload)
+  
+        this.$patch({ isLoading: false })
+        checkConsole('刪除一筆營養日記成功', res.data)
+        alert('刪除一筆營養日記成功')
+        return true
+      } catch (error) {
+        appError(error, '刪除一筆營養日記失敗')
+      }
+    },
     // 取得食品列表
     async getAllFood(payload={search: ''}) {
       try {

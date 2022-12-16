@@ -3,7 +3,7 @@
     <div class="nutrition-record__header">
       <div class="nutrition-record__title">今日紀錄</div>
       <div class="nutrition-record__btns">
-        <div class="baseWhiteBtn" @click="setCustomFood">
+        <div class="baseWhiteBtn" @click="setCustomWindow">
           <i class="fa-solid fa-plus"></i>
           <span>新增自訂食品</span>
         </div>
@@ -191,7 +191,7 @@ export default {
       Object.assign(dayRecord, record)
     }
     // 設置自訂食品彈窗
-    const setCustomFood = () => {
+    const setCustomWindow = () => {
       showBox.value = true
     }
     // 新增自訂食品
@@ -209,7 +209,7 @@ export default {
     return {
       ...toRefs(dayRecord),
       showBox,
-      setCustomFood,
+      setCustomWindow,
       tryCreateCustomFood,
       tryClose
     }
