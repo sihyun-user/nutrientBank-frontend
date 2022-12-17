@@ -29,7 +29,7 @@
       <div class="food__item--kcal-main">
         <span>{{food.nutrition.calories}}</span> kcal
       </div>
-      <div class="food__item--kcal-sub"><span>/</span>{{food.perUnitWeight}}g</div>
+      <div class="food__item--kcal-sub"><span>/</span>{{food.perUnitWeight}} {{food.unit}}</div>
     </div>
     <div class="food__item--intakes">
       <div class="food__item--intakeItem">碳水化合物<span>{{food.nutrition.carbohydrates}}g</span></div>

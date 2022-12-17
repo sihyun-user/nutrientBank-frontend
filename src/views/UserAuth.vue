@@ -61,8 +61,8 @@ export default {
     const authOriganil = () => {
       return {
         name: '',
-        email: 'sihyun@gmail.com',
-        password: 'sihyun123456',
+        email: '',
+        password: '',
         confirmPassword: ''
       }
     }

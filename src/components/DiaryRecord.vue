@@ -39,7 +39,7 @@
           <div class="diary-record__table--item">{{(item.food.nutrition['sugar'] * item.quantity).toFixed(1).replace(/.0+$/g,'')}}</div>
           <div class="diary-record__table--item">{{(item.food.nutrition['sodium'] * item.quantity).toFixed(1).replace(/.0+$/g,'')}}</div>
           <div class="diary-record__table--edit" @click="setEditWindow(item)"><i class="fa-solid fa-pen"></i></div>
-          <div class="diary-record__table--delete" @click="deleteOneDiary"><i class="fa-solid fa-x"></i></div>
+          <div class="diary-record__table--delete" @click="deleteOneDiary(item.diaryId)"><i class="fa-solid fa-x"></i></div>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@ import { useStore } from '@/store'
 import BaseCard from '@/components/ui/BaseCard.vue'
 import EditDiary from '@/components/EditDiary.vue'
 export default {
-  emits: ['update-diary'],
+  emits: ['handle-diary'],
   components: {
     BaseCard,
     EditDiary
@@ -69,6 +69,7 @@ export default {
     }
   },
   setup(props, context) {
+    const store = useStore()
     const showBox = ref(false)
     const selectDiary = ref(null)
     const { diaryRecords, selectedDate } = toRefs(props)
@@ -81,13 +82,14 @@ export default {
       selectDiary.value = diary
     }
     // 刪除一筆營養日記
-    const deleteOneDiary = () => {
-      store.updateOneDiary({diaryId, paramData})
-      context.emit('update-diary')
+    const deleteOneDiary = async(diaryId) => {
+      const result = await store.deleteOneDiary({diaryId})
+      if(!result) return
+      context.emit('handle-diary')
     }
     // 編輯一筆營養日記
     const tryUpdateDiary = () => {
-      context.emit('update-diary')
+      context.emit('handle-diary')
       tryClose()
     }
     

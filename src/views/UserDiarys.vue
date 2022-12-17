@@ -12,7 +12,7 @@
         <diary-record
         :selectedDate="selectedDate" 
         :diaryRecords="diaryRecords"
-        @update-diary="tryUpdateDiary">
+        @handle-diary="tryHandleDiary">
         </diary-record>
       </div>
       <div class="user-diarys__wrapper">
@@ -56,7 +56,7 @@ export default {
     const isLoading = computed(() => store.isLoading)
 
     // 重新撈取營養日記
-    const tryUpdateDiary = (() => {
+    const tryHandleDiary = (() => {
       getMonthDiarys()
     })
 
@@ -69,7 +69,7 @@ export default {
       diaryRecords,
       tryChangeWeekly, 
       tryUpdateDate,
-      tryUpdateDiary
+      tryHandleDiary
     }
   }
 }
