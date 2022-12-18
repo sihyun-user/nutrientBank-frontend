@@ -2,7 +2,7 @@
   <base-card class="nutrition-record">
     <div class="nutrition-record__header">
       <div class="nutrition-record__title">今日紀錄</div>
-      <div class="nutrition-record__btns">
+      <div class="nutrition-record__btns nutrition-record__btns--1">
         <div class="baseWhiteBtn" @click="setCustomWindow">
           <i class="fa-solid fa-plus"></i>
           <span>新增自訂食品</span>
@@ -150,6 +150,16 @@
         </div>
         <div class="skillBar__target">{{sodium.intake}}</div>
       </base-card>
+      <div class="nutrition-record__btns nutrition-record__btns--2">
+        <div class="baseWhiteBtn" @click="setCustomWindow">
+          <i class="fa-solid fa-plus"></i>
+          <span>新增自訂食品</span>
+        </div>
+        <router-link to="user-search" class="baseBtn">
+          <i class="fa-solid fa-plus"></i>
+          <span>新增營養紀錄</span>
+        </router-link>
+      </div>
     </div>
   </base-card>
   <base-light-box v-if="showBox" @close="tryClose">

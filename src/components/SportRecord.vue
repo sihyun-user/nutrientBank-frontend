@@ -5,9 +5,11 @@
         <div class="sport-record__title">建議運動量</div>
         <div class="sport-record__consume">已消耗 200/1560 kcal</div>
       </div>
-      <div class="baseGreenBtn">
-        <i class="fa-solid fa-plus"></i>
-        <span>新增運動紀錄</span>
+      <div class="sport-record__btn sport-record__btn--1">
+        <div class="baseGreenBtn">
+          <i class="fa-solid fa-plus"></i>
+          <span>新增運動紀錄</span>
+        </div>
       </div>
     </div>
     <div class="sport-record__list">
@@ -32,6 +34,12 @@
             <div class="sport-record__item-type--time">0<span>hrs</span></div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="sport-record__btn sport-record__btn--2">
+      <div class="baseGreenBtn">
+        <i class="fa-solid fa-plus"></i>
+        <span>新增運動紀錄</span>
       </div>
     </div>
   </base-card>

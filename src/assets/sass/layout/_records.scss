@@ -336,6 +336,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @include pad {
+      justify-content: center;
+    }
   }
 
   &__title {
@@ -345,8 +349,24 @@
   &__btns {
     display: flex;
 
-    .baseWhiteBtn {
-      margin-right: 16px;
+    &--1 {
+      .baseWhiteBtn {
+        margin-right: 16px;
+      }
+
+      @include pad {
+        display: none;
+      }
+    }
+
+    &--2 {
+      margin-top: 32px;
+      flex-direction: column;
+      align-items: center;
+
+      .baseWhiteBtn {
+        margin-bottom: 16px;
+      }
     }
   } 
 }
@@ -368,7 +388,11 @@
     margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
-    align-items: center
+    align-items: center;
+
+    @include pad {
+      justify-content: center;
+    }
   }
 
   &__wrap {
@@ -449,6 +473,24 @@
           font-weight: $regular;
           margin-left: 7px;
         }
+      }
+    }
+  }
+
+  &__btn {
+    &--1 {
+      @include pad {
+        display: none;
+      }
+    }
+    
+    &--2 {
+      display: none;
+
+      @include pad {
+        margin-top: 32px;
+        display: flex;
+        justify-content: center;
       }
     }
   }
